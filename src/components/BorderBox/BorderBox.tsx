@@ -1,22 +1,50 @@
-import React from 'react';
-import BorderBoxContainer, { TextProps } from './BorderBoxContainer';
-import BorderBoxClient from './BorderBoxClient';
+import React from "react";
 
-interface BorderBoxProps {
-  texts: TextProps[];
-  children: React.ReactNode;
+import BorderBoxClient from "./BorderBoxClient";
+
+export interface TextProps {
+	textYPosition: "top" | "bottom";
+	textXPosition: "left" | "center" | "right";
+	text: string;
 }
 
-const BorderBox: React.FC<BorderBoxProps> = (props) => {
+interface BorderBoxProps {
+	texts: TextProps[];
+	children: React.ReactNode;
+}
 
-  // I really don't like this but gotta do it anyways for the best possible server rendered goodies.
-  // Here the first the BorderBoxContainer is rendered on server and then BorderBoxClient takes over on client
-  // https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#supported-pattern-passing-server-components-to-client-components-as-props
-  return (
-    <BorderBoxClient>
-      <BorderBoxContainer {...props} />
-    </BorderBoxClient>
-  );
+const BorderBox: React.FC<BorderBoxProps> = async ({ texts, children }) => {
+	const getYPositionClass = (textYPosition: TextProps["textYPosition"]): string => {
+		return textYPosition === "bottom" ? "-bottom-3" : "-top-3";
+	};
+
+	const getXPositionClass = (textXPosition: TextProps["textXPosition"]): string => {
+		switch (textXPosition) {
+			case "left":
+				return "left-2 transform translate-x-2";
+			case "right":
+				return "right-0 transform translate-x-0";
+			case "center":
+			default:
+				return "left-1/2 transform -translate-x-1/2";
+		}
+	};
+
+	return (
+		<BorderBoxClient>
+			{texts.map(({ textYPosition, textXPosition, text }, index) => (
+				<span
+					key={index}
+					className={`absolute ${getYPositionClass(textYPosition)} ${getXPositionClass(textXPosition)} bg-tokyo-night-background px-2 text-tokyo-night-red`}
+				>
+					{text}
+				</span>
+			))}
+			<div className="relative h-full overflow-y-auto">
+				<div className="flex min-h-full flex-col py-2 text-lg">{children}</div>
+			</div>
+		</BorderBoxClient>
+	);
 };
 
 export default React.memo(BorderBox);

@@ -1,16 +1,14 @@
-import BorderBox from "@/components/BorderBox/BorderBox";
-import ListSkeleton from "@/components/ListSkeleton";
 import React from "react";
 
-async function ExperienceLoading() {
-  return (
-    <BorderBox
-      texts={[{ textYPosition: 'top', textXPosition: 'left', text: 'techstack' }]}
-    >
-      <ListSkeleton />
-    </BorderBox>
+import BorderBox from "@/components/BorderBox/BorderBox";
+import ListSkeleton from "@/components/ListSkeleton";
 
-  )
+async function ExperienceLoading() {
+	return (
+		<BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: "techstack" }]}>
+			<ListSkeleton />
+		</BorderBox>
+	);
 }
 
-export default React.memo(ExperienceLoading)
+export default React.memo(ExperienceLoading);

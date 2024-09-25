@@ -1,34 +1,85 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "jotai": "^2.9.3",
-    "lodash": "^4.17.21",
-    "lucide-react": "^0.445.0",
-    "next": "14.2.11",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-icons": "^5.3.0",
-    "tailwind-merge": "^2.5.2"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15",
-    "@types/lodash": "^4.17.7",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.11",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+	"name": "termfolio",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "bun run lint:next",
+		"lint:next": "next lint",
+		"lint:eslint": "eslint --fix",
+		"format": "prettier --write .",
+		"format:check": "prettier ./src --check",
+		"pages:build": "bunx @cloudflare/next-on-pages",
+		"preview": "bun pages:build && wrangler pages dev",
+		"deploy": "bun pages:build && wrangler pages deploy",
+		"cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
+	},
+	"eslintConfig": {
+		"plugins": [
+			"eslint-plugin-next-on-pages"
+		],
+		"extends": [
+			"prettier",
+			"next/typescript",
+			"next/core-web-vitals",
+			"plugin:eslint-plugin-next-on-pages/recommended"
+		],
+		"rules": {
+			"eslint-plugin-next-on-pages/no-unsupported-configs": "warn"
+		}
+	},
+	"prettier": {
+		"plugins": [
+			"@trivago/prettier-plugin-sort-imports",
+			"prettier-plugin-tailwindcss"
+		],
+		"bracketSpacing": true,
+		"semi": true,
+		"singleQuote": false,
+		"jsxSingleQuote": false,
+		"useTabs": true,
+		"tabWidth": 2,
+		"trailingComma": "none",
+		"printWidth": 100,
+		"importOrder": [
+			"^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
+			"<THIRD_PARTY_MODULES>",
+			"^@/(.*)$",
+			"^[./]"
+		],
+		"importOrderSeparation": true,
+		"importOrderSortSpecifiers": true
+	},
+	"dependencies": {
+		"clsx": "^2.1.1",
+		"jotai": "^2.9.3",
+		"next": "14.2.5",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-icons": "^5.3.0",
+		"tailwind-merge": "^2.5.2",
+		"underscore": "^1.13.7"
+	},
+	"devDependencies": {
+		"@types/underscore": "^1.11.15",
+		"@cloudflare/next-on-pages": "1",
+		"@cloudflare/workers-types": "^4.20240925.0",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"eslint": "^8",
+		"eslint-config-next": "14.2.5",
+		"eslint-plugin-next-on-pages": "^1.13.3",
+		"postcss": "^8",
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5",
+		"prettier": "3.3.3",
+		"prettier-plugin-tailwindcss": "^0.6.8",
+		"@tailwindcss/typography": "^0.5.15",
+		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
+		"vercel": "^37.6.0",
+		"wrangler": "^3.78.12"
+	}
 }
