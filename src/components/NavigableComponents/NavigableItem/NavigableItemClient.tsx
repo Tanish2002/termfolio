@@ -13,7 +13,7 @@ import { focusedDivAtom, focusedItemsAtom, registeredItemsAtom } from "@/store/f
 const NavigableItemClient: React.FC<{
 	divIndex: number;
 	itemIndex: number;
-	href: string;
+	href?: string;
 	children: React.ReactNode;
 }> = ({ divIndex, itemIndex, href, children }) => {
 	const router = useRouter();
@@ -61,7 +61,7 @@ const NavigableItemClient: React.FC<{
 
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent) => {
-			if (e.key === "Enter" && isFocused) {
+			if (e.key === "Enter" && isFocused && href) {
 				router.push(href);
 			}
 		},
@@ -90,7 +90,7 @@ const NavigableItemClient: React.FC<{
 
 	return (
 		<div ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>
-			<Link href={href}>{children}</Link>
+			{href ? <Link href={href}>{children}</Link> : children}
 		</div>
 	);
 };

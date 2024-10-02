@@ -14,16 +14,6 @@
 	}
 }
 
-.elem1 {
-	max-width: 100%;
-	/* Make the element responsive */
-	/* white-space: nowrap; */
-	/* Prevent text from wrapping */
-	/* Hide the overflow */
-	text-overflow: ellipsis;
-	/* Add an ellipsis (...) when the text overflows */
-}
-
 div {
 	@apply focus:outline-none;
 }

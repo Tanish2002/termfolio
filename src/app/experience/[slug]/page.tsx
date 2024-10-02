@@ -1,87 +1,58 @@
+import { readItems } from "@directus/sdk";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import slugify from "slugify";
+
+import client from "@/lib/directus";
+import cn from "@/utils/cn";
+import monthRange from "@/utils/monthRange";
+
 export const dynamicParams = false;
-export default function Page() {
+
+export default async function Experience() {
+	const experienceData = (
+		await client.request(
+			readItems("Experience", {
+				fields: ["Experience", "Title", "Company", "Start_Date", "End_Date"]
+			})
+		)
+	)[0];
+
 	return (
-		<div className="my-auto space-y-4">
-			<p>
-				Welcome to my experience page! Here, you can dive into my professional journey and see the
-				awesome places I&apos;ve worked and the skills I&apos;ve honed along. 🚀
-			</p>
-			<div>
-				<p>
-					Throughout my career, I&apos;ve had the privilege of working with amazing teams and
-					tackling exciting challenges. From
-					<span className="text-tokyo-night-orange"> backend development</span> to
-					<span className="text-tokyo-night-orange"> full-stack projects</span>, each experience has
-					taught me something new and helped me grow as a developer.
-				</p>
-				<p>
-					I&apos;ve completed <span className="text-tokyo-night-cyan">two internships</span> where I
-					focused on real-world applications and gained valuable skills. Additionally, I’ve made
-					numerous <span className="text-tokyo-night-magenta">open-source contributions</span> that
-					I’m really proud of! 🎉
-				</p>
+		<div className="prose-lg my-auto space-y-4 prose-p:my-0">
+			<div className="flex items-center justify-between">
+				<div>
+					<h2 className="my-1 text-tokyo-night-orange">{experienceData.Title}</h2>
+					<h3 className="text-tokyo-night-magenta">@{experienceData.Company}</h3>
+				</div>
+				<h3 className="my-0">{monthRange(experienceData.Start_Date, experienceData.End_Date)}</h3>
 			</div>
-
-			<div>
-				<p>
-					Each position has enriched my toolkit, and I&apos;m excited to share my growing skill set,
-					including:
-				</p>
-				<ul className="list-inside list-disc">
-					<li>
-						<span className="text-tokyo-night-cyan">Backend Development</span> with Node.js,
-						Express, Golang, etc.
-					</li>
-					<li>
-						<span className="text-tokyo-night-cyan">Full-Stack Development</span> using the MERN
-						stack
-					</li>
-					<li>
-						<span className="text-tokyo-night-cyan">DevOps practices</span> and home lab management
-					</li>
-					<li>And much more! 🎉</li>
-				</ul>
-			</div>
-
-			<div>
-				<p>
-					I’m currently <span className="text-tokyo-night-orange">available for work</span> and
-					would love to connect! If you&apos;d like to learn more about my experiences or discuss
-					opportunities, feel free to reach out! 💬
-				</p>
-			</div>
-
-			<div>
-				<p>
-					Ready to explore my individual experiences?{" "}
-					<span className="text-tokyo-night-cyan">Click</span> on the experience section to dive
-					deeper into each role! 🕵️‍♂️
-				</p>
-			</div>
+			<MDXRemote
+				source={experienceData.Experience}
+				components={{
+					ul: (props) => (
+						<ul {...props} className={cn(props.className, "list-disc")}>
+							{props.children}
+						</ul>
+					),
+					h3: (props) => (
+						<h3 {...props} className={cn(props.className, "text-tokyo-night-orange")}>
+							{props.children}
+						</h3>
+					)
+				}}
+			/>
 		</div>
 	);
 }
 
 export async function generateStaticParams() {
-	const posts = [
-		{
-			jobTitle: "Software Engineer",
-			companyName: "company",
-			slug: "sde-company1"
-		},
-		{
-			jobTitle: "Backend Developer",
-			companyName: "company",
-			slug: "sde-company2"
-		},
-		{
-			jobTitle: "Open Source Contributer",
-			companyName: "Github",
-			slug: "slug-company3"
-		}
-	];
+	const posts = await client.request(
+		readItems("Experience", {
+			fields: ["Title", "Company"]
+		})
+	);
 
 	return posts.map((post) => ({
-		slug: post.slug
+		slug: slugify(`${post.Title} ${post.Company}`)
 	}));
 }

@@ -34,7 +34,7 @@ const TechStackListItemClient: React.FC<TechStackListItemClientProps> = ({
 	);
 
 	return (
-		<NavigableItem divIndex={divIndex} itemIndex={itemIndex} href={techStackItem.slug}>
+		<NavigableItem divIndex={divIndex} itemIndex={itemIndex}>
 			<li
 				className={`flex w-full justify-between p-0.5 transition-colors ${
 					isFocused ? "bg-tokyo-night-dark-blue" : "hover:bg-tokyo-night-selection/20"

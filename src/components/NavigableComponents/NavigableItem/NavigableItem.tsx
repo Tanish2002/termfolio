@@ -5,7 +5,7 @@ import NavigableItemClient from "./NavigableItemClient";
 const NavigableItem: React.FC<{
 	divIndex: number;
 	itemIndex: number;
-	href: string;
+	href?: string;
 	children: React.ReactNode;
 }> = ({ divIndex, itemIndex, href, children }) => (
 	<NavigableItemClient divIndex={divIndex} itemIndex={itemIndex} href={href}>

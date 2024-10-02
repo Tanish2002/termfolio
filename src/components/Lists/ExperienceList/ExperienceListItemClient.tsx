@@ -42,7 +42,7 @@ const ExperienceListItemClient: React.FC<ExperienceListItemClientProps> = ({
 		<NavigableItem divIndex={divIndex} itemIndex={itemIndex} href={experienceItem.slug}>
 			<li
 				className={cn(
-					"flex w-full justify-between p-0.5 transition-colors",
+					"flex w-full items-center justify-between p-0.5 transition-colors",
 					isFocused ? "bg-tokyo-night-dark-blue" : "hover:bg-tokyo-night-selection/20"
 				)}
 				onClick={() => {
@@ -51,13 +51,14 @@ const ExperienceListItemClient: React.FC<ExperienceListItemClientProps> = ({
 					}
 				}}
 			>
-				<p>{experienceItem.jobTitle}</p>
+				<p className="m-0.5">{experienceItem.jobTitle}</p>
 				<p
-					className={
-						isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment"
-					}
+					className={cn(
+						isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment",
+						"m-0.5"
+					)}
 				>
-					@ {experienceItem.companyName}
+					@{experienceItem.companyName}
 				</p>
 			</li>
 		</NavigableItem>

@@ -9,7 +9,7 @@ import SocialList from "@/components/Lists/SocialList/SocialList";
 import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
-import { Providers } from "@/providers/providers";
+import Providers from "@/providers/providers";
 import cn from "@/utils/cn";
 
 import "./globals.css";

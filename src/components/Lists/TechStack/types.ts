@@ -4,11 +4,10 @@ import { IconFamily } from "@/components/DynamicIcon";
 
 export interface TechStackListItemProps {
 	item: string; // Name or description of the tech stack item
-	logo: {
-		name: string; // Logo name
-		type: IconFamily; // Logo type (icon family)
-	};
-	slug: string;
+	// logo: {
+	// 	name: string; // Logo name
+	// 	type: IconFamily; // Logo type (icon family)
+	// };
 }
 
 export interface TechStackListProps {

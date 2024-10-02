@@ -1,4 +1,4 @@
-export default function Experience() {
+export default async function Experience() {
 	return (
 		<div className="prose-xl my-auto space-y-4 prose-p:my-0">
 			<p>

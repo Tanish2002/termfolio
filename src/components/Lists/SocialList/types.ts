@@ -1,13 +1,7 @@
 import React from "react";
 
-import { IconFamily } from "@/components/DynamicIcon";
-
 export interface SocialListItemProps {
 	socialName: string; // Name or description of the tech stack item
-	logo: {
-		name: string; // Logo name
-		type: IconFamily; // Logo type (icon family)
-	};
 	href: string;
 }
 
