@@ -1,7 +1,6 @@
 import React from "react";
 
 import { readItems } from "@directus/sdk";
-import slugify from "slugify";
 
 import client from "@/lib/directus";
 
@@ -29,7 +28,7 @@ import { ExperienceListProps } from "./types";
 const ExperienceList: React.FC<ExperienceListProps> = async ({ divIndex }) => {
 	const items = await client.request(
 		readItems("Experience", {
-			fields: ["Title", "Company"],
+			fields: ["Title", "Company", "slug"],
 			filter: {
 				status: {
 					_eq: "enabled"
@@ -45,9 +44,9 @@ const ExperienceList: React.FC<ExperienceListProps> = async ({ divIndex }) => {
 						key={`experience-item-${itemIndex}`}
 						divIndex={divIndex}
 						experienceItem={{
-							jobTitle: item.Title,
-							companyName: item.Company,
-							slug: "/experience/" + slugify(`${item.Title} ${item.Company}`)
+							jobTitle: item.Title.trim(),
+							companyName: item.Company.trim(),
+							slug: "/experience/" + item.slug.trim()
 						}}
 						itemIndex={itemIndex}
 					/>

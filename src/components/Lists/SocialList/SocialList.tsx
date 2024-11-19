@@ -6,7 +6,7 @@ import DynamicIcon from "@/components/DynamicIcon";
 import client from "@/lib/directus";
 
 import SocialListItemClient from "./SocialListItemClient";
-import { SocialListItemProps, SocialListProps } from "./types";
+import { SocialListProps } from "./types";
 
 // const items: SocialListItemProps[] = [
 // 	{
@@ -50,13 +50,13 @@ const SocialList: React.FC<SocialListProps> = async ({ divIndex }) => {
 						icon={
 							<DynamicIcon
 								className="text-inherit"
-								icon={item.Logo_Name}
+								icon={item.Logo_Name.trim()}
 								iconFamily={item.Logo_Family}
 							/>
 						}
 						key={`social-item-${itemIndex}`}
 						divIndex={divIndex}
-						socialItem={{ socialName: item.Name, href: item.Link }}
+						socialItem={{ socialName: item.Name.trim(), href: item.Link.trim() }}
 						itemIndex={itemIndex}
 					/>
 				);

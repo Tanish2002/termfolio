@@ -1,7 +1,5 @@
 import React from "react";
 
-import { IconFamily } from "@/components/DynamicIcon";
-
 export interface TechStackListItemProps {
 	item: string; // Name or description of the tech stack item
 	// logo: {

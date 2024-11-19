@@ -6,7 +6,7 @@ import DynamicIcon from "@/components/DynamicIcon";
 import client from "@/lib/directus";
 
 import TechStackListItemClient from "./TechStackListItemClient";
-import { TechStackListItemProps, TechStackListProps } from "./types";
+import { TechStackListProps } from "./types";
 
 // const items: TechStackListItemProps[] = [
 // 	{ item: "Golang", logo: { type: "fa6", name: "FaGolang" }, slug: "test.com" },
@@ -70,13 +70,13 @@ const TechStackList: React.FC<TechStackListProps> = async ({ divIndex }) => {
 						icon={
 							<DynamicIcon
 								className="text-inherit"
-								icon={item.Logo_Name}
+								icon={item.Logo_Name.trim()}
 								iconFamily={item.Logo_Family}
 							/>
 						}
 						key={`experience-item-${itemIndex}`}
 						divIndex={divIndex}
-						techStackItem={{ item: item.Name }}
+						techStackItem={{ item: item.Name.trim() }}
 						itemIndex={itemIndex}
 					/>
 				);

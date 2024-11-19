@@ -1,13 +1,10 @@
 import React from "react";
 
 import { readItems } from "@directus/sdk";
-import slugify from "slugify";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
 import ExperienceList from "@/components/Lists/ExperienceList/ExperienceList";
 import client from "@/lib/directus";
-
-export const dynamicParams = false;
 
 export default async function Experience() {
 	return (
@@ -20,11 +17,11 @@ export default async function Experience() {
 export async function generateStaticParams() {
 	const posts = await client.request(
 		readItems("Experience", {
-			fields: ["Title", "Company"]
+			fields: ["slug"]
 		})
 	);
 
 	return posts.map((post) => ({
-		slug: slugify(`${post.Title} ${post.Company}`)
+		slug: post.slug.trim()
 	}));
 }

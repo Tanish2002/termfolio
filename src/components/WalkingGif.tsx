@@ -3,12 +3,12 @@
 import Image, { StaticImageData } from "next/image";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import kirby from "@/assets/kirby.gif";
-import mario from "@/assets/mario.gif";
-import parrot from "@/assets/parrot.gif";
-import pikachu from "@/assets/pikachu.gif";
-import seagull from "@/assets/seagull.gif";
-import sonic from "@/assets/sonic.gif";
+import kirby from "@/assets/kirby.webp";
+import mario from "@/assets/mario.webp";
+import parrot from "@/assets/parrot.webp";
+import pikachu from "@/assets/pikachu.webp";
+import seagull from "@/assets/seagull.webp";
+import sonic from "@/assets/sonic.webp";
 
 const WalkingGif: React.FC = () => {
 	const gifs: StaticImageData[] = useMemo(
@@ -86,6 +86,7 @@ const WalkingGif: React.FC = () => {
 					style={{ height: "auto" }}
 					alt="Walking character"
 					onLoad={(img) => setImageWidth(img.currentTarget.naturalWidth)}
+					unoptimized
 				/>
 			</div>
 		</div>

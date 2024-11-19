@@ -52,7 +52,11 @@ const NavigableItemClient: React.FC<{
 				const itemsInDiv = updatedDivs.get(divIndex);
 				if (itemsInDiv) {
 					itemsInDiv.delete(itemIndex);
-					itemsInDiv.size ? updatedDivs.set(divIndex, itemsInDiv) : updatedDivs.delete(divIndex);
+					if (itemsInDiv.size > 0) {
+						updatedDivs.set(divIndex, itemsInDiv);
+					} else {
+						updatedDivs.delete(divIndex);
+					}
 				}
 				return updatedDivs;
 			});

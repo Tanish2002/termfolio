@@ -1,4 +1,4 @@
-import { createDirectus, graphql, rest } from "@directus/sdk";
+import { createDirectus, rest } from "@directus/sdk";
 
 import { IconFamily } from "@/components/DynamicIcon";
 
@@ -32,6 +32,7 @@ interface Experience {
 	Experience: string;
 	Start_Date: string;
 	End_Date: string;
+	slug: string;
 }
 
 interface TechStack {
@@ -61,7 +62,7 @@ export interface Schema {
 
 const client = createDirectus<Schema>("https://backend.bakaotaku.dev").with(
 	rest({
-		onRequest: (options) => ({ ...options, cache: "no-store" })
+		onRequest: (options) => ({ ...options, cache: "force-cache", next: { revalidate: 5000 } })
 	})
 );
 
