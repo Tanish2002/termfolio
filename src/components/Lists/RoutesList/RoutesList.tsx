@@ -7,7 +7,8 @@ const items: RoutesListItemProps[] = [
 	{ name: "About", path: "/" },
 	{ name: "Experience", path: "/experience" },
 	{ name: "Projects", path: "/project" },
-	{ name: "Blog", path: "/blog" }
+	{ name: "Blog", path: "/blog" },
+	{ name: "Settings", path: "/settings", actualHref: "/settings/font" }
 ];
 
 const RoutesList: React.FC<RoutesListProps> = async ({ divIndex }) => {

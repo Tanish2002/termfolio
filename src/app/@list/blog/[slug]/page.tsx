@@ -1,9 +1,12 @@
 import React from "react";
 
+import { readItems } from "@directus/sdk";
+
 import BorderBox from "@/components/BorderBox/BorderBox";
 import BlogList from "@/components/Lists/BlogList/BlogList";
+import client from "@/lib/directus";
 
-async function Blog({
+export default async function Blog({
 	searchParams
 }: {
 	searchParams: Promise<{ status: "published" | "archived" }>;
@@ -12,18 +15,20 @@ async function Blog({
 		? (await searchParams).status
 		: "published";
 	return (
-		<BorderBox
-			texts={[
-				{
-					textYPosition: "top",
-					textXPosition: "left",
-					text: status === "archived" ? "blog - [archived]" : "blog"
-				}
-			]}
-		>
+		<BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: "blog" }]}>
 			<BlogList divIndex={2} status={status} />
 		</BorderBox>
 	);
 }
 
-export default Blog;
+export async function generateStaticParams() {
+	const posts = await client.request(
+		readItems("Blog", {
+			fields: ["slug"]
+		})
+	);
+
+	return posts.map((post) => ({
+		slug: post.slug.trim()
+	}));
+}

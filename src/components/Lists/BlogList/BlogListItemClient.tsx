@@ -11,11 +11,11 @@ import NavigableItem from "@/components/NavigableComponents/NavigableItem/Naviga
 import { focusedDivAtom, focusedItemsAtom } from "@/store/focusAtoms";
 import cn from "@/utils/cn";
 
-import { RoutesListItemClientProps } from "./types";
+import { BlogListItemClientProps } from "./types";
 
-const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
+const BlogListItemClient: React.FC<BlogListItemClientProps> = ({
 	divIndex,
-	routesItem,
+	blogItem,
 	itemIndex
 }) => {
 	const setIsOpen = useMobileNavbarOpen();
@@ -36,18 +36,13 @@ const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
 	);
 
 	const pathName = usePathname();
-	const isSelected =
-		routesItem.path === "/" ? pathName === "/" : pathName.startsWith(routesItem.path);
+	const isSelected = pathName.includes(blogItem.slug);
 
 	return (
-		<NavigableItem
-			divIndex={divIndex}
-			itemIndex={itemIndex}
-			href={routesItem.actualHref ? routesItem.actualHref : routesItem.path}
-		>
+		<NavigableItem divIndex={divIndex} itemIndex={itemIndex} href={blogItem.slug}>
 			<li
 				className={cn(
-					"flex w-full justify-between p-0.5 transition-colors",
+					"flex w-full items-center justify-between p-0.5 transition-colors",
 					isFocused ? "bg-tokyo-night-dark-blue" : "hover:bg-tokyo-night-selection/20"
 				)}
 				onClick={() => {
@@ -56,17 +51,18 @@ const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
 					}
 				}}
 			>
-				<p>{routesItem.name}</p>
+				<p className="m-0.5">{blogItem.title}</p>
 				<p
-					className={
-						isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment"
-					}
+					className={cn(
+						isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment",
+						"m-0.5"
+					)}
 				>
-					{routesItem.path}
+					{blogItem.readTime}
 				</p>
 			</li>
 		</NavigableItem>
 	);
 };
 
-export default React.memo(RoutesListItemClient);
+export default React.memo(BlogListItemClient);

@@ -1,6 +1,7 @@
 export interface RoutesListItemProps {
 	name: string;
 	path: string;
+	actualHref?: string;
 }
 
 export interface RoutesListProps {

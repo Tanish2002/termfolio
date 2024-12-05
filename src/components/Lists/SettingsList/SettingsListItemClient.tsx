@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, { useMemo } from "react";
 
 import { atom, useAtomValue } from "jotai";
@@ -11,12 +10,13 @@ import NavigableItem from "@/components/NavigableComponents/NavigableItem/Naviga
 import { focusedDivAtom, focusedItemsAtom } from "@/store/focusAtoms";
 import cn from "@/utils/cn";
 
-import { RoutesListItemClientProps } from "./types";
+import { SettingsListItemClientProps } from "./types";
 
-const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
+const SettingsListItemClient: React.FC<SettingsListItemClientProps> = ({
 	divIndex,
-	routesItem,
-	itemIndex
+	settingsItem,
+	itemIndex,
+	pageKey
 }) => {
 	const setIsOpen = useMobileNavbarOpen();
 
@@ -35,15 +35,13 @@ const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
 		)
 	);
 
-	const pathName = usePathname();
-	const isSelected =
-		routesItem.path === "/" ? pathName === "/" : pathName.startsWith(routesItem.path);
+	const isSelected = settingsItem.settingsKey === pageKey;
 
 	return (
 		<NavigableItem
 			divIndex={divIndex}
 			itemIndex={itemIndex}
-			href={routesItem.actualHref ? routesItem.actualHref : routesItem.path}
+			href={"/settings/" + settingsItem.settingsKey}
 		>
 			<li
 				className={cn(
@@ -56,17 +54,17 @@ const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
 					}
 				}}
 			>
-				<p>{routesItem.name}</p>
+				<p>{settingsItem.name}</p>
 				<p
 					className={
 						isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment"
 					}
 				>
-					{routesItem.path}
+					{settingsItem.settingsValue}
 				</p>
 			</li>
 		</NavigableItem>
 	);
 };
 
-export default React.memo(RoutesListItemClient);
+export default React.memo(SettingsListItemClient);

@@ -2,10 +2,16 @@
 
 import React from "react";
 
+import cn from "@/utils/cn";
+
 import { useNavigableFocus } from "../NavigableComponents/NavigableFocusContext";
 
 interface BorderBoxClientProps {
 	children: React.ReactNode;
+	colors?: {
+		focussedClassName: string;
+		unFocussedClassName: string;
+	};
 }
 
 const BorderBoxClient: React.FC<BorderBoxClientProps> = (props) => {
@@ -13,7 +19,16 @@ const BorderBoxClient: React.FC<BorderBoxClientProps> = (props) => {
 
 	return (
 		<div
-			className={`relative border-2 ${isFocused ? "border-tokyo-night-red" : "border-tokyo-night-selection"} box-border h-full w-full p-2`}
+			className={cn(
+				"relative box-border h-full w-full border-2 p-2",
+				isFocused
+					? props.colors
+						? props.colors.focussedClassName
+						: "border-tokyo-night-red"
+					: props.colors
+						? props.colors.unFocussedClassName
+						: "border-tokyo-night-selection"
+			)}
 		>
 			{props.children}
 		</div>
