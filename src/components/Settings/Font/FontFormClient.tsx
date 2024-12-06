@@ -1,15 +1,23 @@
 "use client";
+
 import { useState } from "react";
+
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
-import BorderBox from "../BorderBox/BorderBox";
+
+import BorderBox from "@/components/BorderBox/BorderBox";
 import { updateUserFont } from "@/lib/userSettings/userSettings.server";
+
+import { FontOption } from "./FontForm";
 import FontShowcase from "./FontPreview";
 
-export type FontOption = "scientifica" | "mono";
-
-
-export default function FontForm({ initialFont }: { initialFont: FontOption }) {
+export default function FontFormClient({
+	initialFont,
+	previewMdxComponent
+}: {
+	initialFont: FontOption;
+	previewMdxComponent: React.ReactNode;
+}) {
 	const [font, setFont] = useState<FontOption>(initialFont);
 
 	return (
@@ -31,7 +39,7 @@ export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 						/>
 						<label
 							htmlFor="font-scientifica"
-							className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection bg-tokyo-night-darker-purple p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
+							className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
 						>
 							<div className="block">
 								<div className="w-full text-lg font-semibold">Scientifica</div>
@@ -52,7 +60,7 @@ export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 						/>
 						<label
 							htmlFor="font-mono"
-							className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection bg-tokyo-night-darker-purple p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
+							className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
 						>
 							<div className="block">
 								<div className="w-full text-lg font-semibold">Victor Mono</div>
@@ -67,9 +75,9 @@ export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 
 				<div className="my-4">
 					<BorderBox>
-						<div className={"bg-tokyo-night-background text-tokyo-night-foreground p-4"}>
+						<div className={"bg-tokyo-night-background p-4 text-tokyo-night-foreground"}>
 							<h3 className="mb-2 text-lg font-bold underline">Font Preview</h3>
-							<FontShowcase font={font} />
+							<FontShowcase font={font} previewMdxComponent={previewMdxComponent} />
 						</div>
 					</BorderBox>
 				</div>

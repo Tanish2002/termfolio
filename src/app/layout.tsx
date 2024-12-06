@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Victor_Mono } from "next/font/google";
-import localFont from "next/font/local";
 import React from "react";
 
 import About from "@/components/About";
@@ -10,35 +8,12 @@ import SocialList from "@/components/Lists/SocialList/SocialList";
 import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
+import { mono, scientifica } from "@/constants";
+import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
 import Providers from "@/providers/providers";
 import cn from "@/utils/cn";
 
 import "./globals.css";
-import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
-
-const scientifica = localFont({
-	src: [
-		{
-			path: "./fonts/scientifica.ttf",
-			weight: "400",
-			style: "normal"
-		},
-		{
-			path: "./fonts/scientificaItalic.ttf",
-			weight: "400",
-			style: "italic"
-		},
-		{
-			path: "./fonts/scientificaBold.ttf",
-			weight: "700",
-			style: "normal"
-		}
-	],
-	variable: "--font-text",
-	adjustFontFallback: "Times New Roman"
-});
-
-const victorMono = Victor_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -56,19 +31,24 @@ export default async function RootLayout({
 		...(await getCurrentTheme()),
 		...(await getCurrentFont())
 	};
+
+	console.log({ theme });
 	// Determine actual theme
-	const actualTheme = theme === 'system'
-		? (typeof window !== 'undefined'
-			? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-			: 'dark')
-		: theme;
+	const actualTheme =
+		theme === "system"
+			? typeof window !== "undefined"
+				? window.matchMedia("(prefers-color-scheme: dark)").matches
+					? "dark"
+					: "light"
+				: "dark"
+			: theme;
 	return (
 		<html lang="en">
 			<body
 				className={cn(
 					"flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
 					actualTheme === "dark" ? "dark" : "",
-					font === "scientifica" ? scientifica.className : victorMono.className
+					font === "scientifica" ? scientifica.className : mono.className
 				)}
 			>
 				<Providers>

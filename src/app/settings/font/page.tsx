@@ -1,4 +1,4 @@
-import FontForm from "@/components/Settings/FontForm";
+import FontForm from "@/components/Settings/Font/FontForm";
 import { getCurrentFont } from "@/lib/userSettings/userSettings.server";
 
 export default async function FontPage() {

@@ -25,9 +25,7 @@ export async function getCurrentTheme(): Promise<ThemeSettings> {
 	const themeCookie = cookieStore.get("user-theme")?.value;
 
 	return {
-		theme: themeCookie === "dark" ? "dark"
-			: themeCookie === "light" ? "light"
-				: "system"
+		theme: themeCookie === "dark" ? "dark" : themeCookie === "light" ? "light" : "system"
 	};
 }
 

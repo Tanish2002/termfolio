@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { FaMoon, FaSun, FaDesktop } from "react-icons/fa6";
-import cn from "@/utils/cn";
-import BorderBox from "../BorderBox/BorderBox";
-import { updateUserTheme } from "@/lib/userSettings/userSettings.server";
+
+import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
+
 import { getSystemTheme } from "@/lib/userSettings/userSettings.client";
+import { updateUserTheme } from "@/lib/userSettings/userSettings.server";
+import cn from "@/utils/cn";
+
+import BorderBox from "../BorderBox/BorderBox";
 import ThemeColorPreview from "./ThemeColorPreview";
 
 type ThemeOption = "light" | "dark" | "system";
@@ -14,34 +17,38 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 	const [theme, setTheme] = useState<ThemeOption>(initialTheme);
 
 	const themePreviewMap = {
-		"light": {
+		light: {
 			title: "Light Mode Preview",
 			background: "bg-tokyo-night-light-background",
 			text: "text-tokyo-night-light-foreground",
 			focussedClassName: "border-tokyo-night-dark-red",
 			unFocussedClassName: "border-tokyo-night-light-selection"
 		},
-		"dark": {
+		dark: {
 			title: "Dark Mode Preview",
 			background: "bg-tokyo-night-dark-background",
 			text: "text-tokyo-night-dark-foreground",
 			focussedClassName: "border-tokyo-night-dark-red",
-			unFocussedClassName: "border-tokyo-night-light-selection",
+			unFocussedClassName: "border-tokyo-night-light-selection"
 		},
-		"system": {
+		system: {
 			title: "System Theme Preview",
-			background: getSystemTheme() === "dark"
-				? "bg-tokyo-night-dark-background"
-				: "bg-tokyo-night-light-background",
-			text: getSystemTheme() === "dark"
-				? "text-tokyo-night-dark-foreground"
-				: "text-tokyo-night-light-foreground",
-			focussedClassName: getSystemTheme() === "dark"
-				? "border-tokyo-night-dark-red"
-				: "border-tokyo-night-light-red",
-			unFocussedClassName: getSystemTheme() === "dark"
-				? "border-tokyo-night-dark-selection"
-				: "border-tokyo-night-light-selection"
+			background:
+				getSystemTheme() === "dark"
+					? "bg-tokyo-night-dark-background"
+					: "bg-tokyo-night-light-background",
+			text:
+				getSystemTheme() === "dark"
+					? "text-tokyo-night-dark-foreground"
+					: "text-tokyo-night-light-foreground",
+			focussedClassName:
+				getSystemTheme() === "dark"
+					? "border-tokyo-night-dark-red"
+					: "border-tokyo-night-light-red",
+			unFocussedClassName:
+				getSystemTheme() === "dark"
+					? "border-tokyo-night-dark-selection"
+					: "border-tokyo-night-light-selection"
 		}
 	};
 
@@ -66,23 +73,31 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 							/>
 							<label
 								htmlFor={`theme-${themeOption}`}
-								className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection bg-tokyo-night-darker-purple p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
+								className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
 							>
 								<div className="block">
 									<div className="w-full text-lg font-semibold">
-										{themeOption === "dark" ? "Dark Mode" :
-											themeOption === "light" ? "Light Mode" :
-												"System Theme"}
+										{themeOption === "dark"
+											? "Dark Mode"
+											: themeOption === "light"
+												? "Light Mode"
+												: "System Theme"}
 									</div>
 									<div className="w-full">
-										{themeOption === "dark" ? "Good for Indoor conditions" :
-											themeOption === "light" ? "Good for Outdoor conditions" :
-												"Match device preferences"}
+										{themeOption === "dark"
+											? "Good for Indoor conditions"
+											: themeOption === "light"
+												? "Good for Outdoor conditions"
+												: "Match device preferences"}
 									</div>
 								</div>
-								{themeOption === "dark" ? <FaMoon /> :
-									themeOption === "light" ? <FaSun /> :
-										<FaDesktop />}
+								{themeOption === "dark" ? (
+									<FaMoon />
+								) : themeOption === "light" ? (
+									<FaSun />
+								) : (
+									<FaDesktop />
+								)}
 							</label>
 						</li>
 					))}
@@ -97,19 +112,19 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 							unFocussedClassName: currentPreview["unFocussedClassName"]
 						}}
 					>
-						<div className={cn(
-							currentPreview.background,
-							currentPreview.text,
-							"p-4"
-						)}>
-							<h3 className="mb-2 text-lg font-bold underline">
-								{currentPreview.title}
-							</h3>
-							<ThemeColorPreview actualTheme={theme === 'system'
-								? (typeof window !== 'undefined'
-									? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-									: 'dark')
-								: theme} />
+						<div className={cn(currentPreview.background, currentPreview.text, "p-4")}>
+							<h3 className="mb-2 text-lg font-bold underline">{currentPreview.title}</h3>
+							<ThemeColorPreview
+								actualTheme={
+									theme === "system"
+										? typeof window !== "undefined"
+											? window.matchMedia("(prefers-color-scheme: dark)").matches
+												? "dark"
+												: "light"
+											: "dark"
+										: theme
+								}
+							/>
 						</div>
 					</BorderBox>
 				</div>

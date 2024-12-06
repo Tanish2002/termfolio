@@ -2,7 +2,10 @@ import { notFound } from "next/navigation";
 
 import { readItems } from "@directus/sdk";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
 
+import Pre from "@/components/Blog/MdComponents/Pre";
+import Span from "@/components/Blog/MdComponents/Span";
 import client from "@/lib/directus";
 import cn from "@/utils/cn";
 import { formatDate } from "@/utils/formatDate";
@@ -34,6 +37,7 @@ export default async function BlogPost({
 			})
 		)
 	)[0];
+
 	if (!blogPostData) {
 		notFound();
 	}
@@ -76,7 +80,23 @@ export default async function BlogPost({
 			<div>
 				<MDXRemote
 					source={blogPostData.content}
+					options={{
+						mdxOptions: {
+							rehypePlugins: [
+								[
+									rehypePrettyCode,
+									{
+										theme: { dark: "tokyo-night", light: "catppuccin-latte" }
+									}
+								]
+							],
+
+							format: "mdx"
+						}
+					}}
 					components={{
+						pre: Pre,
+						span: Span,
 						ul: (props) => (
 							<ul {...props} className={cn(props.className, "list-disc space-y-2 pl-6 sm:pl-8")}>
 								{props.children}

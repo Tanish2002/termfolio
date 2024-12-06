@@ -21,7 +21,12 @@ interface BorderBoxProps {
 	};
 }
 
-const BorderBox: React.FC<BorderBoxProps> = ({ texts = null, children, colors, internalPaddingClass = "p-2" }) => {
+const BorderBox: React.FC<BorderBoxProps> = ({
+	texts = null,
+	children,
+	colors,
+	internalPaddingClass = "p-2"
+}) => {
 	const getYPositionClass = (textYPosition: TextProps["textYPosition"]): string => {
 		return textYPosition === "bottom" ? "-bottom-3" : "-top-3";
 	};
@@ -40,19 +45,20 @@ const BorderBox: React.FC<BorderBoxProps> = ({ texts = null, children, colors, i
 
 	return (
 		<BorderBoxClient colors={colors} internalPaddingClass={internalPaddingClass}>
-			{texts && texts.map(({ textYPosition, textXPosition, text, className }, index) => (
-				<span
-					key={index}
-					className={cn(
-						"absolute bg-tokyo-night-background px-2 text-tokyo-night-red",
-						getYPositionClass(textYPosition),
-						getXPositionClass(textXPosition),
-						className
-					)}
-				>
-					{text}
-				</span>
-			))}
+			{texts &&
+				texts.map(({ textYPosition, textXPosition, text, className }, index) => (
+					<span
+						key={index}
+						className={cn(
+							"absolute bg-tokyo-night-background px-2 text-tokyo-night-red",
+							getYPositionClass(textYPosition),
+							getXPositionClass(textXPosition),
+							className
+						)}
+					>
+						{text}
+					</span>
+				))}
 			<div className="relative h-full overflow-y-auto">
 				<div className="flex min-h-full flex-col text-lg">{children}</div>
 			</div>

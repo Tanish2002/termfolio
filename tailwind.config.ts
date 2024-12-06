@@ -41,6 +41,8 @@ const tokyoNightThemePlugin = plugin(
 							"color-mix(in srgb, var(--color-tokyo-night-background) calc(<alpha-value> * 100%), transparent)",
 						foreground:
 							"color-mix(in srgb, var(--color-tokyo-night-foreground) calc(<alpha-value> * 100%), transparent)",
+						"code-background":
+							"color-mix(in srgb, var(--color-tokyo-night-code-background) calc(<alpha-value> * 100%), transparent)",
 						red: "color-mix(in srgb, var(--color-tokyo-night-red) calc(<alpha-value> * 100%), transparent)",
 						orange:
 							"color-mix(in srgb, var(--color-tokyo-night-orange) calc(<alpha-value> * 100%), transparent)",
@@ -80,25 +82,28 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
+				// not really tokyo-night-light, I initially used tokyo-night-light but later decided to use catppuccin latte colorscheme
 				"tokyo-night-light": {
-					background: "#f5f5f7", // Soft, neutral light background
-					foreground: "#4c566a", // Darker text for readability
-					selection: "#a3be8c", // Muted greenish highlight for selection
-					comment: "#7c7f88", // Softer grey for comments
-					red: "#d06779", // Muted pinkish red
-					orange: "#d8875a", // Warm, softer orange
-					yellow: "#cfa750", // Gold-like yellow
-					green: "#8cbf59", // Soft green
-					blue: "#5f8be7", // Lighter, softer blue
-					cyan: "#5f99cc", // Muted light cyan
-					purple: "#a780d7", // Softer purple
-					magenta: "#b265cb", // Light magenta
-					"dark-blue": "#9cb0e2", // Pale sky blue
-					"dark-cyan": "#82c8b2", // Muted seafoam green
-					"dark-purple": "#b4c2d8" // Soft greyish purple
+					background: "#e6e9ef", // Soft, neutral light background
+					"code-background": "#eff1f5",
+					foreground: "#4c4f69", // Darker text for readability
+					selection: "#7c7f93", // Muted greenish highlight for selection
+					comment: "#bcc0cc", // Softer grey for comments
+					red: "#d20f39", // Muted pinkish red
+					orange: "#fe640b", // Warm, softer orange
+					yellow: "#df8e1d", // Gold-like yellow
+					green: "#40a02b", // Soft green
+					blue: "#1e66f5", // Lighter, softer blue
+					cyan: "#04a5e5", // Muted light cyan
+					purple: "#8839ef", // Softer purple
+					magenta: "#7287fd", // Light magenta
+					"dark-blue": "#209fb5", // Pale sky blue
+					"dark-cyan": "#179299", // Muted seafoam green
+					"dark-purple": "#d1cdd0" // Soft greyish purple
 				},
 				"tokyo-night-dark": {
 					background: "#1a1b26",
+					"code-background": "#222436",
 					foreground: "#c0caf5",
 					selection: "#2d4f67",
 					comment: "#565f89",
