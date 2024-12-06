@@ -8,6 +8,7 @@ import { useNavigableFocus } from "../NavigableComponents/NavigableFocusContext"
 
 interface BorderBoxClientProps {
 	children: React.ReactNode;
+	internalPaddingClass: string;
 	colors?: {
 		focussedClassName: string;
 		unFocussedClassName: string;
@@ -20,11 +21,12 @@ const BorderBoxClient: React.FC<BorderBoxClientProps> = (props) => {
 	return (
 		<div
 			className={cn(
-				"relative box-border h-full w-full border-2 p-2",
+				"relative box-border h-full w-full border-2",
+				props.internalPaddingClass,
 				isFocused
 					? props.colors
 						? props.colors.focussedClassName
-						: "border-tokyo-night-red"
+						: "border-tokyo-night-red bg-tokyo-night-background"
 					: props.colors
 						? props.colors.unFocussedClassName
 						: "border-tokyo-night-selection"

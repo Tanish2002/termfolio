@@ -1,5 +1,5 @@
 import ThemeForm from "@/components/Settings/ThemeForm";
-import { getCurrentTheme } from "@/lib/userSettings";
+import { getCurrentTheme } from "@/lib/userSettings/userSettings.server";
 
 export default async function ThemeSettingsPage() {
 	// Fetch current user settings server-side

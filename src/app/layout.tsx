@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Victor_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import React from "react";
 
@@ -10,11 +10,11 @@ import SocialList from "@/components/Lists/SocialList/SocialList";
 import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
-import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings";
 import Providers from "@/providers/providers";
 import cn from "@/utils/cn";
 
 import "./globals.css";
+import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
 
 const scientifica = localFont({
 	src: [
@@ -38,7 +38,7 @@ const scientifica = localFont({
 	adjustFontFallback: "Times New Roman"
 });
 
-const inter = Inter({ subsets: ["latin"] });
+const victorMono = Victor_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -56,13 +56,19 @@ export default async function RootLayout({
 		...(await getCurrentTheme()),
 		...(await getCurrentFont())
 	};
+	// Determine actual theme
+	const actualTheme = theme === 'system'
+		? (typeof window !== 'undefined'
+			? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+			: 'dark')
+		: theme;
 	return (
 		<html lang="en">
 			<body
 				className={cn(
 					"flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
-					theme === "dark" ? "dark" : "",
-					font === "scientifica" ? scientifica.className : inter.className
+					actualTheme === "dark" ? "dark" : "",
+					font === "scientifica" ? scientifica.className : victorMono.className
 				)}
 			>
 				<Providers>

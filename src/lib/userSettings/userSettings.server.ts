@@ -1,39 +1,33 @@
 "use server";
 
-// lib/userSettings.ts
 import { cookies } from "next/headers";
 
 interface FontSettings {
-	font: "scientifica" | "inter";
+	font: "scientifica" | "mono";
 }
 
 interface ThemeSettings {
-	theme: "light" | "dark";
+	theme: "light" | "dark" | "system";
 }
-
-// Default settings
-const DEFAULT_SETTINGS: ThemeSettings & FontSettings = {
-	font: "inter",
-	theme: "light"
-};
 
 export async function getCurrentFont(): Promise<FontSettings> {
 	const cookieStore = await cookies();
-
 	const fontCookie = cookieStore.get("user-font")?.value;
 
+	// Default is scientifica
 	return {
-		font: fontCookie === "scientifica" ? "scientifica" : "inter"
+		font: fontCookie === "mono" ? "mono" : "scientifica"
 	};
 }
 
 export async function getCurrentTheme(): Promise<ThemeSettings> {
 	const cookieStore = await cookies();
-
 	const themeCookie = cookieStore.get("user-theme")?.value;
 
 	return {
-		theme: themeCookie === "dark" ? "dark" : "light"
+		theme: themeCookie === "dark" ? "dark"
+			: themeCookie === "light" ? "light"
+				: "system"
 	};
 }
 
@@ -52,12 +46,6 @@ export async function updateUserTheme(settings: ThemeSettings) {
 			path: "/",
 			maxAge: 60 * 60 * 24 * 365 // 1 year
 		});
-
-		if (settings.theme === "dark") {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
 	} catch (error) {
 		console.error(error);
 	}

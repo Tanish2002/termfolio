@@ -1,49 +1,14 @@
 "use client";
-
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
 import { useState } from "react";
-
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
-
-import { updateUserFont } from "@/lib/userSettings";
-import cn from "@/utils/cn";
-
 import BorderBox from "../BorderBox/BorderBox";
+import { updateUserFont } from "@/lib/userSettings/userSettings.server";
+import FontShowcase from "./FontPreview";
 
-type FontOption = "scientifica" | "inter";
+export type FontOption = "scientifica" | "mono";
 
-const scientifica = localFont({
-	src: [
-		{
-			path: "../../app/fonts/scientifica.ttf",
-			weight: "400",
-			style: "normal"
-		},
-		{
-			path: "../../app/fonts/scientificaItalic.ttf",
-			weight: "400",
-			style: "italic"
-		},
-		{
-			path: "../../app/fonts/scientificaBold.ttf",
-			weight: "700",
-			style: "normal"
-		}
-	],
-	variable: "--font-text",
-	adjustFontFallback: "Times New Roman"
-});
 
-// Sample text for font preview
-const fontPreviewText = `
-    The quick brown fox jumps over the lazy dog. 
-    This pangram contains every letter of the English alphabet.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-    Nulla quis lorem ut libero malesuada feugiat.
-  `;
-const inter = Inter({ subsets: ["latin"] });
 export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 	const [font, setFont] = useState<FontOption>(initialFont);
 
@@ -78,21 +43,21 @@ export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 					<li className="h-full">
 						<input
 							type="radio"
-							id="font-inter"
+							id="font-mono"
 							name="font"
-							value="font-inter"
-							checked={font === "inter"}
-							onChange={() => setFont("inter")}
+							value="font-mono"
+							checked={font === "mono"}
+							onChange={() => setFont("mono")}
 							className="peer hidden"
 						/>
 						<label
-							htmlFor="font-inter"
+							htmlFor="font-mono"
 							className="inline-flex h-full w-full cursor-pointer items-center justify-between border border-tokyo-night-selection bg-tokyo-night-darker-purple p-5 text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 peer-checked:border-tokyo-night-magenta peer-checked:text-tokyo-night-magenta"
 						>
 							<div className="block">
-								<div className="w-full text-lg font-semibold">Inter</div>
+								<div className="w-full text-lg font-semibold">Victor Mono</div>
 								<div className="w-full">
-									Most common website font, use it if you have difficulty reading
+									Common Mono font, use it if you have difficulty reading scientifica
 								</div>
 							</div>
 							<HiOutlineNewspaper />
@@ -101,29 +66,10 @@ export default function FontForm({ initialFont }: { initialFont: FontOption }) {
 				</ul>
 
 				<div className="my-4">
-					<BorderBox
-						texts={[
-							{
-								textYPosition: "top",
-								textXPosition: "left",
-								text: "font preview"
-							}
-						]}
-					>
-						<div
-							className={cn(
-								"bg-tokyo-night-background text-tokyo-night-foreground",
-								font === "scientifica" ? scientifica.className : inter.className
-							)}
-						>
-							<h3 className="mb-2 text-lg font-bold">
-								{font === "scientifica" ? "Scientifica Font Preview" : "Inter Font Preview"}
-							</h3>
-							<p>{fontPreviewText}</p>
-							<div className="mt-4 space-y-2">
-								<p className="italic">{fontPreviewText.slice(0, 100)}...</p>
-								<p className="font-bold">{fontPreviewText.slice(0, 100)}...</p>
-							</div>
+					<BorderBox>
+						<div className={"bg-tokyo-night-background text-tokyo-night-foreground p-4"}>
+							<h3 className="mb-2 text-lg font-bold underline">Font Preview</h3>
+							<FontShowcase font={font} />
 						</div>
 					</BorderBox>
 				</div>
