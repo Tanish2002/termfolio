@@ -17,7 +17,8 @@ const CopyToClipboardButton = ({ content }: { content: string }) => {
 		}
 	}, [clicked]);
 
-	const onClick = async () => {
+	const onClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		e.preventDefault();
 		await navigator.clipboard.writeText(content);
 		setClicked(true);
 	};
@@ -49,7 +50,7 @@ const Pre = (props: PreProps) => {
 	return (
 		<div className="relative">
 			{lang && (
-				<div className="absolute left-1/2 top-1 -translate-x-1/2 transform text-sm text-tokyo-night-orange rounded-t-md bg-[var(--shiki-dark-bg)] px-4 py-1 text-[var(--shiki-dark)]">
+				<div className="absolute left-1/2 top-1 -translate-x-1/2 transform rounded-t-md bg-[var(--shiki-dark-bg)] px-4 py-1 text-sm text-[var(--shiki-dark)] text-tokyo-night-orange">
 					{lang}
 				</div>
 			)}

@@ -1,63 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
 
+import { ThemeType, useTheme } from "@/lib/userSettings/userSettings.client";
 import cn from "@/utils/cn";
 
 import BorderBox from "../BorderBox/BorderBox";
 import ThemeColorPreview from "./ThemeColorPreview";
-import { useTheme } from "@/lib/userSettings/userSettings.client";
-
-type ThemeOption = "light" | "dark" | "system";
 
 export default function ThemeForm() {
-	const { theme: userTheme, setTheme: setUserTheme, actualTheme } = useTheme();
-	const [theme, setTheme] = useState<ThemeOption>(userTheme as ThemeOption);
+	const { theme: userTheme, setTheme: setUserTheme, systemTheme } = useTheme();
+	const [theme, setTheme] = useState(userTheme);
 
-	const themePreviewMap = {
-		light: {
-			title: "Light Mode Preview",
-			background: "bg-tokyo-night-light-background",
-			text: "text-tokyo-night-light-foreground",
-			focussedClassName: "border-tokyo-night-dark-red",
-			unFocussedClassName: "border-tokyo-night-light-selection"
-		},
-		dark: {
-			title: "Dark Mode Preview",
-			background: "bg-tokyo-night-dark-background",
-			text: "text-tokyo-night-dark-foreground",
-			focussedClassName: "border-tokyo-night-dark-red",
-			unFocussedClassName: "border-tokyo-night-light-selection"
-		},
-		system: {
-			title: "System Theme Preview",
-			background:
-				actualTheme === "dark"
-					? "bg-tokyo-night-dark-background"
-					: "bg-tokyo-night-light-background",
-			text:
-				actualTheme === "dark"
-					? "text-tokyo-night-dark-foreground"
-					: "text-tokyo-night-light-foreground",
-			focussedClassName:
-				actualTheme === "dark"
-					? "border-tokyo-night-dark-red"
-					: "border-tokyo-night-light-red",
-			unFocussedClassName:
-				actualTheme === "dark"
-					? "border-tokyo-night-dark-selection"
-					: "border-tokyo-night-light-selection"
+	// Dynamically compute the preview based on current theme and actual theme
+	const currentPreview = useMemo(() => {
+		switch (theme) {
+			case "light":
+				return {
+					title: "Light Mode Preview",
+					background: "bg-tokyo-night-light-background",
+					text: "text-tokyo-night-light-foreground",
+					focussedClassName: "border-tokyo-night-dark-red",
+					unFocussedClassName: "border-tokyo-night-light-selection"
+				};
+			case "dark":
+				return {
+					title: "Dark Mode Preview",
+					background: "bg-tokyo-night-dark-background",
+					text: "text-tokyo-night-dark-foreground",
+					focussedClassName: "border-tokyo-night-dark-red",
+					unFocussedClassName: "border-tokyo-night-light-selection"
+				};
+			case "system":
+				return {
+					title: "System Theme Preview",
+					background:
+						systemTheme === "dark"
+							? "bg-tokyo-night-dark-background"
+							: "bg-tokyo-night-light-background",
+					text:
+						systemTheme === "dark"
+							? "text-tokyo-night-dark-foreground"
+							: "text-tokyo-night-light-foreground",
+					focussedClassName:
+						systemTheme === "dark" ? "border-tokyo-night-dark-red" : "border-tokyo-night-light-red",
+					unFocussedClassName:
+						systemTheme === "dark"
+							? "border-tokyo-night-dark-selection"
+							: "border-tokyo-night-light-selection"
+				};
 		}
-	};
-
-	const currentPreview = themePreviewMap[theme];
+	}, [theme, systemTheme]);
 
 	return (
 		<form
-			action={async () => setUserTheme(theme)}
-			className="space-y-6">
+			onSubmit={(e) => {
+				e.preventDefault();
+				setUserTheme(theme);
+			}}
+			// action={async () => await setUserTheme(theme)}
+			className="space-y-6"
+		>
 			<div className="mt-6">
 				<label className="mb-2 block font-medium">Choose Site Theme</label>
 
@@ -70,7 +75,7 @@ export default function ThemeForm() {
 								name="theme"
 								value={`theme-${themeOption}`}
 								checked={theme === themeOption}
-								onChange={() => setTheme(themeOption as ThemeOption)}
+								onChange={() => setTheme(themeOption as ThemeType)}
 								className="peer hidden"
 							/>
 							<label
@@ -116,9 +121,7 @@ export default function ThemeForm() {
 					>
 						<div className={cn(currentPreview.background, currentPreview.text, "p-4")}>
 							<h3 className="mb-2 text-lg font-bold underline">{currentPreview.title}</h3>
-							<ThemeColorPreview
-								actualTheme={actualTheme ? actualTheme as "light" | "dark" : "dark"}
-							/>
+							<ThemeColorPreview actualTheme={theme === "system" ? systemTheme : theme} />
 						</div>
 					</BorderBox>
 				</div>

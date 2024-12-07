@@ -6,10 +6,10 @@ import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
+import { updateUserFont } from "@/lib/userSettings/userSettings.client";
 
 import { FontOption } from "./FontForm";
 import FontShowcase from "./FontPreview";
-import { updateUserFont } from "@/lib/userSettings/userSettings.server";
 
 export default function FontFormClient({
 	initialFont,
@@ -22,8 +22,13 @@ export default function FontFormClient({
 
 	return (
 		<form
-			action={async () => updateUserFont({ font })}
-			className="space-y-6">
+			onSubmit={(e) => {
+				e.preventDefault();
+				updateUserFont({ font });
+			}}
+			// action={async () => await updateUserFont({ font })}
+			className="space-y-6"
+		>
 			<div>
 				<label className="mb-2 block font-medium">Choose Site Font</label>
 

@@ -1,7 +1,10 @@
-'use server';
-import { getCookie, setCookie } from "cookies-next/server";
-import { FontSettings, ThemeSettings } from "./userSettings.client";
+"use server";
+
 import { cookies } from "next/headers";
+
+import { getCookie, setCookie } from "cookies-next/server";
+
+import { FontSettings, ThemeSettings } from "./userSettings.client";
 
 export async function getCurrentFont(): Promise<FontSettings> {
 	const fontCookie = await getCookie("user-font", { cookies });
@@ -17,18 +20,16 @@ export async function getCurrentTheme(): Promise<ThemeSettings> {
 	const resolvedThemeCookie = await getCookie("user-resolved-theme", { cookies });
 
 	const validTheme =
-		themeCookie === 'light' ||
-			themeCookie === 'dark' ||
-			themeCookie === 'system'
+		themeCookie === "light" || themeCookie === "dark" || themeCookie === "system"
 			? themeCookie
 			: null;
 
 	const validResolvedTheme =
-		resolvedThemeCookie === "light" || resolvedThemeCookie === "dark" ? resolvedThemeCookie : null
+		resolvedThemeCookie === "light" || resolvedThemeCookie === "dark" ? resolvedThemeCookie : null;
 
 	return {
-		theme: validTheme || 'system', // default to system
-		resolvedTheme: validResolvedTheme || 'dark' // default to dark
+		theme: validTheme || "system", // default to system
+		resolvedTheme: validResolvedTheme || "dark" // default to dark
 	};
 }
 
@@ -37,5 +38,5 @@ export async function updateUserTheme(settings: ThemeSettings) {
 }
 
 export async function updateUserFont(settings: FontSettings) {
-	setCookie("user-font", settings.font, { cookies });
+	await setCookie("user-font", settings.font, { cookies });
 }

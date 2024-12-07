@@ -5,10 +5,10 @@ import React, { useEffect, useState } from "react";
 import { Provider } from "jotai";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeSettings, getCurrentTheme } from "@/lib/userSettings/userSettings.client";
 
 import NavigationProvider from "./NavigationProvider";
 import ScrollProvider from "./ScrollProvider";
-import { getCurrentTheme, ThemeSettings } from "@/lib/userSettings/userSettings.client";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [initialTheme, setInitialTheme] = useState<ThemeSettings | null>(null);
@@ -25,12 +25,12 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	if (isLoading || !initialTheme) {
 		return (
 			<div className="fixed inset-0 z-50 flex items-center justify-center bg-tokyo-night-background text-tokyo-night-red">
-				<div className="w-4/5 max-w-2xl h-96 bg-tokyo-night-background border-2 border-tokyo-night-red rounded-lg shadow-lg overflow-hidden">
-					<div className="bg-tokyo-night-comment h-8 flex items-center px-4 border-b border-tokyo-night-red">
+				<div className="h-96 w-4/5 max-w-2xl overflow-hidden rounded-lg border-2 border-tokyo-night-red bg-tokyo-night-background shadow-lg">
+					<div className="flex h-8 items-center border-b border-tokyo-night-red bg-tokyo-night-comment px-4">
 						<div className="flex space-x-2">
-							<div className="w-3 h-3 bg-tokyo-night-orange rounded-full"></div>
-							<div className="w-3 h-3 bg-tokyo-night-yellow rounded-full"></div>
-							<div className="w-3 h-3 bg-tokyo-night-red rounded-full"></div>
+							<div className="h-3 w-3 rounded-full bg-tokyo-night-orange"></div>
+							<div className="h-3 w-3 rounded-full bg-tokyo-night-yellow"></div>
+							<div className="h-3 w-3 rounded-full bg-tokyo-night-red"></div>
 						</div>
 					</div>
 					<div className="p-4 font-mono">
@@ -51,8 +51,12 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 								white-space: nowrap;
 							}
 							@keyframes typing {
-								from { width: 0; }
-								to { width: 100%; }
+								from {
+									width: 0;
+								}
+								to {
+									width: 100%;
+								}
 							}
 						`}</style>
 					</div>
@@ -66,9 +70,7 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 		<Provider>
 			<NavigationProvider />
 			<ScrollProvider />
-			<ThemeProvider initialTheme={initialTheme}>
-				{children}
-			</ThemeProvider>
+			<ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
 		</Provider>
 	);
 };

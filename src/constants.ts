@@ -19,8 +19,12 @@ export const scientifica = localFont({
 			style: "normal"
 		}
 	],
-	variable: "--font-text",
+	variable: "--font-scientifica",
 	adjustFontFallback: "Times New Roman"
 });
 
-export const mono = Victor_Mono({ subsets: ["latin"] });
+export const mono = Victor_Mono({
+	subsets: ["latin"],
+	variable: "--font-mono",
+	adjustFontFallback: true
+});

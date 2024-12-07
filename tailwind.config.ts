@@ -130,8 +130,8 @@ const config: Config = {
 				}
 			},
 			fontFamily: {
-				sans: ["var(--font-mono)"],
-				mono: ["var(--font-mono)"]
+				mono: ["var(--font-mono)"],
+				scientifica: ["var(--font-scientifica)"]
 			}
 		}
 	},
