@@ -43,6 +43,7 @@
 	"dependencies": {
 		"@directus/sdk": "^18.0.0",
 		"clsx": "^2.1.1",
+		"cookies-next": "^5.0.2",
 		"jotai": "^2.10.1",
 		"next": "15.0.2",
 		"next-mdx-remote": "^5.0.0",

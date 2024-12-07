@@ -1,18 +1,10 @@
-"use server";
-
+'use server';
+import { getCookie, setCookie } from "cookies-next/server";
+import { FontSettings, ThemeSettings } from "./userSettings.client";
 import { cookies } from "next/headers";
 
-interface FontSettings {
-	font: "scientifica" | "mono";
-}
-
-interface ThemeSettings {
-	theme: "light" | "dark" | "system";
-}
-
 export async function getCurrentFont(): Promise<FontSettings> {
-	const cookieStore = await cookies();
-	const fontCookie = cookieStore.get("user-font")?.value;
+	const fontCookie = await getCookie("user-font", { cookies });
 
 	// Default is scientifica
 	return {
@@ -21,30 +13,29 @@ export async function getCurrentFont(): Promise<FontSettings> {
 }
 
 export async function getCurrentTheme(): Promise<ThemeSettings> {
-	const cookieStore = await cookies();
-	const themeCookie = cookieStore.get("user-theme")?.value;
+	const themeCookie = await getCookie("user-theme", { cookies });
+	const resolvedThemeCookie = await getCookie("user-resolved-theme", { cookies });
+
+	const validTheme =
+		themeCookie === 'light' ||
+			themeCookie === 'dark' ||
+			themeCookie === 'system'
+			? themeCookie
+			: null;
+
+	const validResolvedTheme =
+		resolvedThemeCookie === "light" || resolvedThemeCookie === "dark" ? resolvedThemeCookie : null
 
 	return {
-		theme: themeCookie === "dark" ? "dark" : themeCookie === "light" ? "light" : "system"
+		theme: validTheme || 'system', // default to system
+		resolvedTheme: validResolvedTheme || 'dark' // default to dark
 	};
 }
 
-export async function updateUserFont(settings: FontSettings) {
-	const cookieStore = await cookies();
-	cookieStore.set("user-font", settings.font, {
-		path: "/",
-		maxAge: 60 * 60 * 24 * 365 // 1 year
-	});
+export async function updateUserTheme(settings: ThemeSettings) {
+	await setCookie("user-theme", settings.theme, { cookies });
 }
 
-export async function updateUserTheme(settings: ThemeSettings) {
-	try {
-		const cookieStore = await cookies();
-		cookieStore.set("user-theme", settings.theme, {
-			path: "/",
-			maxAge: 60 * 60 * 24 * 365 // 1 year
-		});
-	} catch (error) {
-		console.error(error);
-	}
+export async function updateUserFont(settings: FontSettings) {
+	setCookie("user-font", settings.font, { cookies });
 }

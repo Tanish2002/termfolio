@@ -180,7 +180,7 @@ const Section = ({
 }) => (
 	<div>
 		<h4 className="text-md mb-2 font-semibold sm:mb-3 sm:text-lg">{title}</h4>
-		<div className="grid grid-cols-4 gap-2 sm:grid-cols-6 sm:gap-3">
+		<div className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
 			{colors.map((color, index) => (
 				<div
 					key={index}

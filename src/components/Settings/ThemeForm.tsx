@@ -4,17 +4,17 @@ import { useState } from "react";
 
 import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
 
-import { getSystemTheme } from "@/lib/userSettings/userSettings.client";
-import { updateUserTheme } from "@/lib/userSettings/userSettings.server";
 import cn from "@/utils/cn";
 
 import BorderBox from "../BorderBox/BorderBox";
 import ThemeColorPreview from "./ThemeColorPreview";
+import { useTheme } from "@/lib/userSettings/userSettings.client";
 
 type ThemeOption = "light" | "dark" | "system";
 
-export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption }) {
-	const [theme, setTheme] = useState<ThemeOption>(initialTheme);
+export default function ThemeForm() {
+	const { theme: userTheme, setTheme: setUserTheme, actualTheme } = useTheme();
+	const [theme, setTheme] = useState<ThemeOption>(userTheme as ThemeOption);
 
 	const themePreviewMap = {
 		light: {
@@ -34,19 +34,19 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 		system: {
 			title: "System Theme Preview",
 			background:
-				getSystemTheme() === "dark"
+				actualTheme === "dark"
 					? "bg-tokyo-night-dark-background"
 					: "bg-tokyo-night-light-background",
 			text:
-				getSystemTheme() === "dark"
+				actualTheme === "dark"
 					? "text-tokyo-night-dark-foreground"
 					: "text-tokyo-night-light-foreground",
 			focussedClassName:
-				getSystemTheme() === "dark"
+				actualTheme === "dark"
 					? "border-tokyo-night-dark-red"
 					: "border-tokyo-night-light-red",
 			unFocussedClassName:
-				getSystemTheme() === "dark"
+				actualTheme === "dark"
 					? "border-tokyo-night-dark-selection"
 					: "border-tokyo-night-light-selection"
 		}
@@ -55,7 +55,9 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 	const currentPreview = themePreviewMap[theme];
 
 	return (
-		<form action={() => updateUserTheme({ theme })} className="space-y-6">
+		<form
+			action={async () => setUserTheme(theme)}
+			className="space-y-6">
 			<div className="mt-6">
 				<label className="mb-2 block font-medium">Choose Site Theme</label>
 
@@ -115,15 +117,7 @@ export default function ThemeForm({ initialTheme }: { initialTheme: ThemeOption 
 						<div className={cn(currentPreview.background, currentPreview.text, "p-4")}>
 							<h3 className="mb-2 text-lg font-bold underline">{currentPreview.title}</h3>
 							<ThemeColorPreview
-								actualTheme={
-									theme === "system"
-										? typeof window !== "undefined"
-											? window.matchMedia("(prefers-color-scheme: dark)").matches
-												? "dark"
-												: "light"
-											: "dark"
-										: theme
-								}
+								actualTheme={actualTheme ? actualTheme as "light" | "dark" : "dark"}
 							/>
 						</div>
 					</BorderBox>

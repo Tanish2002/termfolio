@@ -1,16 +1,16 @@
 import React from "react";
 
-import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
-
 import SettingsListItemClient from "./SettingsListItemClient";
 import { SettingsListItemProps, SettingsListProps } from "./types";
+import { getCurrentTheme, getCurrentFont } from "@/lib/userSettings/userSettings.server";
 
 const SettingsList: React.FC<SettingsListProps> = async ({ divIndex, settingsKey }) => {
 	const { theme } = await getCurrentTheme();
 	const { font } = await getCurrentFont();
+
 	const items: SettingsListItemProps[] = [
 		{ name: "Font", settingsKey: "font", settingsValue: font },
-		{ name: "Theme", settingsKey: "theme", settingsValue: theme }
+		{ name: "Theme", settingsKey: "theme", settingsValue: theme ?? "system" }
 	];
 	return (
 		<ul className="w-full space-y-2">
