@@ -1,22 +1,30 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import { useAtom, useAtomValue } from "jotai";
 import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
 
-import { ThemeType, useTheme } from "@/lib/userSettings/userSettings.client";
+import { setTheme } from "@/lib/userSettings/client";
+import { ThemeType, systemThemeAtom, themeAtom } from "@/store/themeAtoms";
 import cn from "@/utils/cn";
 
 import BorderBox from "../BorderBox/BorderBox";
 import ThemeColorPreview from "./ThemeColorPreview";
 
 export default function ThemeForm() {
-	const { theme: userTheme, setTheme: setUserTheme, systemTheme } = useTheme();
-	const [theme, setTheme] = useState(userTheme);
+	const [userTheme, setUserTheme] = useAtom(themeAtom);
+	const systemTheme = useAtomValue(systemThemeAtom);
+	const [previewTheme, setPreviewTheme] = useState<ThemeType>(userTheme);
+
+	// initialize the previewTheme with userTheme value so it gets checked automatically on load
+	useEffect(() => {
+		setPreviewTheme(userTheme);
+	}, [userTheme]);
 
 	// Dynamically compute the preview based on current theme and actual theme
 	const currentPreview = useMemo(() => {
-		switch (theme) {
+		switch (previewTheme) {
 			case "light":
 				return {
 					title: "Light Mode Preview",
@@ -52,15 +60,14 @@ export default function ThemeForm() {
 							: "border-tokyo-night-light-selection"
 				};
 		}
-	}, [theme, systemTheme]);
+	}, [previewTheme, systemTheme]);
 
 	return (
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				setUserTheme(theme);
+				setTheme(previewTheme, setUserTheme);
 			}}
-			// action={async () => await setUserTheme(theme)}
 			className="space-y-6"
 		>
 			<div className="mt-6">
@@ -74,8 +81,8 @@ export default function ThemeForm() {
 								id={`theme-${themeOption}`}
 								name="theme"
 								value={`theme-${themeOption}`}
-								checked={theme === themeOption}
-								onChange={() => setTheme(themeOption as ThemeType)}
+								checked={previewTheme === themeOption}
+								onChange={() => setPreviewTheme(themeOption as ThemeType)}
 								className="peer hidden"
 							/>
 							<label
@@ -121,7 +128,9 @@ export default function ThemeForm() {
 					>
 						<div className={cn(currentPreview.background, currentPreview.text, "p-4")}>
 							<h3 className="mb-2 text-lg font-bold underline">{currentPreview.title}</h3>
-							<ThemeColorPreview actualTheme={theme === "system" ? systemTheme : theme} />
+							<ThemeColorPreview
+								actualTheme={previewTheme === "system" ? systemTheme : previewTheme}
+							/>
 						</div>
 					</BorderBox>
 				</div>

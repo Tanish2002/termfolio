@@ -29,7 +29,7 @@ const RoutesListItemClient: React.FC<RoutesListItemClientProps> = ({
 						focusedItems: get(focusedItemsAtom)
 					})),
 					({ focusedDiv, focusedItems }) =>
-						focusedDiv === divIndex && focusedItems[divIndex] === itemIndex
+						focusedDiv === divIndex && focusedItems.get(divIndex) === itemIndex
 				),
 			[divIndex, itemIndex]
 		)

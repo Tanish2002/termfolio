@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import React from "react";
 
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { selectAtom } from "jotai/utils";
 
 import { focusedDivAtom, focusedItemsAtom, registeredItemsAtom } from "@/store/focusAtoms";
@@ -23,14 +23,7 @@ const NavigableItemClient: React.FC<{
 	const isFocused = useAtomValue(
 		useMemo(
 			() =>
-				selectAtom(
-					atom((get) => ({
-						focusedDiv: get(focusedDivAtom),
-						focusedItems: get(focusedItemsAtom)
-					})),
-					({ focusedDiv, focusedItems }) =>
-						focusedDiv === divIndex && focusedItems[divIndex] === itemIndex
-				),
+				selectAtom(focusedItemsAtom, (focusedItems) => focusedItems.get(divIndex) === itemIndex),
 			[divIndex, itemIndex]
 		)
 	);
@@ -88,7 +81,7 @@ const NavigableItemClient: React.FC<{
 
 	const handleClick = useCallback(() => {
 		setFocusedDiv(divIndex);
-		setFocusedItems((prev) => ({ ...prev, [divIndex]: itemIndex }));
+		setFocusedItems((prev) => new Map(prev).set(divIndex, itemIndex));
 		itemRef.current?.focus();
 	}, [setFocusedItems, setFocusedDiv, itemRef, divIndex, itemIndex]);
 

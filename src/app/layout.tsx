@@ -10,7 +10,7 @@ import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
 import { mono, scientifica } from "@/constants";
-import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
+import { getCurrentFont } from "@/lib/userSettings/server";
 import Providers from "@/providers/providers";
 import cn from "@/utils/cn";
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
 					"flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
 					scientifica.variable,
 					mono.variable,
-					font === "scientifica" ? "font-scientifica" : "font-mono"
+					font === "mono" ? "font-mono" : "font-scientifica"
 				)}
 			>
 				<Providers>

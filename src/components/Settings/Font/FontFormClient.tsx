@@ -6,7 +6,7 @@ import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
-import { updateUserFont } from "@/lib/userSettings/userSettings.client";
+import { updateUserFont } from "@/lib/userSettings/client";
 
 import { FontOption } from "./FontForm";
 import FontShowcase from "./FontPreview";

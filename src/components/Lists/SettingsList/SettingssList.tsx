@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/userSettings.server";
+import { getCurrentFont, getCurrentTheme } from "@/lib/userSettings/server";
 
 import SettingsListItemClient from "./SettingsListItemClient";
 import { SettingsListItemProps, SettingsListProps } from "./types";

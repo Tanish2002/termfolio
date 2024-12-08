@@ -4,17 +4,9 @@ import { cookies } from "next/headers";
 
 import { getCookie, setCookie } from "cookies-next/server";
 
-import { FontSettings, ThemeSettings } from "./userSettings.client";
+import { ThemeSettings } from "./types";
 
-export async function getCurrentFont(): Promise<FontSettings> {
-	const fontCookie = await getCookie("user-font", { cookies });
-
-	// Default is scientifica
-	return {
-		font: fontCookie === "mono" ? "mono" : "scientifica"
-	};
-}
-
+// get current user theme from cookies on server
 export async function getCurrentTheme(): Promise<ThemeSettings> {
 	const themeCookie = await getCookie("user-theme", { cookies });
 	const resolvedThemeCookie = await getCookie("user-resolved-theme", { cookies });
@@ -33,10 +25,7 @@ export async function getCurrentTheme(): Promise<ThemeSettings> {
 	};
 }
 
+// function to set user selected theme in cookie on server
 export async function updateUserTheme(settings: ThemeSettings) {
 	await setCookie("user-theme", settings.theme, { cookies });
-}
-
-export async function updateUserFont(settings: FontSettings) {
-	await setCookie("user-font", settings.font, { cookies });
 }
