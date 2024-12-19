@@ -2,7 +2,6 @@ import React from "react";
 
 import cn from "@/utils/cn";
 
-import BorderBox from "../BorderBox/BorderBox";
 import RoutesList from "../Lists/RoutesList/RoutesList";
 import SocialList from "../Lists/SocialList/SocialList";
 import NavigableDiv from "../NavigableComponents/NavigableDiv/NavigableDiv";
@@ -18,26 +17,14 @@ const MobileNavbar: React.FC<{ list: React.ReactNode }> = async ({ list }) => {
 					)}
 				>
 					<NavigableDiv index={10} className="row-span-2">
-						<BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: "pages" }]}>
-							<RoutesList divIndex={1} />
-						</BorderBox>
+						<RoutesList divIndex={1} />
 					</NavigableDiv>
 					<NavigableDiv index={11} className="row-span-2">
 						{/* Render a parallel route based on the current pathName */}
 						{list}
 					</NavigableDiv>
 					<NavigableDiv index={12} className="row-span-2">
-						<BorderBox
-							texts={[
-								{
-									textYPosition: "top",
-									textXPosition: "left",
-									text: "socials"
-								}
-							]}
-						>
-							<SocialList divIndex={3} />
-						</BorderBox>
+						<SocialList divIndex={3} />
 					</NavigableDiv>
 				</div>
 			</MobileNavbarClient>

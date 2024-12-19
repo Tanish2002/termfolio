@@ -32,7 +32,6 @@ export default function ThemeProvider({
 
 	// Effect to keep track of theme changes
 	useEffect(() => {
-		console.log({ theme });
 		// Resolve and apply initial theme
 		const resolvedTheme = resolveTheme(theme);
 		applyTheme(resolvedTheme);

@@ -18,7 +18,7 @@ const WalkingGif: React.FC = () => {
 	const [currentGif, setCurrentGif] = useState<StaticImageData>(gifs[0]);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const imageRef = useRef<HTMLImageElement>(null);
-	const animationRef = useRef<number>();
+	const animationRef = useRef<number>(null);
 	const [containerWidth, setContainerWidth] = useState<number>(0);
 	const [imageWidth, setImageWidth] = useState<number>(0);
 

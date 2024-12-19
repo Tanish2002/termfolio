@@ -4,17 +4,17 @@ import localFont from "next/font/local";
 export const scientifica = localFont({
 	src: [
 		{
-			path: "./app/fonts/scientifica.ttf",
+			path: "./app/(frontend)/fonts/scientifica.ttf",
 			weight: "400",
 			style: "normal"
 		},
 		{
-			path: "./app/fonts/scientificaItalic.ttf",
+			path: "./app/(frontend)/fonts/scientificaItalic.ttf",
 			weight: "400",
 			style: "italic"
 		},
 		{
-			path: "./app/fonts/scientificaBold.ttf",
+			path: "./app/(frontend)/fonts/scientificaBold.ttf",
 			weight: "700",
 			style: "normal"
 		}

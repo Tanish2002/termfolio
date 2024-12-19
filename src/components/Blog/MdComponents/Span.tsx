@@ -2,22 +2,19 @@ import React from "react";
 
 import cn from "@/utils/cn";
 
-const Span = (
-	props: React.JSX.IntrinsicAttributes &
-		React.ClassAttributes<HTMLSpanElement> &
-		React.HTMLAttributes<HTMLSpanElement>
+const Span: React.FC<React.HTMLAttributes<HTMLSpanElement> & { style?: React.CSSProperties }> = (
+	props
 ) => {
+	const { style, ...restProps } = props;
+
 	return (
 		<span
-			className={cn(
-				"bg-tokyo-night-code-background text-[var(--shiki-light)]",
-				"dark:text-[var(--shiki-dark)]"
-			)}
-			{...props}
-		>
-			{props.children}
-		</span>
+			className={cn("text-[var(--shiki-light)] dark:text-[var(--shiki-dark)]")}
+			style={{
+				...style
+			}}
+			{...restProps}
+		/>
 	);
 };
-
 export default Span;

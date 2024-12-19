@@ -1,29 +1,18 @@
 import React from "react";
 
-import RoutesListItemClient from "./RoutesListItemClient";
-import { RoutesListItemProps, RoutesListProps } from "./types";
+import { BaseList } from "../BaseList";
+import { BaseListItem } from "../types";
 
-const items: RoutesListItemProps[] = [
-	{ name: "About", path: "/" },
-	{ name: "Experience", path: "/experience" },
-	{ name: "Projects", path: "/project" },
-	{ name: "Blog", path: "/blog" },
-	{ name: "Settings", path: "/settings", actualHref: "/settings/font" }
+const items: BaseListItem[] = [
+	{ leftContent: "About", rightContent: "/", href: "/" },
+	{ leftContent: "Experience", rightContent: "/experience", href: "/experience" },
+	{ leftContent: "Projects", rightContent: "/projects", href: "/projects" },
+	{ leftContent: "Blog", rightContent: "/blog", href: "/blog" },
+	{ leftContent: "Settings", rightContent: "/settings", href: "/settings" }
 ];
 
-const RoutesList: React.FC<RoutesListProps> = async ({ divIndex }) => {
-	return (
-		<ul className="w-full space-y-2">
-			{items.map((item, itemIndex) => (
-				<RoutesListItemClient
-					key={`routes-item-${itemIndex}`}
-					divIndex={divIndex}
-					routesItem={item}
-					itemIndex={itemIndex}
-				/>
-			))}
-		</ul>
-	);
+const RoutesList: React.FC<{ divIndex: number }> = async ({ divIndex }) => {
+	return <BaseList divIndex={divIndex} items={items} boxText="pages" />;
 };
 
 export default React.memo(RoutesList);

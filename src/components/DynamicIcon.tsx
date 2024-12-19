@@ -62,6 +62,7 @@ const getDynamicIconImports = () => ({
 });
 
 export type IconFamily = keyof ReturnType<typeof getDynamicIconImports>;
+export const SUPPORTED_FAMILIES = Object.keys(getDynamicIconImports());
 
 interface DynamicIconProps {
 	iconFamily: IconFamily;

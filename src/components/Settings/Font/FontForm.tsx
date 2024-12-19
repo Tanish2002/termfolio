@@ -1,8 +1,4 @@
-import { MDXRemote, compileMDX } from "next-mdx-remote/rsc";
-import rehypePrettyCode from "rehype-pretty-code";
-
-import Pre from "@/components/Blog/MdComponents/Pre";
-import Span from "@/components/Blog/MdComponents/Span";
+import CodeBlock from "@/payload/blocks/Code/Component";
 import cn from "@/utils/cn";
 
 import FontFormClient from "./FontFormClient";
@@ -10,127 +6,65 @@ import FontFormClient from "./FontFormClient";
 export type FontOption = "scientifica" | "mono";
 
 export default async function FontForm({ initialFont }: { initialFont: FontOption }) {
-	const previewText = `
-# Heading Level 1
-
-## Heading Level 2
-
-### Heading Level 3
-
-#### Heading Level 4
-
----
-
-### Text Styles
-
-**Bold Text:** This text is bold.  
-*Italic Text:* This text is italic.  
-<u>Underlined Text:</u> This text is underlined.  
-~~Strikethrough Text:~~ This text is strikethrough.
-
----
-
-### Lists
-
-- First bullet point
-- Second bullet point
-- Third bullet point
-
-1. First ordered item
-2. Second ordered item
-3. Third ordered item
-
----
-
-### Blockquote
-
-> "The quick brown fox jumps over the lazy dog."
-
----
-
-### Code Snippet
-
-\`\`\`javascript
-const font = "scientifica";
-\`\`\`
-`;
-
 	return (
 		<FontFormClient
 			initialFont={initialFont}
 			previewMdxComponent={
-				<MDXRemote
-					source={previewText}
-					options={{
-						mdxOptions: {
-							rehypePlugins: [
-								[
-									rehypePrettyCode,
-									{
-										theme: { dark: "tokyo-night", light: "catppuccin-latte" }
-									}
-								]
-							],
-
-							format: "mdx"
-						}
-					}}
-					components={{
-						pre: Pre,
-						span: Span,
-						ul: (props) => (
-							<ul {...props} className={cn(props.className, "list-disc space-y-2 pl-6 sm:pl-8")}>
-								{props.children}
-							</ul>
-						),
-
-						ol: (props) => (
-							<ol {...props} className={cn(props.className, "list-decimal space-y-2 pl-6 sm:pl-8")}>
-								{props.children}
-							</ol>
-						),
-
-						blockquote: (props) => (
-							<blockquote
-								{...props}
-								className={cn(props.className, "border-l-4 pl-4 italic text-tokyo-night-comment")}
-							>
-								{props.children}
-							</blockquote>
-						)
-						// h1: (props) => (
-						// 	<h1 {...props} className={cn(props.className, "text-2xl font-bold mb-2")}>
-						// 		{props.children}
-						// 	</h1>
-						// ),
-						// h2: (props) => (
-						// 	<h2 {...props} className={cn(props.className, "text-tokyo-night-orange text-xl font-bold mb-2")}>
-						// 		{props.children}
-						// 	</h2>
-						// ),
-						// h3: (props) => (
-						// 	<h3 {...props} className={cn(props.className, "text-tokyo-night-orange text-lg font-bold mb-2")}>
-						// 		{props.children}
-						// 	</h3>
-						// ),
-						// h4: (props) => (
-						// 	<h4 {...props} className={cn(props.className, "text-tokyo-night-orange text-md font-bold mb-2")}>
-						// 		{props.children}
-						// 	</h4>
-						// ),
-						// p: (props) => (
-						// 	<p
-						// 		{...props}
-						// 		className={cn(
-						// 			props.className
-						// 			// "leading-relaxed text-base sm:text-lg"
-						// 		)}
-						// 	>
-						// 		{props.children}
-						// 	</p>
-						// )
-					}}
-				/>
+				<div
+					className={cn(
+						"prose-p:my-0",
+						"prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8",
+						"prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ol:sm:pl-8",
+						"prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-tokyo-night-comment",
+						"divide-y divide-tokyo-night-comment"
+					)}
+				>
+					<div>
+						<h1>Heading Level 1</h1>
+						<h2>Heading Level 2</h2>
+						<h3>Heading Level 3</h3>
+						<h4>Heading Level 4</h4>
+					</div>
+					<div>
+						<h3>Text Styles</h3>
+						<p>
+							<strong>Bold Text:</strong> This text is bold.
+						</p>
+						<p>
+							<em>Italic Text:</em> This text is italic.
+						</p>
+						<p>
+							<u>Underlined Text:</u> This text is underlined.
+						</p>
+						<p>
+							<del>Strikethrough Text:</del> This text is strikethrough.
+						</p>
+						<h3>Lists</h3>
+						<ul>
+							<li>First bullet point</li>
+							<li>Second bullet point</li>
+							<li>Third bullet point</li>
+						</ul>
+						<ol>
+							<li>First ordered item</li>
+							<li>Second ordered item</li>
+							<li>Third ordered item</li>
+						</ol>
+					</div>
+					<div>
+						<h3>Blockquote</h3>
+						<blockquote>
+							<p>&quot;The quick brown fox jumps over the lazy dog.&quot;</p>
+						</blockquote>
+					</div>
+					<div>
+						<h3>Code Snippet</h3>
+						<CodeBlock
+							language="javascript"
+							codeContent={`const font = "${initialFont || "scientifica"}";`}
+						/>
+					</div>
+				</div>
 			}
 		/>
 	);

@@ -1,83 +1,31 @@
 import typography from "@tailwindcss/typography";
-import { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin";
 
-// Custom plugin to handle theme color mapping
-const tokyoNightThemePlugin = plugin(
-	// Plugin function
-	({ addBase, theme, addUtilities }) => {
-		const tokyoNightColors = theme("colors.tokyo-night-dark", {});
-		const tokyoNightLightColors = theme("colors.tokyo-night-light", {});
+import tokyoNightThemePlugin from "./src/lib/tokyo-night-plugin";
 
-		// Generate CSS variables for both themes
-		const cssVars = {
-			":root": Object.fromEntries(
-				Object.entries(tokyoNightLightColors).map(([key, value]) => [
-					`--color-tokyo-night-${key}`,
-					value
-				])
-			),
-			".dark": Object.fromEntries(
-				Object.entries(tokyoNightColors).map(([key, value]) => [
-					`--color-tokyo-night-${key}`,
-					value
-				])
-			)
-		} as Record<string, Record<string, string>>; // Ensure correct typing
-
-		// Add the CSS variables to the base styles
-		addBase(cssVars);
-	},
-
-	// Configuration function
-	{
-		theme: {
-			extend: {
-				colors: {
-					"tokyo-night": {
-						DEFAULT:
-							"color-mix(in srgb, var(--color-tokyo-night-background) calc(<alpha-value> * 100%), transparent)",
-						background:
-							"color-mix(in srgb, var(--color-tokyo-night-background) calc(<alpha-value> * 100%), transparent)",
-						foreground:
-							"color-mix(in srgb, var(--color-tokyo-night-foreground) calc(<alpha-value> * 100%), transparent)",
-						"code-background":
-							"color-mix(in srgb, var(--color-tokyo-night-code-background) calc(<alpha-value> * 100%), transparent)",
-						red: "color-mix(in srgb, var(--color-tokyo-night-red) calc(<alpha-value> * 100%), transparent)",
-						orange:
-							"color-mix(in srgb, var(--color-tokyo-night-orange) calc(<alpha-value> * 100%), transparent)",
-						yellow:
-							"color-mix(in srgb, var(--color-tokyo-night-yellow) calc(<alpha-value> * 100%), transparent)",
-						green:
-							"color-mix(in srgb, var(--color-tokyo-night-green) calc(<alpha-value> * 100%), transparent)",
-						blue: "color-mix(in srgb, var(--color-tokyo-night-blue) calc(<alpha-value> * 100%), transparent)",
-						cyan: "color-mix(in srgb, var(--color-tokyo-night-cyan) calc(<alpha-value> * 100%), transparent)",
-						purple:
-							"color-mix(in srgb, var(--color-tokyo-night-purple) calc(<alpha-value> * 100%), transparent)",
-						magenta:
-							"color-mix(in srgb, var(--color-tokyo-night-magenta) calc(<alpha-value> * 100%), transparent)",
-						"darker-blue":
-							"color-mix(in srgb, var(--color-tokyo-night-dark-blue) calc(<alpha-value> * 100%), transparent)",
-						"darker-cyan":
-							"color-mix(in srgb, var(--color-tokyo-night-dark-cyan) calc(<alpha-value> * 100%), transparent)",
-						"darker-purple":
-							"color-mix(in srgb, var(--color-tokyo-night-dark-purple) calc(<alpha-value> * 100%), transparent)",
-						selection:
-							"color-mix(in srgb, var(--color-tokyo-night-selection) calc(<alpha-value> * 100%), transparent)",
-						comment:
-							"color-mix(in srgb, var(--color-tokyo-night-comment) calc(<alpha-value> * 100%), transparent)"
-					}
-				}
-			}
-		}
-	}
-);
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+export default {
 	content: [
-		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/app/**/*.{js,ts,jsx,tsx,mdx}"
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}"
+	],
+	darkMode: ["selector", '[data-theme="dark"]'],
+	plugins: [typography, tokyoNightThemePlugin],
+	prefix: "",
+	safelist: [
+		"lg:col-span-4",
+		"lg:col-span-6",
+		"lg:col-span-8",
+		"lg:col-span-12",
+		"border-border",
+		"bg-card",
+		"border-error",
+		"bg-error/30",
+		"border-success",
+		"bg-success/30",
+		"border-warning",
+		"bg-warning/30"
 	],
 	theme: {
 		extend: {
@@ -134,8 +82,5 @@ const config: Config = {
 				scientifica: ["var(--font-scientifica)"]
 			}
 		}
-	},
-	plugins: [tokyoNightThemePlugin, typography]
+	}
 };
-
-export default config;
