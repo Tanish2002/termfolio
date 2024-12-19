@@ -1,6 +1,7 @@
 import {
 	BlockquoteFeature,
 	BoldFeature,
+	IndentFeature,
 	InlineCodeFeature,
 	ItalicFeature,
 	LinkFeature,
@@ -27,6 +28,7 @@ export const defaultLexical: Config["editor"] = lexicalEditor({
 			UnorderedListFeature(),
 			OrderedListFeature(),
 			BlockquoteFeature(),
+			IndentFeature(),
 			LinkFeature({
 				enabledCollections: ["posts"],
 				fields: ({ defaultFields }) => {
