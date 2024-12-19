@@ -760,7 +760,20 @@ export interface BannerBlock {
  */
 export interface CodeBlock {
   language?:
-    | ('typescript' | 'javascript' | 'css' | 'html' | 'nix' | 'haskell' | 'lua' | 'go' | 'rust' | 'cpp' | 'csharp')
+    | (
+        | 'typescript'
+        | 'javascript'
+        | 'css'
+        | 'html'
+        | 'shell'
+        | 'nix'
+        | 'haskell'
+        | 'lua'
+        | 'go'
+        | 'rust'
+        | 'cpp'
+        | 'csharp'
+      )
     | null;
   codeContent: string;
   id?: string | null;

@@ -1,7 +1,12 @@
 import Link from "next/link";
 
-import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
-import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import {
+	DefaultNodeTypes,
+	SerializedBlockNode,
+	SerializedListItemNode,
+	SerializedListNode
+} from "@payloadcms/richtext-lexical";
+import { SerializedEditorState, SerializedLexicalNode } from "@payloadcms/richtext-lexical/lexical";
 import {
 	JSXConvertersFunction,
 	RichText as RichTextWithoutBlocks,
@@ -73,7 +78,8 @@ export default function RichText(props: Props) {
 					"max-w-none": !enableGutter,
 					"md:prose-md prose mx-auto text-tokyo-night-foreground lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert":
 						enableProse,
-					"prose-a: prose-a:text-tokyo-night-blue": enableProse,
+					"prose-a:text-tokyo-night-blue": enableProse,
+					"prose-p:my-0": enableProse,
 					"prose-headings:text-tokyo-night-orange": enableProse,
 					"prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8": enableProse,
 					"prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ol:sm:pl-8": enableProse,
@@ -85,4 +91,51 @@ export default function RichText(props: Props) {
 			{...rest}
 		/>
 	);
+}
+
+/**
+ * Normalize children of a list to use HTML stacking without needing any CSS quirks.
+ *
+ * Note: changes a single level, call again for sublists while rendering.
+ *
+ * @param children children of a list
+ * @returns
+ */
+function fixListItemNesting(children: SerializedLexicalNode[]) {
+	const res: SerializedLexicalNode[] = [];
+
+	for (const node of children) {
+		//validate
+		if (node.type !== "listitem") {
+			//unexpected item found
+			res.push(node);
+			continue;
+		}
+
+		//check li > ol, li > ul
+		const listItemNode = node as SerializedListItemNode;
+		const children = listItemNode.children;
+
+		if (children.length === 1 && children[0].type === "list" && res.length > 0) {
+			const prev = res.pop() as SerializedListNode;
+
+			// @ts-ignore
+			if (prev.type !== "listitem") {
+				res.push(prev);
+				res.push(node);
+				continue;
+			}
+
+			res.push({
+				...prev,
+
+				children: [...prev.children, children[0]]
+			} as SerializedListNode);
+
+			continue;
+		}
+
+		res.push(node);
+	}
+	return res;
 }

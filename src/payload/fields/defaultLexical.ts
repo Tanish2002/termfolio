@@ -10,6 +10,7 @@ import {
 	StrikethroughFeature,
 	UnderlineFeature,
 	UnorderedListFeature,
+	defaultEditorFeatures,
 	lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import { Config } from "payload";
@@ -19,6 +20,7 @@ import { ColorTextFeature } from "../features/colorText/server";
 export const defaultLexical: Config["editor"] = lexicalEditor({
 	features: () => {
 		return [
+			...defaultEditorFeatures,
 			ParagraphFeature(),
 			UnderlineFeature(),
 			BoldFeature(),

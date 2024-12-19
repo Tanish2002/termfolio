@@ -11,6 +11,22 @@ html[data-theme="light"] {
 	opacity: initial;
 }
 
+/* lexical editor doesn't handle nested lists properly so gotta use this: https://payloadcms.com/docs/rich-text/converters */
+@layer payload-default {
+	.nestedListItem,
+	.list-check {
+		list-style-type: none;
+	}
+
+	ul li.LexicalEditorTheme__listItem {
+		list-style-type: disc;
+	}
+
+	ol li.LexicalEditorTheme__listItem {
+		list-style-type: decimal;
+	}
+}
+
 /* html.dark .shiki, */
 /* html.dark .shiki span { */
 /*   color: var(--shiki-dark) !important; */
