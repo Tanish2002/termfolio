@@ -5,6 +5,7 @@ const SUPPORTED_LANGUAGES = [
 	"javascript",
 	"css",
 	"html",
+	"shell",
 	"nix",
 	"haskell",
 	"lua",

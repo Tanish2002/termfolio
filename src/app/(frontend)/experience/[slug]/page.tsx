@@ -33,12 +33,7 @@ export default async function Experience({ params }: Args) {
 				</div>
 				<h3 className="my-0">{monthRange(experienceData.startDate!, experienceData.endDate!)}</h3>
 			</div>
-			<RichText
-				className="space-y-4"
-				data={experienceData.content}
-				enableGutter={false}
-				enableProse={false}
-			/>
+			<RichText className="space-y-4" data={experienceData.content} enableGutter={false} />
 		</div>
 	);
 }
