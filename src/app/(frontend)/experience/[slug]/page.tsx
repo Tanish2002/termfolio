@@ -7,6 +7,7 @@ import configPromise from "@payload-config";
 import { getPayload } from "payload";
 
 import RichText from "@/payload/components/RichText";
+import cn from "@/utils/cn";
 import { generateMeta } from "@/utils/generateMeta";
 import monthRange from "@/utils/monthRange";
 
@@ -25,13 +26,19 @@ export default async function Experience({ params }: Args) {
 	if (!experienceData) return notFound();
 
 	return (
-		<div className="prose-lg my-auto space-y-4 prose-p:my-0">
-			<div className="flex items-center justify-between">
+		<div className={cn("mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8")}>
+			<div className="my-1 flex items-center justify-between md:my-2 lg:my-3">
 				<div>
-					<h2 className="my-1 text-tokyo-night-orange">{experienceData.title.trim()}</h2>
-					<h3 className="text-tokyo-night-magenta">@{experienceData.company.trim()}</h3>
+					<h1 className="mb-2 mt-1 text-3xl text-tokyo-night-orange md:mb-3 md:mt-2 md:text-5xl lg:mb-4 lg:mt-3 lg:text-7xl">
+						{experienceData.title.trim()}
+					</h1>
+					<h2 className="my-1 text-xl text-tokyo-night-magenta md:my-2 md:text-2xl lg:my-3 lg:text-4xl">
+						@{experienceData.company.trim()}
+					</h2>
 				</div>
-				<h3 className="my-0">{monthRange(experienceData.startDate!, experienceData.endDate!)}</h3>
+				<h3 className="md:text-xl lg:text-2xl">
+					{monthRange(experienceData.startDate!, experienceData.endDate!)}
+				</h3>
 			</div>
 			<RichText className="space-y-4" data={experienceData.content} enableGutter={false} />
 		</div>

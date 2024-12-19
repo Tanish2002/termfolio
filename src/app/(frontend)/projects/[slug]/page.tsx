@@ -35,7 +35,7 @@ export default async function ProjectPage({ params }: Args) {
 			)}
 		>
 			{/* Project Header */}
-			<header className="mb-8 space-y-4">
+			<header className="mb-8 space-y-4 prose-h1:my-4">
 				{/* Title */}
 				<h1 className="font-bold leading-tight">{project.title}</h1>
 

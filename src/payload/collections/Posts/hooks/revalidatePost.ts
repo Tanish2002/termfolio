@@ -14,7 +14,7 @@ import { createRevalidateHooks } from "@/utils/revalidateDocument";
 export const { onChange: revalidatePost, onDelete: revalidateDelete } = createRevalidateHooks<Post>(
 	{
 		type: "blog",
-		tags: ["blog-sitemap", "blog-list"]
+		tags: ["blog-sitemap", "blog-published-list", "blog-archived-list"] // Honestly here I should not revalidate both blog lists...
 	}
 );
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
+import { toast } from "sonner";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
 import { updateUserFont } from "@/lib/userSettings/client";
@@ -20,15 +21,16 @@ export default function FontFormClient({
 }) {
 	const [font, setFont] = useState<FontOption>(initialFont);
 
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		updateUserFont({ font });
+
+		// Show a custom toast notification
+		toast.success("Font settings saved successfully!");
+	};
+
 	return (
-		<form
-			onSubmit={(e) => {
-				e.preventDefault();
-				updateUserFont({ font });
-			}}
-			// action={async () => await updateUserFont({ font })}
-			className="space-y-6"
-		>
+		<form onSubmit={handleSubmit} className="space-y-6">
 			<div>
 				<label className="mb-2 block font-medium">Choose Site Font</label>
 
@@ -50,7 +52,7 @@ export default function FontFormClient({
 						>
 							<div className="block">
 								<div className="w-full text-lg font-semibold">Scientifica</div>
-								<div className="w-full">Terminal like font, Reccommended for best experience</div>
+								<div className="w-full">Terminal like font, Recommended for best experience</div>
 							</div>
 							<ImTerminal />
 						</label>
@@ -80,6 +82,17 @@ export default function FontFormClient({
 					</li>
 				</ul>
 
+				{/* Save Button */}
+				<div className="mt-6 flex justify-center">
+					<button
+						type="submit"
+						className="w-full rounded border border-tokyo-night-selection bg-tokyo-night-background px-6 py-3 text-lg font-semibold text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 hover:text-tokyo-night-magenta focus:outline-none focus:ring-2 focus:ring-tokyo-night-magenta md:w-auto"
+					>
+						Save Font
+					</button>
+				</div>
+
+				{/* Font Preview */}
 				<div className="my-4">
 					<BorderBox>
 						<div className={"bg-tokyo-night-background p-4 text-tokyo-night-foreground"}>
@@ -89,13 +102,6 @@ export default function FontFormClient({
 					</BorderBox>
 				</div>
 			</div>
-
-			<button
-				type="submit"
-				className="mt-6 rounded bg-tokyo-night-purple px-4 py-2 text-tokyo-night-background transition hover:bg-tokyo-night-purple/80"
-			>
-				Save Font
-			</button>
 		</form>
 	);
 }

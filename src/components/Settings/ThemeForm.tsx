@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
+import { toast } from "sonner";
 
 import { setTheme } from "@/lib/userSettings/client";
 import { ThemeType, systemThemeAtom, themeAtom } from "@/store/themeAtoms";
@@ -67,6 +68,8 @@ export default function ThemeForm() {
 			onSubmit={(e) => {
 				e.preventDefault();
 				setTheme(previewTheme, setUserTheme);
+
+				toast.success("Theme settings saved successfully!");
 			}}
 			className="space-y-6"
 		>
@@ -117,6 +120,16 @@ export default function ThemeForm() {
 					))}
 				</ul>
 
+				{/* Save Button */}
+				<div className="mt-6 flex justify-center">
+					<button
+						type="submit"
+						className="w-full rounded border border-tokyo-night-selection bg-tokyo-night-background px-6 py-3 text-lg font-semibold text-tokyo-night-foreground hover:bg-tokyo-night-comment/30 hover:text-tokyo-night-magenta focus:outline-none focus:ring-2 focus:ring-tokyo-night-magenta md:w-auto"
+					>
+						Save Theme
+					</button>
+				</div>
+
 				{/* Theme Preview Section */}
 				<div className="my-4">
 					<BorderBox
@@ -135,13 +148,6 @@ export default function ThemeForm() {
 					</BorderBox>
 				</div>
 			</div>
-
-			<button
-				type="submit"
-				className="mt-6 rounded bg-tokyo-night-purple px-4 py-2 text-tokyo-night-background transition hover:bg-tokyo-night-purple/80"
-			>
-				Save Theme
-			</button>
 		</form>
 	);
 }

@@ -8,6 +8,7 @@ import { selectAtom } from "jotai/utils";
 
 import { useMobileNavbarOpen } from "@/components/MobileNavbar/MobileNavbarContext";
 import NavigableItem from "@/components/NavigableComponents/NavigableItem/NavigableItem";
+import useIsMobile from "@/hooks/useIsMobile";
 import { focusedDivAtom, focusedItemsAtom } from "@/store/focusAtoms";
 import cn from "@/utils/cn";
 
@@ -16,11 +17,11 @@ import { BaseListItem, BaseListItemClientProps } from "./types";
 export function BaseListItemClient<T extends BaseListItem>({
 	divIndex,
 	item,
-	itemIndex,
-	isMobile = false
+	itemIndex
 }: BaseListItemClientProps<T>) {
 	const setIsOpen = useMobileNavbarOpen();
 	const pathName = usePathname();
+	const isMobile = useIsMobile();
 
 	const isFocused = useAtomValue(
 		useMemo(
@@ -37,13 +38,19 @@ export function BaseListItemClient<T extends BaseListItem>({
 		)
 	);
 
-	const isSelected = item.href ? pathName.includes(item.href) : false;
+	const isSelected = item.href
+		? item.href === "/" && pathName !== "/" /* check for the / route */
+			? false
+			: pathName.includes(item.href)
+		: false;
 
 	const content = (
 		<li
 			className={cn(
 				"flex w-full items-center justify-between p-0.5 transition-colors",
-				isFocused ? "bg-tokyo-night-dark-blue" : "hover:bg-tokyo-night-selection/20"
+				isFocused
+					? "bg-tokyo-night-dark-blue/80 text-tokyo-night-code-background"
+					: "hover:bg-tokyo-night-selection/20"
 			)}
 			onClick={() => {
 				if (isMobile && setIsOpen) {

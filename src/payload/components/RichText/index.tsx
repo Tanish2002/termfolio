@@ -79,7 +79,7 @@ export default function RichText(props: Props) {
 					"md:prose-md prose mx-auto text-tokyo-night-foreground lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert":
 						enableProse,
 					"prose-a:text-tokyo-night-blue": enableProse,
-					"prose-p:my-0": enableProse,
+					"prose-p:my-0 prose-strong:text-tokyo-night-foreground": enableProse,
 					"prose-headings:text-tokyo-night-orange": enableProse,
 					"prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8": enableProse,
 					"prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ol:sm:pl-8": enableProse,

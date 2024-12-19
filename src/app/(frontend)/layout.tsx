@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import React from "react";
 
+import { Toaster } from "sonner";
+
 import About from "@/components/About";
 import BorderBox from "@/components/BorderBox/BorderBox";
 import { BaseList } from "@/components/Lists/BaseList";
@@ -40,11 +42,22 @@ export default async function RootLayout({
 			<body
 				className={cn(
 					"flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
-					scientifica.variable,
-					mono.variable,
-					font === "mono" ? "font-mono" : "font-scientifica"
+					font === "mono"
+						? `font-mono ${mono.variable}`
+						: `font-scientifica ${scientifica.variable}`
 				)}
 			>
+				{/* import here so font is used */}
+				<Toaster
+					toastOptions={{
+						classNames: {
+							success: "bg-tokyo-night-green",
+							info: "bg-tokyo-night-blue",
+							error: "bg-tokyo-night-red",
+							warning: "bg-tokyo-night-yellow"
+						}
+					}}
+				/>
 				<Providers>
 					<LivePreviewListener />
 					<div

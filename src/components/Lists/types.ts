@@ -24,5 +24,4 @@ export interface BaseListItemClientProps<T extends BaseListItem> {
 	divIndex: number;
 	item: T & { rightContent: string | ReactNode }; // will only be either string or react node
 	itemIndex: number;
-	isMobile?: boolean;
 }

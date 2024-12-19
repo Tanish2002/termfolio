@@ -4,17 +4,17 @@ import localFont from "next/font/local";
 export const scientifica = localFont({
 	src: [
 		{
-			path: "./app/(frontend)/fonts/scientifica.ttf",
+			path: "./assets/fonts/scientifica.ttf",
 			weight: "400",
 			style: "normal"
 		},
 		{
-			path: "./app/(frontend)/fonts/scientificaItalic.ttf",
+			path: "./assets/fonts/scientificaItalic.ttf",
 			weight: "400",
 			style: "italic"
 		},
 		{
-			path: "./app/(frontend)/fonts/scientificaBold.ttf",
+			path: "./assets/fonts/scientificaBold.ttf",
 			weight: "700",
 			style: "normal"
 		}
@@ -23,8 +23,17 @@ export const scientifica = localFont({
 	adjustFontFallback: "Times New Roman"
 });
 
+// TODO: get opinion on this later
+// export const scientifica = VT323({
+//   subsets: ["latin"],
+//   variable: "--font-scientifica",
+//   adjustFontFallback: true,
+//   weight: ["400"]
+// });
+
 export const mono = Victor_Mono({
 	subsets: ["latin"],
 	variable: "--font-mono",
+	weight: ["300", "400", "500", "600", "700"],
 	adjustFontFallback: true
 });

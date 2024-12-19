@@ -1,31 +1,10 @@
-// CodeBlockClient.tsx (Client Component)
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-import { FaCheck, FaClipboard, FaCopy } from "react-icons/fa";
+import { FaCheck, FaClipboard } from "react-icons/fa";
 
 import cn from "@/utils/cn";
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
-
-// CodeBlockClient.tsx (Client Component)
 
 type CodeBlockClientProps = {
 	codeContent: string;

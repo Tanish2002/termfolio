@@ -1,19 +1,12 @@
-import Link from "next/link";
-
-type Args = {
-	searchParams: Promise<{
-		status: "published" | "archived";
-	}>;
-};
+import BlogHeader from "./page.client";
 
 export const dynamic = "force-static";
 
-export default async function Blog({ searchParams }: Args) {
-	const status = ["published", "archived"].includes((await searchParams).status)
-		? (await searchParams).status
-		: "published";
+export default function Blog() {
 	return (
 		<div className="prose-xl my-auto space-y-4 prose-p:my-0">
+			<BlogHeader />
+
 			<p>
 				Welcome to my blog! Here, I share thoughts, discoveries, and interesting tidbits from my
 				tech adventures and beyond. 🌟
@@ -58,20 +51,7 @@ export default async function Blog({ searchParams }: Args) {
 			<div>
 				<p>
 					If you enjoy learning about the same things or just want to share your thoughts, feel free
-					to connect! I’d love to hear how my posts resonate with you. 💬
-				</p>
-			</div>
-
-			<div>
-				<p>
-					Want to see some {status === "archived" ? "latest" : "old archived"} blog posts?{" "}
-					<span className="text-tokyo-night-cyan">
-						<Link href={`/blog?status=${status === "archived" ? "published" : "archived"}`}>
-							Click Here
-						</Link>
-					</span>{" "}
-					then check the blog list to explore all my
-					{status === "archived" ? " writings 📝" : " old writings 🧓"}
+					to connect! I&apos;d love to hear how my posts resonate with you. 💬
 				</p>
 			</div>
 		</div>
