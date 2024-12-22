@@ -27,7 +27,8 @@ const queryItems = unstable_cache(
 		});
 		const transformedItems: BaseListItem[] = result.docs.map((item) => ({
 			leftContent: item.name,
-			rightContent: { iconName: item.logo_name.trim(), iconFamily: item.logo_family }
+			rightContent: { iconName: item.logo_name.trim(), iconFamily: item.logo_family },
+			href: item.link
 		}));
 
 		return transformedItems;

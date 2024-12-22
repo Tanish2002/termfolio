@@ -1,4 +1,25 @@
+import { Metadata } from "next";
+
+import { getServerSideURL } from "@/utils/getURL";
+import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
+
 export const dynamic = "force-static";
+
+export function generateMetadata(): Metadata {
+	const title = "Experience | bakaotaku.dev";
+	const description =
+		"Learn about my professional journey, including internships, skills, and open-source contributions in full-stack development and DevOps.";
+	return {
+		title,
+		description,
+		...mergeSocialMetadata({
+			title,
+			description,
+			image: `${getServerSideURL()}/og/Experience.png`,
+			url: "/experience"
+		})
+	};
+}
 
 export default async function Experience() {
 	return (

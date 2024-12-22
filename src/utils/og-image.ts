@@ -5,7 +5,10 @@ export function generateOgImageUrl(
 	item: Partial<Project> | Partial<Post> | Partial<Experience>,
 	type: "projects" | "posts" | "experience"
 ) {
-	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+	const baseUrl =
+		process.env.NEXT_PUBLIC_SERVER_URL ||
+		process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+		"https://termfolio.bakaotaku.dev";
 
 	const title = item.title || "";
 
@@ -54,7 +57,7 @@ export function generateOgImageUrl(
 
 function handleTags(tags: Project["tags"] | Post["tags"], params: URLSearchParams) {
 	const tagNames = (tags || [])
-		.slice(0, 3)
+		// .slice(0, 3)
 		.map((tag) =>
 			typeof tag === "object" && tag !== null && "name" in tag ? tag.name : String(tag)
 		)

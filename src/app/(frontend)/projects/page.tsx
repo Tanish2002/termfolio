@@ -1,4 +1,26 @@
+import { Metadata } from "next";
+
+import { generateMeta } from "@/utils/generateMeta";
+import { getServerSideURL } from "@/utils/getURL";
+import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
+
 export const dynamic = "force-static";
+
+export function generateMetadata(): Metadata {
+	const title = "Projects | bakaotaku.dev";
+	const description =
+		"Explore my portfolio of technical projects, from automation tools to full-stack applications. Each project showcases different skills and solutions to real-world problems.";
+	return {
+		title,
+		description,
+		...mergeSocialMetadata({
+			title,
+			description,
+			image: `${getServerSideURL()}/og/Project.png`,
+			url: "/projects"
+		})
+	};
+}
 
 export default async function Projects() {
 	return (

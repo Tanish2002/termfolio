@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import type { Experience, Post, Project } from "../payload-types";
-import { mergeOpenGraph } from "./mergeOpenGraph";
+import { mergeSocialMetadata } from "./mergeOpenGraph";
 import { generateOgImageUrl } from "./og-image";
 
 export const generateMeta = async (args: {
@@ -15,19 +15,13 @@ export const generateMeta = async (args: {
 	const title = doc?.meta?.title ? doc?.meta?.title : "Termfolio | bakaotaku.dev";
 
 	return {
+		title,
 		description: doc?.meta?.description,
-		openGraph: mergeOpenGraph({
-			description: doc?.meta?.description || "",
-			images: ogImage
-				? [
-						{
-							url: ogImage
-						}
-					]
-				: undefined,
+		...mergeSocialMetadata({
+			description: doc?.meta?.description,
 			title,
-			url: Array.isArray(doc?.slug) ? doc?.slug.join("/") : "/"
-		}),
-		title
+			url: Array.isArray(doc?.slug) ? doc?.slug.join("/") : "/",
+			image: ogImage
+		})
 	};
 };

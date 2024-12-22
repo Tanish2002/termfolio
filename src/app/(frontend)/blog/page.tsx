@@ -1,6 +1,34 @@
+import { Metadata } from "next";
+
+import { getServerSideURL } from "@/utils/getURL";
+import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
+
 import BlogHeader from "./page.client";
 
 export const dynamic = "force-static";
+
+export function generateMetadata({
+	searchParams
+}: {
+	searchParams: { status?: string };
+}): Metadata {
+	const isArchived = searchParams.status === "archived";
+	const title = isArchived ? "Archived Blog Posts" : "Blog" + " | bakaotaku.dev";
+	const description = isArchived
+		? "Browse through my archived blog posts about tech, automation, and programming."
+		: "Read my latest thoughts and discoveries about tech, home servers, automation, and programming languages.";
+
+	return {
+		title,
+		description,
+		...mergeSocialMetadata({
+			title,
+			description,
+			image: `${getServerSideURL()}/og/Blog.png`,
+			url: "/blog"
+		})
+	};
+}
 
 export default function Blog() {
 	return (

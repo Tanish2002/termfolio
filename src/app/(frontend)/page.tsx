@@ -1,7 +1,13 @@
+import { Metadata } from "next";
+import Link from "next/link";
 import React from "react";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
 import WalkingGif from "@/components/WalkingGif";
+import { getServerSideURL } from "@/utils/getURL";
+import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
+
+import FortuneCookie from "./page.client";
 
 async function getFortune(): Promise<string> {
 	try {
@@ -16,7 +22,7 @@ async function getFortune(): Promise<string> {
 
 export const dynamic = "force-static";
 
-async function About() {
+export default React.memo(async function About() {
 	const fortune = await getFortune();
 	return (
 		<>
@@ -54,30 +60,36 @@ async function About() {
 				<div>
 					<p>
 						These days, you’ll find me on{" "}
-						<a href="" className="text-tokyo-night-red underline">
+						<Link href="https://x.com/baka_otaku2002" className="text-tokyo-night-red underline">
 							X (Twitter)
-						</a>{" "}
+						</Link>{" "}
 						🐦.
 					</p>
 					<p>
 						If you want to cringe a little, feel free to connect with me on{" "}
-						<a href="" className="text-tokyo-night-red underline">
+						<Link
+							href="https://www.linkedin.com/in/tanish-khare-144032169/"
+							className="text-tokyo-night-red underline"
+						>
 							LinkedIn
-						</a>
+						</Link>
 						! 💼
 					</p>
 					<p>
 						Check out my projects and code over on{" "}
-						<a href="" className="text-tokyo-night-red underline">
+						<Link href="https://github.com/Tanish2002/" className="text-tokyo-night-red underline">
 							GitHub
-						</a>{" "}
+						</Link>{" "}
 						💻.
 					</p>
 					<p>
 						Oh, and you can find my résumé here 👉{" "}
-						<a href="" className="text-tokyo-night-red underline">
+						<Link
+							href="https://drive.google.com/file/d/1B_H_v4Vl93RSfaaP6o-I9O9kFUQoHu8m/view?usp=sharing"
+							className="text-tokyo-night-red underline"
+						>
 							resume
-						</a>
+						</Link>
 					</p>
 				</div>
 				<div>
@@ -96,10 +108,27 @@ async function About() {
 
 			<div className="prose-xl mx-auto my-2">
 				<BorderBox texts={[{ textXPosition: "left", textYPosition: "top", text: "🥠" }]}>
-					<div>{fortune}</div>
+					<div>
+						<FortuneCookie />
+					</div>
 				</BorderBox>
 			</div>
 		</>
 	);
+});
+
+export function generateMetadata(): Metadata {
+	const title = "Termfolio | bakaotaku.dev";
+	const description =
+		"Welcome to my personal space! Learn more about me, explore the technologies I'm skilled in, and discover the tools I use to build impactful projects.";
+	return {
+		title,
+		description,
+		...mergeSocialMetadata({
+			title,
+			description,
+			image: `${getServerSideURL()}/og/About.png`,
+			url: "/"
+		})
+	};
 }
-export default React.memo(About);

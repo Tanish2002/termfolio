@@ -1,8 +1,27 @@
+import { Metadata } from "next";
+
 import FontForm from "@/components/Settings/Font/FontForm";
 import { getCurrentFont } from "@/lib/userSettings/server";
+import { getServerSideURL } from "@/utils/getURL";
+import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
 
 export const dynamic = "force-static";
 
+export function generateMetadata(): Metadata {
+	const title = "Font | Settings | bakaotaku.dev";
+	const description =
+		"Customize your font settings effortlessly on this page. Choose between bitmap or mono fonts and preview your selection in real-time for the perfect look and readability.";
+	return {
+		title,
+		description,
+		...mergeSocialMetadata({
+			title,
+			description,
+			image: `${getServerSideURL()}/og/FontSetings.png`,
+			url: "/settings/font"
+		})
+	};
+}
 export default async function FontPage() {
 	// Fetch current user settings server-side
 	const currentSettings = await getCurrentFont();
