@@ -36,11 +36,11 @@ export const getPublishedPosts = unstable_cache(
     return result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: `${item.readTime} min`,
-      href: "/blog/" + item.slug?.trim()
+      href: `/blog/${item.slug?.trim()}`
     }));
   },
   ["blog-published-list"],
-  { tags: ["blog-archived-list"] }
+  { tags: ["blog-published-list"] }
 );
 
 export const getArchivedPosts = unstable_cache(
@@ -73,7 +73,7 @@ export const getArchivedPosts = unstable_cache(
     return result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: `${item.readTime} min`,
-      href: "/blog/" + item.slug?.trim() + "?status=archived"
+      href: `/blog/${item.slug?.trim()}?status=archived`
     }));
   },
   ["blog-archived-list"],

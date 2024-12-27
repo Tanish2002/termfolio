@@ -5,7 +5,7 @@ import Blog from "../page";
 
 export default Blog;
 
-export const dynamic = "force-static";
+export const dynamic = "force-static"; // keep this static so actual content is also static
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise });
