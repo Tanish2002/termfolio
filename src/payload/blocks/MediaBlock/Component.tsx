@@ -1,10 +1,7 @@
 import type { StaticImageData } from "next/image";
 import React from "react";
 
-import type {
-  MediaBlock as MediaBlockProps,
-  Media as MediaType,
-} from "@/payload-types";
+import type { MediaBlock as MediaBlockProps, Media as MediaType } from "@/payload-types";
 import { Media } from "@/payload/components/Media";
 import RichText from "@/payload/components/RichText";
 import cn from "@/utils/cn";
@@ -24,11 +21,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
 
   return (
     <div className={cn(className)}>
-      <Media
-        imgClassName={cn("rounded-md", imgClassName)}
-        resource={media}
-        src={staticImage}
-      />
+      <Media imgClassName={cn("rounded-md", imgClassName)} resource={media} src={staticImage} />
       {caption && (
         <RichText
           className="mx-auto flex max-w-[48rem] justify-center font-thin italic text-tokyo-night-comment"

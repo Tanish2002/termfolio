@@ -1,7 +1,7 @@
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import type { Block } from "payload";
 
@@ -16,25 +16,21 @@ export const Banner: Block = {
         { label: "Info", value: "info" },
         { label: "Warning", value: "warning" },
         { label: "Error", value: "error" },
-        { label: "Success", value: "success" },
+        { label: "Success", value: "success" }
       ],
-      required: true,
+      required: true
     },
     {
       name: "content",
       type: "richText",
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ];
-        },
+          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()];
+        }
       }),
       label: false,
-      required: true,
-    },
+      required: true
+    }
   ],
-  interfaceName: "BannerBlock",
+  interfaceName: "BannerBlock"
 };

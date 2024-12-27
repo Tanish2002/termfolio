@@ -24,7 +24,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     resource,
     size: sizeFromProps,
     src: srcFromProps,
-    loading: loadingFromProps,
+    loading: loadingFromProps
   } = props;
 
   let width: number | undefined;
@@ -95,7 +95,7 @@ function generateSizes(sizes?: Media["sizes"]): string {
     .map(([key, sizeInfo]) => ({
       key,
       width: sizeInfo!.width!,
-      url: sizeInfo!.url!,
+      url: sizeInfo!.url!
     }))
     .sort((a, b) => a.width - b.width);
 
@@ -103,9 +103,7 @@ function generateSizes(sizes?: Media["sizes"]): string {
   const sizeRules = sortedSizes
     .map((sizeInfo) => {
       const breakpoint = getBreakpointForSize(sizeInfo.key);
-      return breakpoint
-        ? `(max-width: ${breakpoint}px) ${sizeInfo.width}px`
-        : "";
+      return breakpoint ? `(max-width: ${breakpoint}px) ${sizeInfo.width}px` : "";
     })
     .filter(Boolean);
 
@@ -125,7 +123,7 @@ function getBreakpointForSize(sizeKey: string): number | undefined {
     medium: "lg",
     large: "xl",
     xlarge: "2xl",
-    og: "3xl",
+    og: "3xl"
   };
 
   const breakpointKey = sizeBreakpointMap[sizeKey];

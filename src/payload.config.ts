@@ -23,11 +23,11 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: path.resolve(dirname)
     },
     components: {
       afterLogin: ["/payload/components/Admin/OAuthLoginButton.tsx#default"],
-      beforeLogin: ["/payload/components/Admin/DashBoardInfo.tsx#default"],
+      beforeLogin: ["/payload/components/Admin/DashBoardInfo.tsx#default"]
     },
     livePreview: {
       breakpoints: [
@@ -35,43 +35,34 @@ export default buildConfig({
           label: "Mobile",
           name: "mobile",
           width: 375,
-          height: 667,
+          height: 667
         },
         {
           label: "Tablet",
           name: "tablet",
           width: 768,
-          height: 1024,
+          height: 1024
         },
         {
           label: "Desktop",
           name: "desktop",
           width: 1440,
-          height: 900,
-        },
-      ],
-    },
+          height: 900
+        }
+      ]
+    }
   },
   plugins: [...plugins],
-  collections: [
-    Users,
-    Media,
-    Tags,
-    Posts,
-    Experiences,
-    Projects,
-    TechStacks,
-    Socials,
-  ],
+  collections: [Users, Media, Tags, Posts, Experiences, Projects, TechStacks, Socials],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
-    outputFile: path.resolve(dirname, "payload-types.ts"),
+    outputFile: path.resolve(dirname, "payload-types.ts")
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "",
-    },
+      connectionString: process.env.DATABASE_URI || ""
+    }
   }),
-  sharp,
+  sharp
 });

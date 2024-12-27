@@ -8,12 +8,9 @@ interface FontShowcaseProps {
 }
 
 const FontShowcase = ({ font, previewMdxComponent }: FontShowcaseProps) => {
-  const fontClass =
-    font === "scientifica" ? scientifica.className : mono.className;
+  const fontClass = font === "scientifica" ? scientifica.className : mono.className;
 
-  return (
-    <div className={`p-4 ${fontClass} prose-lg`}>{previewMdxComponent}</div>
-  );
+  return <div className={`p-4 ${fontClass} prose-lg`}>{previewMdxComponent}</div>;
 };
 
 export default FontShowcase;

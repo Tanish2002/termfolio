@@ -14,7 +14,7 @@ import FontShowcase from "./FontPreview";
 
 export default function FontFormClient({
   initialFont,
-  previewMdxComponent,
+  previewMdxComponent
 }: {
   initialFont: FontOption;
   previewMdxComponent: React.ReactNode;
@@ -52,9 +52,7 @@ export default function FontFormClient({
             >
               <div className="block">
                 <div className="w-full text-lg font-semibold">Scientifica</div>
-                <div className="w-full">
-                  Terminal like font, Recommended for best experience
-                </div>
+                <div className="w-full">Terminal like font, Recommended for best experience</div>
               </div>
               <ImTerminal />
             </label>
@@ -76,8 +74,7 @@ export default function FontFormClient({
               <div className="block">
                 <div className="w-full text-lg font-semibold">Victor Mono</div>
                 <div className="w-full">
-                  Common Mono font, use it if you have difficulty reading
-                  scientifica
+                  Common Mono font, use it if you have difficulty reading scientifica
                 </div>
               </div>
               <HiOutlineNewspaper />
@@ -98,16 +95,9 @@ export default function FontFormClient({
         {/* Font Preview */}
         <div className="my-4">
           <BorderBox>
-            <div
-              className={
-                "bg-tokyo-night-background p-4 text-tokyo-night-foreground"
-              }
-            >
+            <div className={"bg-tokyo-night-background p-4 text-tokyo-night-foreground"}>
               <h3 className="mb-2 text-lg font-bold underline">Font Preview</h3>
-              <FontShowcase
-                font={font}
-                previewMdxComponent={previewMdxComponent}
-              />
+              <FontShowcase font={font} previewMdxComponent={previewMdxComponent} />
             </div>
           </BorderBox>
         </div>

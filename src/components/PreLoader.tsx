@@ -13,17 +13,14 @@ const PreLoader: React.FC = () => {
         </div>
         <div className="p-4">
           <div className="typing-animation">
-            <span className="text-tokyo-night-red">➜</span> Loading theme
-            configuration
+            <span className="text-tokyo-night-red">➜</span> Loading theme configuration
             <span className="animate-pulse">_</span>
           </div>
           <div className="mt-2 opacity-75">
-            <span className="text-tokyo-night-red">•</span> Resolving system
-            preferences
+            <span className="text-tokyo-night-red">•</span> Resolving system preferences
           </div>
           <div className="mt-2 opacity-50">
-            <span className="text-tokyo-night-red">•</span> Applying theme
-            settings
+            <span className="text-tokyo-night-red">•</span> Applying theme settings
           </div>
         </div>
       </div>

@@ -13,10 +13,7 @@ export default function Loading() {
           {/* Tags Loading */}
           <div className="flex flex-wrap gap-2">
             {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="h-7 w-24 rounded-md bg-tokyo-night-cyan/10"
-              ></div>
+              <div key={i} className="h-7 w-24 rounded-md bg-tokyo-night-cyan/10"></div>
             ))}
           </div>
 

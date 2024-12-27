@@ -12,24 +12,24 @@ module.exports = {
     "/experience-sitemap.xml",
     "/projects-sitemap.xml",
     "/*",
-    "/posts/*",
+    "/posts/*"
   ],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: "*",
-        allow: "/api/og/*",
+        allow: "/api/og/*"
       },
       {
         userAgent: "*",
-        disallow: "/admin/*",
-      },
+        disallow: "/admin/*"
+      }
     ],
     additionalSitemaps: [
       `${SITE_URL}/static-sitemap.xml`,
       `${SITE_URL}/blog-sitemap.xml`,
       `${SITE_URL}/projects-sitemap.xml`,
-      `${SITE_URL}/experience-sitemap.xml`,
-    ],
-  },
+      `${SITE_URL}/experience-sitemap.xml`
+    ]
+  }
 };

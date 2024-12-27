@@ -28,25 +28,25 @@ const queryItems = unstable_cache(
         title: true,
         company: true,
         slug: true,
-        endDate: true,
+        endDate: true
       },
       sort: "-endDate",
       where: {
         _status: {
-          equals: "published",
-        },
-      },
+          equals: "published"
+        }
+      }
     });
     const transformedItems: BaseListItem[] = result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: item.company.trim(),
-      href: "/experience/" + item.slug?.trim(),
+      href: "/experience/" + item.slug?.trim()
     }));
 
     return transformedItems;
   },
   ["experience-list"],
-  { tags: ["experience-list"] },
+  { tags: ["experience-list"] }
 );
 
 export default Experience;

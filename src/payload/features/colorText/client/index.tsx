@@ -4,22 +4,18 @@ import { ToolbarGroup } from "@payloadcms/richtext-lexical";
 import {
   createClientFeature,
   getSelectedNode,
-  toolbarFeatureButtonsGroupWithItems,
+  toolbarFeatureButtonsGroupWithItems
 } from "@payloadcms/richtext-lexical/client";
 import {
   $getSelection,
   $isRangeSelection,
-  LexicalNode,
+  LexicalNode
 } from "@payloadcms/richtext-lexical/lexical";
 import { $findMatchingParent } from "@payloadcms/richtext-lexical/lexical/utils";
 import { IoColorPalette } from "react-icons/io5";
 
 import { AutoColorTextNode } from "../nodes/AutoColorTextNode";
-import {
-  $isColorTextNode,
-  ColorTextNode,
-  TOGGLE_COLOR_COMMAND,
-} from "../nodes/ColorTextNode";
+import { $isColorTextNode, ColorTextNode, TOGGLE_COLOR_COMMAND } from "../nodes/ColorTextNode";
 import { ColorTextFields } from "../nodes/types";
 import { ExclusiveTextColorCollectionProps } from "../server";
 import { AutoColorTextPlugin } from "./plugins/autoColor";
@@ -36,19 +32,13 @@ const toolbarGroups: ToolbarGroup[] = [
       isActive: ({ selection }) => {
         if ($isRangeSelection(selection)) {
           const selectedNode = getSelectedNode(selection);
-          const colorTextParent = $findMatchingParent(
-            selectedNode,
-            $isColorTextNode,
-          );
+          const colorTextParent = $findMatchingParent(selectedNode, $isColorTextNode);
           return colorTextParent != null;
         }
         return false;
       },
       isEnabled: ({ selection }) => {
-        return !!(
-          $isRangeSelection(selection) &&
-          $getSelection()?.getTextContent()?.length
-        );
+        return !!($isRangeSelection(selection) && $getSelection()?.getTextContent()?.length);
       },
       key: "colorText",
       label: "Text Color",
@@ -67,22 +57,22 @@ const toolbarGroups: ToolbarGroup[] = [
           }
 
           const colorTextFields: ColorTextFields = {
-            textColor: "",
+            textColor: ""
           };
 
           // Pass the initial state correctly
           editor.dispatchCommand(TOGGLE_COLOR_WITH_MODAL_COMMAND, {
             fields: colorTextFields,
             selectedNodes,
-            text: selectedText,
+            text: selectedText
           });
         } else {
           editor.dispatchCommand(TOGGLE_COLOR_COMMAND, null);
         }
       },
-      order: 1,
-    },
-  ]),
+      order: 1
+    }
+  ])
 ];
 
 export const ColorTextFeatureClient = createClientFeature({
@@ -90,21 +80,21 @@ export const ColorTextFeatureClient = createClientFeature({
   plugins: [
     {
       Component: ColorTextPlugin,
-      position: "normal",
+      position: "normal"
     },
     {
       Component: AutoColorTextPlugin,
-      position: "normal",
+      position: "normal"
     },
     {
       Component: FloatingColorTextEditorPlugin,
-      position: "floatingAnchorElem",
-    },
+      position: "floatingAnchorElem"
+    }
   ],
   toolbarFixed: {
-    groups: toolbarGroups,
+    groups: toolbarGroups
   },
   toolbarInline: {
-    groups: toolbarGroups,
-  },
+    groups: toolbarGroups
+  }
 });

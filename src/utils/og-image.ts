@@ -3,7 +3,7 @@ import { Experience, Media, Post, Project } from "@/payload-types";
 
 export function generateOgImageUrl(
   item: Partial<Project> | Partial<Post> | Partial<Experience>,
-  type: "projects" | "posts" | "experience",
+  type: "projects" | "posts" | "experience"
 ) {
   const baseUrl =
     process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -15,7 +15,7 @@ export function generateOgImageUrl(
   // Create base params
   const params = new URLSearchParams({
     type,
-    title,
+    title
   });
 
   switch (type) {
@@ -34,9 +34,7 @@ export function generateOgImageUrl(
       // Handle different possible banner formats
       if (typeof banner === "object" && banner !== null) {
         const bannerUrl =
-          typeof banner === "object" && "url" in banner
-            ? (banner as Media).url
-            : undefined;
+          typeof banner === "object" && "url" in banner ? (banner as Media).url : undefined;
 
         if (bannerUrl) {
           params.set("image", baseUrl + bannerUrl);
@@ -57,16 +55,11 @@ export function generateOgImageUrl(
   return `${baseUrl}/api/og?${params.toString()}`;
 }
 
-function handleTags(
-  tags: Project["tags"] | Post["tags"],
-  params: URLSearchParams,
-) {
+function handleTags(tags: Project["tags"] | Post["tags"], params: URLSearchParams) {
   const tagNames = (tags || [])
     // .slice(0, 3)
     .map((tag) =>
-      typeof tag === "object" && tag !== null && "name" in tag
-        ? tag.name
-        : String(tag),
+      typeof tag === "object" && tag !== null && "name" in tag ? tag.name : String(tag)
     )
     .filter((tag) => tag)
     .join(",");

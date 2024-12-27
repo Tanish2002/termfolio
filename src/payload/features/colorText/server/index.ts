@@ -1,15 +1,9 @@
 import {
   convertLexicalNodesToHTML,
   createNode,
-  createServerFeature,
+  createServerFeature
 } from "@payloadcms/richtext-lexical";
-import type {
-  Config,
-  Field,
-  FieldAffectingData,
-  FieldSchemaMap,
-  SanitizedConfig,
-} from "payload";
+import type { Config, Field, FieldAffectingData, FieldSchemaMap, SanitizedConfig } from "payload";
 import { sanitizeFields } from "payload";
 
 import { ClientProps } from "../client";
@@ -52,11 +46,11 @@ export const ColorTextFeature = createServerFeature<
       fields: _transformedFields as Field[],
       parentIsLocalized,
       requireFieldLevelRichTextEditor: isRoot,
-      validRelationships,
+      validRelationships
     });
 
     const sanitizedFieldsWithoutText = sanitizedFields.filter(
-      (field) => !("name" in field) || field.name !== "text",
+      (field) => !("name" in field) || field.name !== "text"
     );
 
     // Remove any fields that might have functions
@@ -75,19 +69,19 @@ export const ColorTextFeature = createServerFeature<
       // ClientFeature: '@payloadcms/richtext-lexical/client#LinkFeatureClient',
       ClientFeature: {
         path: "/payload/features/colorText/client",
-        exportName: "ColorTextFeatureClient",
+        exportName: "ColorTextFeatureClient"
         // clientProps: {
         //   'enabledColors': sanitizedProps.enabledColors
         // }
       },
       clientFeatureProps: {
-        enabledColors: sanitizedProps.enabledColors,
+        enabledColors: sanitizedProps.enabledColors
       } as ExclusiveTextColorCollectionProps,
       generateSchemaMap: () => {
         const schemaMap: FieldSchemaMap = new Map();
 
         schemaMap.set("fields", {
-          fields: sanitizedFields,
+          fields: sanitizedFields
         });
 
         return schemaMap;
@@ -106,7 +100,7 @@ export const ColorTextFeature = createServerFeature<
                 overrideAccess,
                 parent,
                 req,
-                showHiddenFields,
+                showHiddenFields
               }) => {
                 const childrenText = await convertLexicalNodesToHTML({
                   converters,
@@ -117,17 +111,17 @@ export const ColorTextFeature = createServerFeature<
                   overrideAccess,
                   parent: {
                     ...node,
-                    parent,
+                    parent
                   },
                   req,
-                  showHiddenFields,
+                  showHiddenFields
                 });
                 const className = node.fields.textColor;
                 return `<span class="${className}">${childrenText}</span>`;
               },
-              nodeTypes: [AutoColorTextNode.getType()],
-            },
-          },
+              nodeTypes: [AutoColorTextNode.getType()]
+            }
+          }
         }),
         createNode({
           node: ColorTextNode,
@@ -142,7 +136,7 @@ export const ColorTextFeature = createServerFeature<
                 overrideAccess,
                 parent,
                 req,
-                showHiddenFields,
+                showHiddenFields
               }) => {
                 const childrenText = await convertLexicalNodesToHTML({
                   converters,
@@ -153,29 +147,29 @@ export const ColorTextFeature = createServerFeature<
                   overrideAccess,
                   parent: {
                     ...node,
-                    parent,
+                    parent
                   },
                   req,
-                  showHiddenFields,
+                  showHiddenFields
                 });
 
                 const className = node.fields.textColor;
 
                 return `<span class="${className}">${childrenText}</span>`;
               },
-              nodeTypes: [ColorTextNode.getType()],
-            },
+              nodeTypes: [ColorTextNode.getType()]
+            }
           },
           getSubFields: () => {
             return sanitizedFieldsWithoutText;
           },
           getSubFieldsData: ({ node }) => {
             return node?.fields;
-          },
-        }),
+          }
+        })
       ],
-      sanitizedServerFeatureProps: sanitizedProps,
+      sanitizedServerFeatureProps: sanitizedProps
     };
   },
-  key: "colorText",
+  key: "colorText"
 });

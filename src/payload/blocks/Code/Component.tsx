@@ -11,17 +11,14 @@ export type CodeBlockProps = {
   language?: string;
 };
 
-export default async function CodeBlock({
-  codeContent,
-  language = "javascript",
-}: CodeBlockProps) {
+export default async function CodeBlock({ codeContent, language = "javascript" }: CodeBlockProps) {
   const hast = await codeToHast(codeContent, {
     lang: language,
     themes: {
       light: "tokyo-night",
-      dark: "tokyo-night",
+      dark: "tokyo-night"
     },
-    transformers: [],
+    transformers: []
   });
 
   return toJsxRuntime(hast, {
@@ -29,10 +26,8 @@ export default async function CodeBlock({
     jsx,
     jsxs,
     components: {
-      pre: (props) => (
-        <Pre {...props} language={language} code_content={codeContent} />
-      ),
-      span: (props) => <Span {...props} />,
-    },
+      pre: (props) => <Pre {...props} language={language} code_content={codeContent} />,
+      span: (props) => <Span {...props} />
+    }
   });
 }

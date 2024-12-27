@@ -39,7 +39,6 @@
     "semi": true,
     "singleQuote": false,
     "jsxSingleQuote": false,
-    "useTabs": true,
     "tabWidth": 2,
     "trailingComma": "none",
     "printWidth": 100,

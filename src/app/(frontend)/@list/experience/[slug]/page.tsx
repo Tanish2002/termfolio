@@ -16,8 +16,8 @@ export async function generateStaticParams() {
     overrideAccess: false,
     pagination: false,
     select: {
-      slug: true,
-    },
+      slug: true
+    }
   });
 
   const params = posts.docs.map(({ slug }) => {

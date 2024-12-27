@@ -6,10 +6,7 @@ import { isAdmin } from "@/payload/access/isAdmin";
 import { generatePreviewPath } from "@/utils/generatePreviewPath";
 import { getServerSideURL } from "@/utils/getURL";
 
-import {
-  revalidateDelete,
-  revalidateTechStack,
-} from "./hooks/revalidateTechStack";
+import { revalidateDelete, revalidateTechStack } from "./hooks/revalidateTechStack";
 
 export const TechStacks: CollectionConfig<"techstacks"> = {
   slug: "techstacks",
@@ -17,7 +14,7 @@ export const TechStacks: CollectionConfig<"techstacks"> = {
     create: isAdmin,
     delete: isAdmin,
     read: anyone,
-    update: isAdmin,
+    update: isAdmin
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -26,7 +23,7 @@ export const TechStacks: CollectionConfig<"techstacks"> = {
     name: true,
     enabled: true,
     logo_name: true,
-    logo_family: true,
+    logo_family: true
   },
   admin: {
     defaultColumns: ["name", "logo_family", "logo_name", "enabled"],
@@ -34,28 +31,28 @@ export const TechStacks: CollectionConfig<"techstacks"> = {
       url: () => {
         const path = generatePreviewPath({
           slug: "",
-          collection: "techstacks",
+          collection: "techstacks"
         });
 
         return `${getServerSideURL()}${path}`;
-      },
+      }
     },
     preview: () => {
       const path = generatePreviewPath({
         slug: "",
-        collection: "techstacks",
+        collection: "techstacks"
       });
 
       return `${getServerSideURL()}${path}`;
     },
-    useAsTitle: "name",
+    useAsTitle: "name"
   },
   fields: [
     {
       name: "name",
       label: "Name",
       type: "text",
-      required: true,
+      required: true
     },
     {
       name: "enabled",
@@ -65,9 +62,9 @@ export const TechStacks: CollectionConfig<"techstacks"> = {
       admin: {
         position: "sidebar",
         components: {
-          Cell: "/payload/fields/checkbox.tsx#default",
-        },
-      },
+          Cell: "/payload/fields/checkbox.tsx#default"
+        }
+      }
     },
     {
       type: "row",
@@ -79,21 +76,21 @@ export const TechStacks: CollectionConfig<"techstacks"> = {
           defaultValue: SUPPORTED_FAMILIES[0],
           options: SUPPORTED_FAMILIES.map((family) => ({
             label: family,
-            value: family,
+            value: family
           })),
-          required: true,
+          required: true
         },
         {
           name: "logo_name",
           label: "Logo Name",
           type: "text",
-          required: true,
-        },
-      ],
-    },
+          required: true
+        }
+      ]
+    }
   ],
   hooks: {
     afterChange: [revalidateTechStack],
-    afterDelete: [revalidateDelete],
-  },
+    afterDelete: [revalidateDelete]
+  }
 };

@@ -19,16 +19,12 @@ const serverFunction: ServerFunctionClient = async function (args) {
   return handleServerFunctions({
     ...args,
     config,
-    importMap,
+    importMap
   });
 };
 
 const Layout = ({ children }: Args) => (
-  <RootLayout
-    config={config}
-    importMap={importMap}
-    serverFunction={serverFunction}
-  >
+  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
     {children}
   </RootLayout>
 );

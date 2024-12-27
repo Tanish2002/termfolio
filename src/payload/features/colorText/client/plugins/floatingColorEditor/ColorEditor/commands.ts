@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  LexicalCommand,
-  createCommand,
-} from "@payloadcms/richtext-lexical/lexical";
+import { LexicalCommand, createCommand } from "@payloadcms/richtext-lexical/lexical";
 
 import type { ColorTextPayload } from "../types.js";
 

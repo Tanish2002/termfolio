@@ -18,8 +18,8 @@ export function generateMetadata(): Metadata {
       title,
       description,
       image: `${getServerSideURL()}/og/FontSetings.png`,
-      url: "/settings/font",
-    }),
+      url: "/settings/font"
+    })
   };
 }
 export default async function FontPage() {
@@ -28,9 +28,7 @@ export default async function FontPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 text-4xl font-bold text-tokyo-night-orange">
-        Font Settings
-      </h1>
+      <h1 className="mb-6 text-4xl font-bold text-tokyo-night-orange">Font Settings</h1>
       <FontForm initialFont={currentSettings.font} />
     </div>
   );

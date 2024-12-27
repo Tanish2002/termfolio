@@ -10,24 +10,20 @@ import { ThemeSettings } from "./types";
 export async function getCurrentTheme(): Promise<ThemeSettings> {
   const themeCookie = await getCookie("user-theme", { cookies });
   const resolvedThemeCookie = await getCookie("user-resolved-theme", {
-    cookies,
+    cookies
   });
 
   const validTheme =
-    themeCookie === "light" ||
-    themeCookie === "dark" ||
-    themeCookie === "system"
+    themeCookie === "light" || themeCookie === "dark" || themeCookie === "system"
       ? themeCookie
       : null;
 
   const validResolvedTheme =
-    resolvedThemeCookie === "light" || resolvedThemeCookie === "dark"
-      ? resolvedThemeCookie
-      : null;
+    resolvedThemeCookie === "light" || resolvedThemeCookie === "dark" ? resolvedThemeCookie : null;
 
   return {
     theme: validTheme || "system", // default to system
-    resolvedTheme: validResolvedTheme || "dark", // default to dark
+    resolvedTheme: validResolvedTheme || "dark" // default to dark
   };
 }
 

@@ -3,9 +3,7 @@ import cn from "@/utils/cn";
 export default function Loading() {
   return (
     <div
-      className={cn(
-        "mx-auto w-full max-w-4xl bg-tokyo-night-background px-4 py-8 sm:px-6 lg:px-8",
-      )}
+      className={cn("mx-auto w-full max-w-4xl bg-tokyo-night-background px-4 py-8 sm:px-6 lg:px-8")}
     >
       {/* Header section with title, company and date */}
       <div className="my-1 flex items-center justify-between md:my-2 lg:my-3">

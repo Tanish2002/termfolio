@@ -5,17 +5,17 @@ const redirects = async () => {
       {
         type: "header",
         key: "user-agent",
-        value: "(.*Trident.*)", // all ie browsers
-      },
+        value: "(.*Trident.*)" // all ie browsers
+      }
     ],
     permanent: false,
-    source: "/:path((?!ie-incompatible.html$).*)", // all pages except the incompatibility page
+    source: "/:path((?!ie-incompatible.html$).*)" // all pages except the incompatibility page
   };
 
   const settingsRedirect = {
     source: "/settings",
     destination: "/settings/font",
-    permanent: true,
+    permanent: true
   };
 
   const redirects = [internetExplorerRedirect, settingsRedirect];

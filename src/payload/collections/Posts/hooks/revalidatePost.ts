@@ -1,7 +1,7 @@
 import {
   LexicalRichTextAdapter,
   SanitizedServerEditorConfig,
-  getEnabledNodes,
+  getEnabledNodes
 } from "@payloadcms/richtext-lexical";
 import { $getRoot } from "@payloadcms/richtext-lexical/lexical";
 import { createHeadlessEditor } from "@payloadcms/richtext-lexical/lexical/headless";
@@ -11,42 +11,40 @@ import { Post } from "@/payload-types";
 import findFieldByName from "@/utils/findFieldByName";
 import { createRevalidateHooks } from "@/utils/revalidateDocument";
 
-export const { onChange: revalidatePost, onDelete: revalidateDelete } =
-  createRevalidateHooks<Post>({
+export const { onChange: revalidatePost, onDelete: revalidateDelete } = createRevalidateHooks<Post>(
+  {
     type: "blog",
-    tags: ["blog-sitemap", "blog-published-list", "blog-archived-list"], // Honestly here I should not revalidate both blog lists...
-  });
+    tags: ["blog-sitemap", "blog-published-list", "blog-archived-list"] // Honestly here I should not revalidate both blog lists...
+  }
+);
 
 export const addReadTime: CollectionBeforeChangeHook<Post> = ({
   data,
   collection,
-  req: { payload },
+  req: { payload }
 }) => {
   const otherRichTextField: RichTextField = findFieldByName(
     collection.fields,
-    "content",
+    "content"
   ) as RichTextField;
 
   const lexicalAdapter: LexicalRichTextAdapter =
     otherRichTextField.editor as LexicalRichTextAdapter;
 
-  const sanitizedServerEditorConfig: SanitizedServerEditorConfig =
-    lexicalAdapter.editorConfig;
+  const sanitizedServerEditorConfig: SanitizedServerEditorConfig = lexicalAdapter.editorConfig;
 
   const headlessEditor = createHeadlessEditor({
     nodes: getEnabledNodes({
-      editorConfig: sanitizedServerEditorConfig,
-    }),
+      editorConfig: sanitizedServerEditorConfig
+    })
   });
   try {
     headlessEditor.update(
       () => {
         if (data.content)
-          headlessEditor.setEditorState(
-            headlessEditor.parseEditorState(data.content),
-          );
+          headlessEditor.setEditorState(headlessEditor.parseEditorState(data.content));
       },
-      { discrete: true }, // This should commit the editor state immediately
+      { discrete: true } // This should commit the editor state immediately
     );
   } catch (e) {
     payload.logger.error({ err: e }, "ERROR parsing editor state");

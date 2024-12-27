@@ -52,10 +52,7 @@ export default async function BlogPost({ params }: Args) {
           {/* Metadata Details - Stacked on Small Screens */}
           <div className="flex flex-col items-start gap-2 text-tokyo-night-comment sm:flex-row sm:items-center sm:gap-4">
             {/* Date */}
-            <time
-              className="text-xs text-tokyo-night-red sm:text-sm"
-              dateTime={post.createdAt}
-            >
+            <time className="text-xs text-tokyo-night-red sm:text-sm" dateTime={post.createdAt}>
               {formatDate(post.createdAt)}
             </time>
           </div>
@@ -82,8 +79,8 @@ export async function generateStaticParams() {
     overrideAccess: false,
     pagination: false,
     select: {
-      slug: true,
-    },
+      slug: true
+    }
   });
 
   const params = posts.docs.map(({ slug }) => {
@@ -106,9 +103,9 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     pagination: false,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   });
 
   return result.docs?.[0] || null;

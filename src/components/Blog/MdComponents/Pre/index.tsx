@@ -24,9 +24,7 @@ const Pre: React.FC<PreProps> = async (props) => {
           "px-4 py-1 text-sm",
           "text-tokyo-night-orange",
           "bg-tokyo-night-code-background",
-          currentFont.font === "scientifica"
-            ? scientifica.className
-            : mono.className,
+          currentFont.font === "scientifica" ? scientifica.className : mono.className
         )}
       >
         {lang}
@@ -37,7 +35,7 @@ const Pre: React.FC<PreProps> = async (props) => {
           // "text-[var(--shiki-light)] dark:text-[var(--shiki-dark)]",
           "bg-tokyo-night-code-background",
           "my-3 overflow-x-auto px-4 pt-8",
-          mono.className, // code content will always be by default mono
+          mono.className // code content will always be by default mono
         )}
         style={undefined}
       />

@@ -31,7 +31,7 @@ export default async function ProjectPage({ params }: Args) {
     <article
       className={cn(
         "md:prose-md prose lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert prose-headings:text-tokyo-night-orange prose-a:no-underline",
-        "mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8",
+        "mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8"
       )}
     >
       {/* Project Header */}
@@ -108,8 +108,8 @@ export async function generateStaticParams() {
     overrideAccess: false,
     pagination: false,
     select: {
-      slug: true,
-    },
+      slug: true
+    }
   });
 
   const params = projects.docs.map(({ slug }) => {
@@ -132,9 +132,9 @@ const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
     pagination: false,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   });
 
   return result.docs?.[0] || null;

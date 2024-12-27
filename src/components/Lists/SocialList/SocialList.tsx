@@ -23,22 +23,22 @@ const queryItems = unstable_cache(
       collection: "socials",
       draft,
       overrideAccess: draft,
-      pagination: false,
+      pagination: false
     });
     const transformedItems: BaseListItem[] = result.docs.map((item) => ({
       leftContent: item.name,
       rightContent: {
         iconName: item.logo_name.trim(),
-        iconFamily: item.logo_family,
+        iconFamily: item.logo_family
       },
-      href: item.link,
+      href: item.link
     }));
 
     return transformedItems;
   },
   ["socials-list"],
   {
-    tags: ["socials-list"],
-  },
+    tags: ["socials-list"]
+  }
 );
 export default React.memo(SocialList);

@@ -2,14 +2,7 @@
 
 import React, { useCallback, useEffect } from "react";
 
-import {
-  Button,
-  FieldLabel,
-  TextInput,
-  useField,
-  useForm,
-  useFormFields,
-} from "@payloadcms/ui";
+import { Button, FieldLabel, TextInput, useField, useForm, useFormFields } from "@payloadcms/ui";
 import { TextFieldClientProps } from "payload";
 
 import { formatSlug } from "./formatSlug";
@@ -25,7 +18,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = (props) => {
     fieldToUse,
     checkboxFieldPath: checkboxFieldPathFromProps,
     path,
-    readOnly: readOnlyFromProps,
+    readOnly: readOnlyFromProps
   } = props;
   const { label } = field;
 
@@ -67,10 +60,10 @@ export const SlugComponent: React.FC<SlugComponentProps> = (props) => {
       dispatchFields({
         type: "UPDATE",
         path: checkboxFieldPath,
-        value: !checkboxValue,
+        value: !checkboxValue
       });
     },
-    [checkboxValue, checkboxFieldPath, dispatchFields],
+    [checkboxValue, checkboxFieldPath, dispatchFields]
   );
 
   const readOnly = readOnlyFromProps || checkboxValue;

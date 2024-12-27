@@ -17,17 +17,15 @@ export function generateMetadata(): Metadata {
       title,
       description,
       image: `${getServerSideURL()}/og/FontSetings.png`,
-      url: "/settings/theme",
-    }),
+      url: "/settings/theme"
+    })
   };
 }
 
 export default async function ThemeSettingsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 text-4xl font-bold text-tokyo-night-orange">
-        Theme Settings
-      </h1>
+      <h1 className="mb-6 text-4xl font-bold text-tokyo-night-orange">Theme Settings</h1>
       <ThemeForm />
     </div>
   );

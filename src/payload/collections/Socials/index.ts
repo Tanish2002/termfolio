@@ -14,7 +14,7 @@ export const Socials: CollectionConfig<"socials"> = {
     create: isAdmin,
     delete: isAdmin,
     read: anyone,
-    update: isAdmin,
+    update: isAdmin
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -24,7 +24,7 @@ export const Socials: CollectionConfig<"socials"> = {
     link: true,
     enabled: true,
     logo_name: true,
-    logo_family: true,
+    logo_family: true
   },
   admin: {
     defaultColumns: ["name", "logo_family", "logo_name", "enabled"],
@@ -32,34 +32,34 @@ export const Socials: CollectionConfig<"socials"> = {
       url: () => {
         const path = generatePreviewPath({
           slug: "",
-          collection: "socials",
+          collection: "socials"
         });
 
         return `${getServerSideURL()}${path}`;
-      },
+      }
     },
     preview: () => {
       const path = generatePreviewPath({
         slug: "",
-        collection: "socials",
+        collection: "socials"
       });
 
       return `${getServerSideURL()}${path}`;
     },
-    useAsTitle: "name",
+    useAsTitle: "name"
   },
   fields: [
     {
       name: "name",
       label: "Name",
       type: "text",
-      required: true,
+      required: true
     },
     {
       name: "link",
       label: "Link",
       type: "text",
-      required: true,
+      required: true
     },
     {
       name: "enabled",
@@ -69,9 +69,9 @@ export const Socials: CollectionConfig<"socials"> = {
       admin: {
         position: "sidebar",
         components: {
-          Cell: "/payload/fields/checkbox.tsx#default",
-        },
-      },
+          Cell: "/payload/fields/checkbox.tsx#default"
+        }
+      }
     },
     {
       type: "row",
@@ -83,21 +83,21 @@ export const Socials: CollectionConfig<"socials"> = {
           defaultValue: SUPPORTED_FAMILIES[0],
           options: SUPPORTED_FAMILIES.map((family) => ({
             label: family,
-            value: family,
+            value: family
           })),
-          required: true,
+          required: true
         },
         {
           name: "logo_name",
           label: "Logo Name",
           type: "text",
-          required: true,
-        },
-      ],
-    },
+          required: true
+        }
+      ]
+    }
   ],
   hooks: {
     afterChange: [revalidateSocials],
-    afterDelete: [revalidateDelete],
-  },
+    afterDelete: [revalidateDelete]
+  }
 };

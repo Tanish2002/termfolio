@@ -5,15 +5,9 @@ import DynamicIcon from "../DynamicIcon";
 import { BaseListItemClient } from "./BaseListItemClient";
 import { BaseListItem, BaseListProps } from "./types";
 
-export function BaseList<T extends BaseListItem>({
-  divIndex,
-  items,
-  boxText,
-}: BaseListProps<T>) {
+export function BaseList<T extends BaseListItem>({ divIndex, items, boxText }: BaseListProps<T>) {
   return (
-    <BorderBox
-      texts={[{ textYPosition: "top", textXPosition: "left", text: boxText }]}
-    >
+    <BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: boxText }]}>
       <ul className="w-full space-y-2">
         {items.map((item, itemIndex) => (
           <BaseListItemClient
@@ -32,7 +26,7 @@ export function BaseList<T extends BaseListItem>({
                   />
                 ) : (
                   item.rightContent
-                ),
+                )
             }}
             itemIndex={itemIndex}
           />

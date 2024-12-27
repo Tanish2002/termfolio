@@ -5,11 +5,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { selectAtom } from "jotai/utils";
 
-import {
-  focusedDivAtom,
-  focusedItemsAtom,
-  registeredDivsAtom,
-} from "@/store/focusAtoms";
+import { focusedDivAtom, focusedItemsAtom, registeredDivsAtom } from "@/store/focusAtoms";
 
 import { NavigableFocusContext } from "../NavigableFocusContext";
 
@@ -23,10 +19,7 @@ const NavigableDivClient: React.FC<{
   const registerDiv = useSetAtom(registeredDivsAtom);
 
   const isFocused = useAtomValue(
-    useMemo(
-      () => selectAtom(focusedDivAtom, (focused) => focused === index),
-      [index],
-    ),
+    useMemo(() => selectAtom(focusedDivAtom, (focused) => focused === index), [index])
   );
 
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -51,12 +44,7 @@ const NavigableDivClient: React.FC<{
 
   return (
     <NavigableFocusContext.Provider value={isFocused}>
-      <div
-        ref={divRef}
-        onClick={handleClick}
-        onTouchStart={handleClick}
-        className={className}
-      >
+      <div ref={divRef} onClick={handleClick} onTouchStart={handleClick} className={className}>
         {children}
       </div>
     </NavigableFocusContext.Provider>

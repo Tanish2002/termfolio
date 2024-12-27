@@ -21,8 +21,8 @@ const CodeComponent: React.FC<CodeFieldClientProps> = ({ field, path }) => {
         name: path,
         admin: {
           language: languageValue, // Dynamically use the selected language value
-          editorOptions: field.admin?.editorOptions || {}, // Pass any editor options as needed
-        },
+          editorOptions: field.admin?.editorOptions || {} // Pass any editor options as needed
+        }
       }}
     />
   );

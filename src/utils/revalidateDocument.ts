@@ -1,14 +1,8 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 
-import {
-  CollectionAfterChangeHook,
-  CollectionAfterDeleteHook,
-  TypeWithID,
-} from "payload";
+import { CollectionAfterChangeHook, CollectionAfterDeleteHook, TypeWithID } from "payload";
 
-type RevalidateParams<T extends TypeWithID = any> = Parameters<
-  CollectionAfterChangeHook<T>
->[0] & {
+type RevalidateParams<T extends TypeWithID = any> = Parameters<CollectionAfterChangeHook<T>>[0] & {
   type: string;
   tags: string[];
 };
@@ -18,7 +12,7 @@ const revalidatePathsAndTags = <T extends TypeWithID>({
   doc,
   previousDoc,
   req,
-  tags,
+  tags
 }: RevalidateParams<T>) => {
   const { context, payload } = req;
   if (!context.disableRevalidate) {
@@ -29,10 +23,7 @@ const revalidatePathsAndTags = <T extends TypeWithID>({
       tags.forEach((tag) => revalidateTag(tag));
     }
 
-    if (
-      (previousDoc as any)?._status === "published" &&
-      (doc as any)._status !== "published"
-    ) {
+    if ((previousDoc as any)?._status === "published" && (doc as any)._status !== "published") {
       const oldPath = `/${type}/${(previousDoc as any).slug}`;
       payload.logger.info(`Revalidating old ${type} at path: ${oldPath}`);
       revalidatePath(oldPath);
@@ -52,7 +43,7 @@ const revalidateDeleteHook = <T extends TypeWithID = any>({
   type,
   doc,
   context,
-  tags,
+  tags
 }: RevalidateDeleteParams<T>) => {
   if (!context.disableRevalidate) {
     const path = `/${type}/${(doc as any).slug}`; // idk why this gives error so typecasting to any for now
@@ -66,13 +57,11 @@ type RevalidateConfig = {
   tags: string[];
 };
 
-export function createRevalidateHooks<T extends TypeWithID>(
-  config: RevalidateConfig,
-) {
+export function createRevalidateHooks<T extends TypeWithID>(config: RevalidateConfig) {
   const onChange: CollectionAfterChangeHook<T> = (props) => {
     revalidatePathsAndTags<T>({
       ...props,
-      ...config,
+      ...config
     });
     return props.doc;
   };
@@ -80,7 +69,7 @@ export function createRevalidateHooks<T extends TypeWithID>(
   const onDelete: CollectionAfterDeleteHook<T> = (props) => {
     revalidateDeleteHook<T>({
       ...props,
-      ...config,
+      ...config
     });
     return props.doc;
   };

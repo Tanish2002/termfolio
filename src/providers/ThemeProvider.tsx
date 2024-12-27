@@ -7,16 +7,12 @@ import { useAtom, useSetAtom } from "jotai";
 import PreLoader from "@/components/PreLoader";
 import { resolveTheme } from "@/lib/userSettings/client";
 import { ThemeSettings } from "@/lib/userSettings/theme/types";
-import {
-  ResolvedThemeType,
-  systemThemeAtom,
-  themeAtom,
-} from "@/store/themeAtoms";
+import { ResolvedThemeType, systemThemeAtom, themeAtom } from "@/store/themeAtoms";
 
 // Theme Provider Component
 export default function ThemeProvider({
   children,
-  initialTheme,
+  initialTheme
 }: {
   children: React.ReactNode;
   initialTheme: ThemeSettings | null;

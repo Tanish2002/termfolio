@@ -12,9 +12,7 @@ export const generateMeta = async (args: {
 
   const ogImage = generateOgImageUrl(doc, type);
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title
-    : "Termfolio | bakaotaku.dev";
+  const title = doc?.meta?.title ? doc?.meta?.title : "Termfolio | bakaotaku.dev";
 
   return {
     title,
@@ -23,7 +21,7 @@ export const generateMeta = async (args: {
       description: doc?.meta?.description,
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join("/") : "/",
-      image: ogImage,
-    }),
+      image: ogImage
+    })
   };
 };

@@ -11,7 +11,7 @@ import {
   focusedDivAtom,
   focusedItemsAtom,
   registeredDivsAtom,
-  registeredItemsAtom,
+  registeredItemsAtom
 } from "@/store/focusAtoms";
 import { findScrollableElement } from "@/utils/scrollUtils";
 
@@ -25,18 +25,7 @@ const NavigationProvider: React.FC = () => {
   useEffect(() => {
     if (isMobile) return;
     const handleKeyDown = debounce((e: KeyboardEvent) => {
-      if (
-        [
-          "ArrowUp",
-          "ArrowDown",
-          "ArrowLeft",
-          "ArrowRight",
-          "h",
-          "j",
-          "k",
-          "l",
-        ].includes(e.key)
-      ) {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "h", "j", "k", "l"].includes(e.key)) {
         e.preventDefault();
 
         setFocusedDiv((prevFocusedDiv) => {
@@ -47,15 +36,11 @@ const NavigationProvider: React.FC = () => {
             case "ArrowRight":
             case "h":
             case "l": {
-              const sortedKeys = Array.from(registeredDivs.keys()).sort(
-                (a, b) => a - b,
-              );
+              const sortedKeys = Array.from(registeredDivs.keys()).sort((a, b) => a - b);
               const currentIndex = sortedKeys.indexOf(prevFocusedDiv);
               newFocusedDiv = ["ArrowRight", "l"].includes(e.key)
                 ? sortedKeys[(currentIndex + 1) % sortedKeys.length]
-                : sortedKeys[
-                    (currentIndex - 1 + sortedKeys.length) % sortedKeys.length
-                  ]; // ArrowLeft
+                : sortedKeys[(currentIndex - 1 + sortedKeys.length) % sortedKeys.length]; // ArrowLeft
               break;
             }
             case "ArrowUp":
@@ -83,16 +68,12 @@ const NavigationProvider: React.FC = () => {
                 // Scroll the NavigableDiv if it has no items and scrollableElement found
                 const divRef = registeredDivs.get(prevFocusedDiv);
                 if (divRef?.current) {
-                  const scrollableElement = findScrollableElement(
-                    divRef.current,
-                  );
+                  const scrollableElement = findScrollableElement(divRef.current);
                   if (scrollableElement) {
                     const scrollAmount = scrollableElement.clientHeight * 0.1; // Scroll by 10% of the height
                     scrollableElement.scrollBy({
-                      top: ["ArrowUp", "k"].includes(e.key)
-                        ? -scrollAmount
-                        : scrollAmount,
-                      behavior: "smooth",
+                      top: ["ArrowUp", "k"].includes(e.key) ? -scrollAmount : scrollAmount,
+                      behavior: "smooth"
                     });
                   }
                 }
@@ -127,13 +108,7 @@ const NavigationProvider: React.FC = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
-    setFocusedDiv,
-    setFocusedItems,
-    registeredDivs,
-    registeredItems,
-    isMobile,
-  ]);
+  }, [setFocusedDiv, setFocusedItems, registeredDivs, registeredItems, isMobile]);
 
   return <></>;
 };

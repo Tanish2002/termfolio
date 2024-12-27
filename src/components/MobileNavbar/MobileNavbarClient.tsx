@@ -7,9 +7,7 @@ import { GiSkullCrossedBones } from "react-icons/gi";
 
 import { MobileNavbarOpenContext } from "./MobileNavbarContext";
 
-const MobileNavbarClient: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const MobileNavbarClient: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = useCallback(() => {

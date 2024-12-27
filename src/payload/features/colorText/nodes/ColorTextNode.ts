@@ -7,7 +7,7 @@ import type {
   LexicalCommand,
   LexicalNode,
   NodeKey,
-  RangeSelection,
+  RangeSelection
 } from "@payloadcms/richtext-lexical/lexical";
 import {
   $applyNodeReplacement,
@@ -17,7 +17,7 @@ import {
   $isElementNode,
   $isRangeSelection,
   ElementNode,
-  createCommand,
+  createCommand
 } from "@payloadcms/richtext-lexical/lexical";
 import { addClassNamesToElement } from "@payloadcms/richtext-lexical/lexical/utils";
 import ObjectID from "bson-objectid";
@@ -33,9 +33,9 @@ export class ColorTextNode extends ElementNode {
   constructor({
     id,
     fields = {
-      textColor: "",
+      textColor: ""
     },
-    key,
+    key
   }: {
     fields: ColorTextFields;
     id: string;
@@ -50,7 +50,7 @@ export class ColorTextNode extends ElementNode {
     return new ColorTextNode({
       id: node.__id,
       fields: node.__fields,
-      key: node.__key,
+      key: node.__key
     });
   }
 
@@ -62,8 +62,8 @@ export class ColorTextNode extends ElementNode {
     return {
       span: (_: Node) => ({
         conversion: $convertSpanElement,
-        priority: 1,
-      }),
+        priority: 1
+      })
     };
   }
 
@@ -73,7 +73,7 @@ export class ColorTextNode extends ElementNode {
 
     const node = $createColorTextNode({
       id: serializedNode.id,
-      fields: serializedNode.fields,
+      fields: serializedNode.fields
     });
     node.setFormat(serializedNode.format);
     node.setIndent(serializedNode.indent);
@@ -104,7 +104,7 @@ export class ColorTextNode extends ElementNode {
       ...super.exportJSON(),
       type: "colorText",
       fields: this.getFields(),
-      version: 3,
+      version: 3
     };
     const id = this.getID();
     if (id) {
@@ -116,7 +116,7 @@ export class ColorTextNode extends ElementNode {
   extractWithChild(
     _: LexicalNode,
     selection: BaseSelection,
-    _destination: "clone" | "html",
+    _destination: "clone" | "html"
   ): boolean {
     if (!$isRangeSelection(selection)) {
       return false;
@@ -140,14 +140,8 @@ export class ColorTextNode extends ElementNode {
     return this.getLatest().__id;
   }
 
-  insertNewAfter(
-    selection: RangeSelection,
-    restoreSelection = true,
-  ): ElementNodeType | null {
-    const element = this.getParentOrThrow().insertNewAfter(
-      selection,
-      restoreSelection,
-    );
+  insertNewAfter(selection: RangeSelection, restoreSelection = true): ElementNodeType | null {
+    const element = this.getParentOrThrow().insertNewAfter(selection, restoreSelection);
     if ($isElementNode(element)) {
       const linkNode = $createColorTextNode({ fields: this.__fields });
       element.append(linkNode);
@@ -165,11 +159,7 @@ export class ColorTextNode extends ElementNode {
     writable.__fields = fields;
   }
 
-  updateDOM(
-    _prevNode: ColorTextNode,
-    span: HTMLSpanElement,
-    _config: EditorConfig,
-  ): boolean {
+  updateDOM(_prevNode: ColorTextNode, span: HTMLSpanElement, _config: EditorConfig): boolean {
     const className = this.__fields?.textColor;
     addClassNamesToElement(span, className);
     return false;
@@ -183,8 +173,8 @@ function $convertSpanElement(domNode: Node): DOMConversionOutput {
       const node = $createColorTextNode({
         id: new ObjectID().toHexString(),
         fields: {
-          textColor: domNode.className,
-        },
+          textColor: domNode.className
+        }
       });
       return { node };
     }
@@ -193,15 +183,12 @@ function $convertSpanElement(domNode: Node): DOMConversionOutput {
 }
 
 function isSpanElement(domNode: Node): domNode is HTMLSpanElement {
-  return (
-    domNode.nodeType === 1 &&
-    (domNode as HTMLElement).tagName.toLowerCase() === "span"
-  );
+  return domNode.nodeType === 1 && (domNode as HTMLElement).tagName.toLowerCase() === "span";
 }
 
 export function $createColorTextNode({
   id,
-  fields,
+  fields
 }: {
   fields: ColorTextFields;
   id?: string;
@@ -209,14 +196,12 @@ export function $createColorTextNode({
   return $applyNodeReplacement(
     new ColorTextNode({
       id: id ?? new ObjectID().toHexString(),
-      fields,
-    }),
+      fields
+    })
   );
 }
 
-export function $isColorTextNode(
-  node: LexicalNode | null | undefined,
-): node is ColorTextNode {
+export function $isColorTextNode(node: LexicalNode | null | undefined): node is ColorTextNode {
   return node instanceof ColorTextNode;
 }
 
@@ -229,9 +214,7 @@ export function $toggleLink(payload: ColorTextPayload): void {
   if (!$isRangeSelection(selection) && !payload.selectedNodes?.length) {
     return;
   }
-  const nodes = $isRangeSelection(selection)
-    ? selection.extract()
-    : payload.selectedNodes;
+  const nodes = $isRangeSelection(selection) ? selection.extract() : payload.selectedNodes;
 
   if (payload === null) {
     // Remove LinkNodes
@@ -266,10 +249,7 @@ export function $toggleLink(payload: ColorTextPayload): void {
       if (linkNode !== null) {
         linkNode.setFields(payload.fields);
 
-        if (
-          payload.text != null &&
-          payload.text !== linkNode.getTextContent()
-        ) {
+        if (payload.text != null && payload.text !== linkNode.getTextContent()) {
           // remove all children and add child with new textcontent:
           linkNode.append($createTextNode(payload.text));
           linkNode.getChildren().forEach((child) => {
@@ -288,11 +268,7 @@ export function $toggleLink(payload: ColorTextPayload): void {
     nodes?.forEach((node) => {
       const parent = node.getParent();
 
-      if (
-        parent === linkNode ||
-        parent === null ||
-        ($isElementNode(node) && !node.isInline())
-      ) {
+      if (parent === linkNode || parent === null || ($isElementNode(node) && !node.isInline())) {
         return;
       }
 
@@ -350,14 +326,12 @@ export function $toggleLink(payload: ColorTextPayload): void {
 }
 
 function $getLinkAncestor(node: LexicalNode): ColorTextNode | null {
-  return $getAncestor(node, (ancestor) =>
-    $isColorTextNode(ancestor),
-  ) as ColorTextNode;
+  return $getAncestor(node, (ancestor) => $isColorTextNode(ancestor)) as ColorTextNode;
 }
 
 function $getAncestor(
   node: LexicalNode,
-  predicate: (ancestor: LexicalNode) => boolean,
+  predicate: (ancestor: LexicalNode) => boolean
 ): LexicalNode | null {
   let parent: LexicalNode | null = node;
   while (parent !== null) {

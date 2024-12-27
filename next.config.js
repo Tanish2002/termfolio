@@ -15,13 +15,13 @@ const nextConfig = {
 
         return {
           hostname: url.hostname,
-          protocol: url.protocol.replace(":", ""),
+          protocol: url.protocol.replace(":", "")
         };
-      }),
-    ],
+      })
+    ]
   },
   reactStrictMode: true,
-  redirects,
+  redirects
 };
 
 export default withPayload(nextConfig);

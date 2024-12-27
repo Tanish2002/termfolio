@@ -15,7 +15,7 @@ export async function GET(
         value: string;
       };
     };
-  },
+  }
 ): Promise<Response> {
   const payload = await getPayload({ config: configPromise });
   const token = req.cookies.get(payloadToken)?.value;
@@ -28,7 +28,7 @@ export async function GET(
 
   if (previewSecret) {
     return new Response("You are not allowed to preview this page", {
-      status: 403,
+      status: 403
     });
   } else {
     if (!path) {
@@ -49,7 +49,7 @@ export async function GET(
 
     if (!path.startsWith("/")) {
       new Response("This endpoint can only be used for internal previews", {
-        status: 500,
+        status: 500
       });
     }
 
@@ -67,7 +67,7 @@ export async function GET(
     if (!user) {
       draft.disable();
       return new Response("You are not allowed to preview this page", {
-        status: 403,
+        status: 403
       });
     }
 
@@ -83,9 +83,9 @@ export async function GET(
         select: {},
         where: {
           slug: {
-            equals: slug,
-          },
-        },
+            equals: slug
+          }
+        }
       });
 
       if (!docs.docs.length) {

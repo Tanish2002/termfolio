@@ -8,7 +8,7 @@ export default {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}"
   ],
   darkMode: ["selector", '[data-theme="dark"]'],
   plugins: [typography, tokyoNightThemePlugin],
@@ -25,7 +25,7 @@ export default {
     "border-success",
     "bg-success/30",
     "border-warning",
-    "bg-warning/30",
+    "bg-warning/30"
   ],
   theme: {
     extend: {
@@ -47,7 +47,7 @@ export default {
           magenta: "#7287fd", // Light magenta
           "dark-blue": "#209fb5", // Pale sky blue
           "dark-cyan": "#179299", // Muted seafoam green
-          "dark-purple": "#d1cdd0", // Soft greyish purple
+          "dark-purple": "#d1cdd0" // Soft greyish purple
         },
         "tokyo-night-dark": {
           background: "#1a1b26",
@@ -65,22 +65,22 @@ export default {
           magenta: "#c678dd",
           "dark-blue": "#3d59a1",
           "dark-cyan": "#1abc9c",
-          "dark-purple": "#1e2239",
-        },
+          "dark-purple": "#1e2239"
+        }
       },
       animation: {
-        "character-walk": "character-walk 5s linear infinite",
+        "character-walk": "character-walk 5s linear infinite"
       },
       keyframes: {
         "character-walk": {
           "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
+          "100%": { transform: "translateX(100%)" }
+        }
       },
       fontFamily: {
         mono: ["var(--font-mono)"],
-        scientifica: ["var(--font-scientifica)"],
-      },
-    },
-  },
+        scientifica: ["var(--font-scientifica)"]
+      }
+    }
+  }
 };

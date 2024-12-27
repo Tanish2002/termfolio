@@ -9,7 +9,7 @@ import {
   focusedDivAtom,
   focusedItemsAtom,
   registeredDivsAtom,
-  scrollableDivAtom,
+  scrollableDivAtom
 } from "@/store/focusAtoms";
 import { findScrollableElement } from "@/utils/scrollUtils";
 
@@ -21,21 +21,14 @@ interface ScrollableDivProps {
   index: number;
 }
 
-const ScrollableDivClient: React.FC<ScrollableDivProps> = ({
-  children,
-  className,
-  index,
-}) => {
+const ScrollableDivClient: React.FC<ScrollableDivProps> = ({ children, className, index }) => {
   const setScrollableDiv = useSetAtom(scrollableDivAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const setFocusedDiv = useSetAtom(focusedDivAtom);
   const setFocusedItems = useSetAtom(focusedItemsAtom);
   const registerDiv = useSetAtom(registeredDivsAtom);
   const isFocused = useAtomValue(
-    useMemo(
-      () => selectAtom(focusedDivAtom, (focused) => focused === index),
-      [index],
-    ),
+    useMemo(() => selectAtom(focusedDivAtom, (focused) => focused === index), [index])
   );
 
   useEffect(() => {
@@ -60,9 +53,7 @@ const ScrollableDivClient: React.FC<ScrollableDivProps> = ({
     const updateScrollableDiv = () => {
       if (containerRef.current) {
         const scrollableElement = findScrollableElement(containerRef.current);
-        setScrollableDiv(
-          scrollableElement ? { current: scrollableElement } : undefined,
-        );
+        setScrollableDiv(scrollableElement ? { current: scrollableElement } : undefined);
       }
     };
 

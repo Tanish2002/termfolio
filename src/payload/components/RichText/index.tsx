@@ -4,21 +4,18 @@ import {
   DefaultNodeTypes,
   SerializedBlockNode,
   SerializedListItemNode,
-  SerializedListNode,
+  SerializedListNode
 } from "@payloadcms/richtext-lexical";
-import {
-  SerializedEditorState,
-  SerializedLexicalNode,
-} from "@payloadcms/richtext-lexical/lexical";
+import { SerializedEditorState, SerializedLexicalNode } from "@payloadcms/richtext-lexical/lexical";
 import {
   JSXConvertersFunction,
   RichText as RichTextWithoutBlocks,
-  convertLexicalNodesToJSX,
+  convertLexicalNodesToJSX
 } from "@payloadcms/richtext-lexical/react";
 
 import type {
   BannerBlock as BannerBlockProps,
-  MediaBlock as MediaBlockProps,
+  MediaBlock as MediaBlockProps
 } from "@/payload-types";
 import { BannerBlock } from "@/payload/blocks/Banner/Component";
 import CodeBlock, { CodeBlockProps } from "@/payload/blocks/Code/Component";
@@ -29,15 +26,13 @@ type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<MediaBlockProps | BannerBlockProps | CodeBlockProps>;
 
-const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
-  defaultConverters,
-}) => ({
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   link: ({ node }) => {
     const children = convertLexicalNodesToJSX({
       converters: defaultConverters,
       parent: node,
-      nodes: node.children,
+      nodes: node.children
     });
     if (node.fields.linkType === "internal") {
       const slug = (node.fields.doc?.value as any).slug;
@@ -51,25 +46,19 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
     const children = convertLexicalNodesToJSX({
       converters: defaultConverters,
       parent: node,
-      nodes: node.children,
+      nodes: node.children
     });
     return <span className={`${node.fields.textColor}`}>{children}</span>;
   },
   blocks: {
-    banner: ({ node }) => (
-      <BannerBlock className="col-start-2 mb-4" {...node.fields} />
-    ),
+    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: async ({ node }) => (
-      <MediaBlock
-        imgClassName="m-0"
-        {...node.fields}
-        disableInnerContainer={true}
-      />
+      <MediaBlock imgClassName="m-0" {...node.fields} disableInnerContainer={true} />
     ),
     code: async ({ node }) => {
       return <CodeBlock {...node.fields} />;
-    },
-  },
+    }
+  }
 });
 
 type Props = {
@@ -92,14 +81,12 @@ export default function RichText(props: Props) {
           "prose-a:text-tokyo-night-blue": enableProse,
           "prose-p:my-0 prose-strong:text-tokyo-night-foreground": enableProse,
           "prose-headings:text-tokyo-night-orange": enableProse,
-          "prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8":
-            enableProse,
-          "prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ol:sm:pl-8":
-            enableProse,
+          "prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8": enableProse,
+          "prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ol:sm:pl-8": enableProse,
           "prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-tokyo-night-comment":
-            enableProse,
+            enableProse
         },
-        className,
+        className
       )}
       {...rest}
     />
@@ -129,11 +116,7 @@ function fixListItemNesting(children: SerializedLexicalNode[]) {
     const listItemNode = node as SerializedListItemNode;
     const children = listItemNode.children;
 
-    if (
-      children.length === 1 &&
-      children[0].type === "list" &&
-      res.length > 0
-    ) {
+    if (children.length === 1 && children[0].type === "list" && res.length > 0) {
       const prev = res.pop() as SerializedListNode;
 
       // @ts-ignore
@@ -146,7 +129,7 @@ function fixListItemNesting(children: SerializedLexicalNode[]) {
       res.push({
         ...prev,
 
-        children: [...prev.children, children[0]],
+        children: [...prev.children, children[0]]
       } as SerializedListNode);
 
       continue;

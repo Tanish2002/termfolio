@@ -5,11 +5,7 @@ import FontFormClient from "./FontFormClient";
 
 export type FontOption = "scientifica" | "mono";
 
-export default async function FontForm({
-  initialFont,
-}: {
-  initialFont: FontOption;
-}) {
+export default async function FontForm({ initialFont }: { initialFont: FontOption }) {
   return (
     <FontFormClient
       initialFont={initialFont}
@@ -20,7 +16,7 @@ export default async function FontForm({
             "prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8",
             "prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ul:sm:pl-8",
             "prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-tokyo-night-comment",
-            "divide-y divide-tokyo-night-comment",
+            "divide-y divide-tokyo-night-comment"
           )}
         >
           <div>

@@ -13,7 +13,7 @@ const MobileNavbar: React.FC<{ list: React.ReactNode }> = async ({ list }) => {
       <MobileNavbarClient>
         <div
           className={cn(
-            "grid h-svh grid-cols-1 grid-rows-6 gap-4 overflow-y-scroll bg-tokyo-night-background p-5 text-tokyo-night-foreground",
+            "grid h-svh grid-cols-1 grid-rows-6 gap-4 overflow-y-scroll bg-tokyo-night-background p-5 text-tokyo-night-foreground"
           )}
         >
           <NavigableDiv index={10} className="row-span-2">

@@ -8,11 +8,7 @@ import React from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { selectAtom } from "jotai/utils";
 
-import {
-  focusedDivAtom,
-  focusedItemsAtom,
-  registeredItemsAtom,
-} from "@/store/focusAtoms";
+import { focusedDivAtom, focusedItemsAtom, registeredItemsAtom } from "@/store/focusAtoms";
 
 const NavigableItemClient: React.FC<{
   divIndex: number;
@@ -27,12 +23,9 @@ const NavigableItemClient: React.FC<{
   const isFocused = useAtomValue(
     useMemo(
       () =>
-        selectAtom(
-          focusedItemsAtom,
-          (focusedItems) => focusedItems.get(divIndex) === itemIndex,
-        ),
-      [divIndex, itemIndex],
-    ),
+        selectAtom(focusedItemsAtom, (focusedItems) => focusedItems.get(divIndex) === itemIndex),
+      [divIndex, itemIndex]
+    )
   );
 
   const itemRef = useRef<HTMLDivElement>(null);
@@ -69,7 +62,7 @@ const NavigableItemClient: React.FC<{
         router.push(href);
       }
     },
-    [href, isFocused, router],
+    [href, isFocused, router]
   );
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -81,7 +74,7 @@ const NavigableItemClient: React.FC<{
       itemRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
-        inline: "start",
+        inline: "start"
       });
     }
   }, [isFocused]);
@@ -93,12 +86,7 @@ const NavigableItemClient: React.FC<{
   }, [setFocusedItems, setFocusedDiv, itemRef, divIndex, itemIndex]);
 
   return (
-    <div
-      ref={itemRef}
-      tabIndex={0}
-      onClick={handleClick}
-      onTouchStart={handleClick}
-    >
+    <div ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>
       {href ? <Link href={href}>{children}</Link> : children}
     </div>
   );

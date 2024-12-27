@@ -2,7 +2,7 @@ import {
   MetaDescriptionField,
   MetaTitleField,
   OverviewField,
-  PreviewField,
+  PreviewField
 } from "@payloadcms/plugin-seo/fields";
 import {
   BlocksFeature,
@@ -11,7 +11,7 @@ import {
   HorizontalRuleFeature,
   IndentFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 
@@ -24,11 +24,7 @@ import { slugField } from "@/payload/fields/slug";
 import { generatePreviewPath } from "@/utils/generatePreviewPath";
 import { getServerSideURL } from "@/utils/getURL";
 
-import {
-  addReadTime,
-  revalidateDelete,
-  revalidatePost,
-} from "./hooks/revalidatePost";
+import { addReadTime, revalidateDelete, revalidatePost } from "./hooks/revalidatePost";
 
 export const Posts: CollectionConfig<"posts"> = {
   slug: "posts",
@@ -36,7 +32,7 @@ export const Posts: CollectionConfig<"posts"> = {
     create: isAdmin,
     delete: isAdmin,
     read: authenticatedOrPublished,
-    update: isAdmin,
+    update: isAdmin
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -46,8 +42,8 @@ export const Posts: CollectionConfig<"posts"> = {
     slug: true,
     tags: true,
     meta: {
-      description: true,
-    },
+      description: true
+    }
   },
   admin: {
     defaultColumns: ["title", "slug", "updatedAt"],
@@ -55,27 +51,27 @@ export const Posts: CollectionConfig<"posts"> = {
       url: ({ data }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === "string" ? data.slug : "",
-          collection: "posts",
+          collection: "posts"
         });
 
         return `${getServerSideURL()}${path}`;
-      },
+      }
     },
     preview: (data) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === "string" ? data.slug : "",
-        collection: "posts",
+        collection: "posts"
       });
 
       return `${getServerSideURL()}${path}`;
     },
-    useAsTitle: "title",
+    useAsTitle: "title"
   },
   fields: [
     {
       name: "title",
       type: "text",
-      required: true,
+      required: true
     },
     {
       type: "tabs",
@@ -94,15 +90,15 @@ export const Posts: CollectionConfig<"posts"> = {
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
+                    HorizontalRuleFeature()
                   ];
-                },
+                }
               }),
               label: false,
-              required: true,
-            },
+              required: true
+            }
           ],
-          label: "Content",
+          label: "Content"
         },
         {
           fields: [
@@ -110,13 +106,13 @@ export const Posts: CollectionConfig<"posts"> = {
               name: "tags",
               type: "relationship",
               admin: {
-                position: "sidebar",
+                position: "sidebar"
               },
               hasMany: true,
-              relationTo: "tags",
-            },
+              relationTo: "tags"
+            }
           ],
-          label: "Meta",
+          label: "Meta"
         },
         {
           name: "meta",
@@ -125,10 +121,10 @@ export const Posts: CollectionConfig<"posts"> = {
             OverviewField({
               titlePath: "meta.title",
               descriptionPath: "meta.description",
-              imagePath: "meta.image",
+              imagePath: "meta.image"
             }),
             MetaTitleField({
-              hasGenerateFn: true,
+              hasGenerateFn: true
             }),
             MetaDescriptionField({}),
             PreviewField({
@@ -137,11 +133,11 @@ export const Posts: CollectionConfig<"posts"> = {
 
               // field paths to match the target field for data
               titlePath: "meta.title",
-              descriptionPath: "meta.description",
-            }),
-          ],
-        },
-      ],
+              descriptionPath: "meta.description"
+            })
+          ]
+        }
+      ]
     },
     {
       name: "archived",
@@ -149,17 +145,17 @@ export const Posts: CollectionConfig<"posts"> = {
       label: "Archived",
       defaultValue: false,
       admin: {
-        position: "sidebar",
-      },
+        position: "sidebar"
+      }
     },
     {
       name: "publishedAt",
       type: "date",
       admin: {
         date: {
-          pickerAppearance: "dayAndTime",
+          pickerAppearance: "dayAndTime"
         },
-        position: "sidebar",
+        position: "sidebar"
       },
       hooks: {
         beforeChange: [
@@ -168,39 +164,39 @@ export const Posts: CollectionConfig<"posts"> = {
               return new Date();
             }
             return value;
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
     {
       name: "authors",
       type: "relationship",
       admin: {
-        position: "sidebar",
+        position: "sidebar"
       },
       hasMany: true,
-      relationTo: "users",
+      relationTo: "users"
     },
     {
       name: "readTime",
       type: "text",
       admin: {
-        hidden: true,
-      },
+        hidden: true
+      }
     },
-    ...slugField(),
+    ...slugField()
   ],
   hooks: {
     beforeChange: [addReadTime],
     afterChange: [revalidatePost],
-    afterDelete: [revalidateDelete],
+    afterDelete: [revalidateDelete]
   },
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
+        interval: 100 // We set this interval for optimal live preview
+      }
     },
-    maxPerDoc: 10,
-  },
+    maxPerDoc: 10
+  }
 };

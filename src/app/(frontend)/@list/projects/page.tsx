@@ -9,7 +9,7 @@ import { BaseList } from "@/components/Lists/BaseList";
 
 export const dynamic = "force-static";
 
-export default async function Experience() {
+export default async function Project() {
   const items = await queryItems();
   return <BaseList divIndex={2} items={items} boxText="projects" />;
 }
@@ -28,22 +28,22 @@ const queryItems = unstable_cache(
       select: {
         title: true,
         projectType: true,
-        slug: true,
+        slug: true
       },
       sort: ["-createdAt"],
       where: {
         _status: {
-          equals: "published",
-        },
-      },
+          equals: "published"
+        }
+      }
     });
     const transformedItems = result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: item.projectType.trim(),
-      href: "/projects/" + item.slug?.trim(),
+      href: "/projects/" + item.slug?.trim()
     }));
     return transformedItems;
   },
   ["project-list"],
-  { tags: ["project-list"] },
+  { tags: ["project-list"] }
 );

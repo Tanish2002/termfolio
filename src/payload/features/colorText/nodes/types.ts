@@ -1,7 +1,7 @@
 import {
   SerializedElementNode,
   SerializedLexicalNode,
-  Spread,
+  Spread
 } from "@payloadcms/richtext-lexical/lexical";
 import type { JsonValue } from "payload";
 
@@ -12,9 +12,7 @@ export type ColorTextFields = {
   textColor: colorMap["className"];
 };
 
-export type SerializedLinkNode<
-  T extends SerializedLexicalNode = SerializedLexicalNode,
-> = Spread<
+export type SerializedLinkNode<T extends SerializedLexicalNode = SerializedLexicalNode> = Spread<
   {
     fields: ColorTextFields;
     id?: string; // optional if AutoLinkNode
@@ -23,8 +21,6 @@ export type SerializedLinkNode<
   SerializedElementNode<T>
 >;
 
-export type SerializedAutoLinkNode<
-  T extends SerializedLexicalNode = SerializedLexicalNode,
-> = {
+export type SerializedAutoLinkNode<T extends SerializedLexicalNode = SerializedLexicalNode> = {
   type: "autoColorText";
 } & Omit<SerializedLinkNode<T>, "id" | "type">;

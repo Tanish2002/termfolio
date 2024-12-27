@@ -17,14 +17,14 @@ const multipartThreshold = 1024 * 1024 * 99; // 99MB
 export const getHandleUpload = ({
   folderSrc,
   getStorageClient,
-  prefix = "",
+  prefix = ""
 }: HandleUploadArgs): HandleUpload => {
   return async ({ data, file }) => {
     const fileKey = path.posix.join(data.prefix || prefix, file.filename);
     const config: UploadApiOptions = {
       folder: folderSrc,
       public_id: fileKey,
-      resource_type: "auto",
+      resource_type: "auto"
     };
 
     const fileBufferOrStream: Buffer | stream.Readable = file.tempFilePath

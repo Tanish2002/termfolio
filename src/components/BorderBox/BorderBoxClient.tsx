@@ -29,7 +29,7 @@ const BorderBoxClient: React.FC<BorderBoxClientProps> = (props) => {
             : "border-tokyo-night-red bg-tokyo-night-background"
           : props.colors
             ? props.colors.unFocussedClassName
-            : "border-tokyo-night-selection",
+            : "border-tokyo-night-selection"
       )}
     >
       {props.children}

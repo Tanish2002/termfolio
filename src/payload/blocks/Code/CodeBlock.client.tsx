@@ -19,9 +19,7 @@ const CopyToClipboardButton = ({ content }: { content: string }) => {
     }
   }, [clicked]);
 
-  const onClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const onClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     await navigator.clipboard.writeText(content);
     setClicked(true);
@@ -32,16 +30,12 @@ const CopyToClipboardButton = ({ content }: { content: string }) => {
       <button
         className={cn(
           "text-[var(--shiki-light)]",
-          "dark:bg-[var(--shiki-dark-bg)] dark:text-[var(--shiki-dark)]",
+          "dark:bg-[var(--shiki-dark-bg)] dark:text-[var(--shiki-dark)]"
         )}
         aria-label={clicked ? "Copied!" : "Copy to Clipboard"}
         onClick={onClick}
       >
-        {clicked ? (
-          <FaCheck className="fill-tokyo-night-green" />
-        ) : (
-          <FaClipboard />
-        )}
+        {clicked ? <FaCheck className="fill-tokyo-night-green" /> : <FaClipboard />}
       </button>
     </div>
   );

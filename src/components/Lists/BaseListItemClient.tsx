@@ -17,7 +17,7 @@ import { BaseListItem, BaseListItemClientProps } from "./types";
 export function BaseListItemClient<T extends BaseListItem>({
   divIndex,
   item,
-  itemIndex,
+  itemIndex
 }: BaseListItemClientProps<T>) {
   const setIsOpen = useMobileNavbarOpen();
   const pathName = usePathname();
@@ -29,13 +29,13 @@ export function BaseListItemClient<T extends BaseListItem>({
         selectAtom(
           atom((get) => ({
             focusedDiv: get(focusedDivAtom),
-            focusedItems: get(focusedItemsAtom),
+            focusedItems: get(focusedItemsAtom)
           })),
           ({ focusedDiv, focusedItems }) =>
-            focusedDiv === divIndex && focusedItems.get(divIndex) === itemIndex,
+            focusedDiv === divIndex && focusedItems.get(divIndex) === itemIndex
         ),
-      [divIndex, itemIndex],
-    ),
+      [divIndex, itemIndex]
+    )
   );
 
   const isSelected = item.href
@@ -50,7 +50,7 @@ export function BaseListItemClient<T extends BaseListItem>({
         "flex w-full items-center justify-between p-0.5 transition-colors",
         isFocused
           ? "bg-tokyo-night-dark-blue/80 text-tokyo-night-code-background"
-          : "hover:bg-tokyo-night-selection/20",
+          : "hover:bg-tokyo-night-selection/20"
       )}
       onClick={() => {
         if (isMobile && setIsOpen) {
@@ -62,10 +62,8 @@ export function BaseListItemClient<T extends BaseListItem>({
       {item.rightContent && (
         <div
           className={cn(
-            isFocused || isSelected
-              ? "text-tokyo-night-orange"
-              : "text-tokyo-night-comment",
-            "m-0.5",
+            isFocused || isSelected ? "text-tokyo-night-orange" : "text-tokyo-night-comment",
+            "m-0.5"
           )}
         >
           {item.rightContent}

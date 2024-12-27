@@ -9,14 +9,14 @@ interface HandleDeleteArgs {
 
 export const getHandleDelete = ({
   folderSrc,
-  getStorageClient,
+  getStorageClient
 }: HandleDeleteArgs): HandleDelete => {
   return async ({ doc: { mimeType, prefix = "" }, filename }) => {
     const publicId = path.posix.join(folderSrc, prefix, filename);
     const isVideo = mimeType.includes("video");
 
     await getStorageClient().uploader.destroy(publicId, {
-      resource_type: isVideo ? "video" : "image",
+      resource_type: isVideo ? "video" : "image"
     });
   };
 };

@@ -13,12 +13,12 @@ export const Users: CollectionConfig = {
     // Admins can update all, but any other logged in user can only update themselves
     update: isAdminOrSelf,
     // Only admins can delete
-    delete: isAdmin,
+    delete: isAdmin
   },
   admin: {
     defaultColumns: ["email", "roles"],
     useAsTitle: "email",
-    group: "Misc",
+    group: "Misc"
   },
   auth: true,
   fields: [
@@ -32,26 +32,26 @@ export const Users: CollectionConfig = {
       access: {
         // Only admins can create or update a value for this field
         create: isAdminFieldLevel,
-        update: isAdminFieldLevel,
+        update: isAdminFieldLevel
       },
       options: [
         {
           label: "Admin",
-          value: "admin",
+          value: "admin"
         },
         {
           label: "Viewer",
-          value: "viewer",
-        },
-      ],
+          value: "viewer"
+        }
+      ]
     },
     {
       name: "sub",
       type: "text",
       admin: {
-        hidden: true,
-      },
-    },
+        hidden: true
+      }
+    }
   ],
-  timestamps: true,
+  timestamps: true
 };

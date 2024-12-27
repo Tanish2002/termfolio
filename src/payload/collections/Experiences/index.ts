@@ -2,7 +2,7 @@ import {
   MetaDescriptionField,
   MetaTitleField,
   OverviewField,
-  PreviewField,
+  PreviewField
 } from "@payloadcms/plugin-seo/fields";
 import {
   BlockquoteFeature,
@@ -15,7 +15,7 @@ import {
   OrderedListFeature,
   StrikethroughFeature,
   UnorderedListFeature,
-  lexicalEditor,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 
@@ -28,10 +28,7 @@ import { slugField } from "@/payload/fields/slug";
 import { generatePreviewPath } from "@/utils/generatePreviewPath";
 import { getServerSideURL } from "@/utils/getURL";
 
-import {
-  revalidateDelete,
-  revalidateExperience,
-} from "./hooks/revalidateExperience";
+import { revalidateDelete, revalidateExperience } from "./hooks/revalidateExperience";
 
 export const Experiences: CollectionConfig<"experiences"> = {
   slug: "experiences",
@@ -39,7 +36,7 @@ export const Experiences: CollectionConfig<"experiences"> = {
     create: isAdmin,
     delete: isAdmin,
     read: authenticatedOrPublished,
-    update: isAdmin,
+    update: isAdmin
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -49,8 +46,8 @@ export const Experiences: CollectionConfig<"experiences"> = {
     slug: true,
     meta: {
       title: true,
-      description: true,
-    },
+      description: true
+    }
   },
   admin: {
     defaultColumns: ["company", "slug"],
@@ -58,34 +55,34 @@ export const Experiences: CollectionConfig<"experiences"> = {
       url: ({ data }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === "string" ? data.slug : "",
-          collection: "experiences",
+          collection: "experiences"
         });
 
         return `${getServerSideURL()}${path}`;
-      },
+      }
     },
     preview: (data) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === "string" ? data.slug : "",
-        collection: "experiences",
+        collection: "experiences"
       });
 
       return `${getServerSideURL()}${path}`;
     },
-    useAsTitle: "title",
+    useAsTitle: "title"
   },
   fields: [
     {
       name: "title",
       label: "Job Title",
       type: "text",
-      required: true,
+      required: true
     },
     {
       name: "company",
       label: "Company Name",
       type: "text",
-      required: true,
+      required: true
     },
     {
       type: "tabs",
@@ -100,7 +97,7 @@ export const Experiences: CollectionConfig<"experiences"> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({
-                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"]
                     }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
@@ -110,15 +107,15 @@ export const Experiences: CollectionConfig<"experiences"> = {
                     InlineCodeFeature(),
                     UnorderedListFeature(),
                     OrderedListFeature(),
-                    BlockquoteFeature(),
+                    BlockquoteFeature()
                   ];
-                },
+                }
               }),
               label: false,
-              required: true,
-            },
+              required: true
+            }
           ],
-          label: "Content",
+          label: "Content"
         },
         {
           name: "meta",
@@ -126,10 +123,10 @@ export const Experiences: CollectionConfig<"experiences"> = {
           fields: [
             OverviewField({
               titlePath: "meta.title",
-              descriptionPath: "meta.description",
+              descriptionPath: "meta.description"
             }),
             MetaTitleField({
-              hasGenerateFn: true,
+              hasGenerateFn: true
             }),
             MetaDescriptionField({}),
             PreviewField({
@@ -138,16 +135,16 @@ export const Experiences: CollectionConfig<"experiences"> = {
 
               // field paths to match the target field for data
               titlePath: "meta.title",
-              descriptionPath: "meta.description",
-            }),
-          ],
-        },
-      ],
+              descriptionPath: "meta.description"
+            })
+          ]
+        }
+      ]
     },
     {
       type: "row",
       admin: {
-        position: "sidebar",
+        position: "sidebar"
       },
       fields: [
         {
@@ -156,9 +153,9 @@ export const Experiences: CollectionConfig<"experiences"> = {
           required: true,
           admin: {
             date: {
-              pickerAppearance: "monthOnly",
-            },
-          },
+              pickerAppearance: "monthOnly"
+            }
+          }
         },
         {
           name: "endDate",
@@ -166,24 +163,24 @@ export const Experiences: CollectionConfig<"experiences"> = {
           type: "date",
           admin: {
             date: {
-              pickerAppearance: "monthOnly",
-            },
-          },
-        },
-      ],
+              pickerAppearance: "monthOnly"
+            }
+          }
+        }
+      ]
     },
-    ...slugField(["title", "company"]), // use title and company to create slug
+    ...slugField(["title", "company"]) // use title and company to create slug
   ],
   hooks: {
     afterChange: [revalidateExperience],
-    afterDelete: [revalidateDelete],
+    afterDelete: [revalidateDelete]
   },
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
+        interval: 100 // We set this interval for optimal live preview
+      }
     },
-    maxPerDoc: 10,
-  },
+    maxPerDoc: 10
+  }
 };

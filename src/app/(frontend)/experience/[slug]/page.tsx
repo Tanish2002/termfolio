@@ -40,11 +40,7 @@ export default async function Experience({ params }: Args) {
           {monthRange(experienceData.startDate!, experienceData.endDate!)}
         </h3>
       </div>
-      <RichText
-        className="space-y-4"
-        data={experienceData.content}
-        enableGutter={false}
-      />
+      <RichText className="space-y-4" data={experienceData.content} enableGutter={false} />
     </div>
   );
 }
@@ -58,8 +54,8 @@ export async function generateStaticParams() {
     overrideAccess: false,
     pagination: false,
     select: {
-      slug: true,
-    },
+      slug: true
+    }
   });
 
   const params = posts.docs.map(({ slug }) => {
@@ -82,9 +78,9 @@ const queryExperienceBySlug = cache(async ({ slug }: { slug: string }) => {
     pagination: false,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
+        equals: slug
+      }
+    }
   });
 
   return result.docs?.[0] || null;

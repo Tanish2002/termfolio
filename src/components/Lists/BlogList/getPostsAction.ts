@@ -20,27 +20,27 @@ export const getPublishedPosts = unstable_cache(
         title: true,
         readTime: true,
         slug: true,
-        archived: true,
+        archived: true
       },
       sort: ["-publishedAt"],
       where: {
         _status: {
-          equals: "published",
+          equals: "published"
         },
         archived: {
-          equals: false,
-        },
-      },
+          equals: false
+        }
+      }
     });
 
     return result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: `${item.readTime} min`,
-      href: "/blog/" + item.slug?.trim(),
+      href: "/blog/" + item.slug?.trim()
     }));
   },
   ["blog-published-list"],
-  { tags: ["blog-archived-list"] },
+  { tags: ["blog-archived-list"] }
 );
 
 export const getArchivedPosts = unstable_cache(
@@ -57,25 +57,25 @@ export const getArchivedPosts = unstable_cache(
         title: true,
         readTime: true,
         slug: true,
-        archived: true,
+        archived: true
       },
       sort: ["-publishedAt"],
       where: {
         _status: {
-          equals: "published",
+          equals: "published"
         },
         archived: {
-          equals: true,
-        },
-      },
+          equals: true
+        }
+      }
     });
 
     return result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: `${item.readTime} min`,
-      href: "/blog/" + item.slug?.trim() + "?status=archived",
+      href: "/blog/" + item.slug?.trim() + "?status=archived"
     }));
   },
   ["blog-archived-list"],
-  { tags: ["blog-archived-list"] },
+  { tags: ["blog-archived-list"] }
 );

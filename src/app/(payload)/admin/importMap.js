@@ -84,8 +84,7 @@ export const importMap = {
     ColorTextFeatureClient_ad6f515e9c8899edcad96485ccf95000,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient":
     BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "/payload/fields/code/index.tsx#default":
-    default_392b71bddad790c856ef58182151606b,
+  "/payload/fields/code/index.tsx#default": default_392b71bddad790c856ef58182151606b,
   "@payloadcms/plugin-seo/client#OverviewComponent":
     OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent":
@@ -96,10 +95,8 @@ export const importMap = {
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "/payload/fields/slug/SlugComponent#SlugComponent":
     SlugComponent_a826338eb6e187a3efaaabb6ad891720,
-  "/payload/fields/checkbox.tsx#default":
-    default_3e92e60748100fbde963e9ab0e5dd812,
+  "/payload/fields/checkbox.tsx#default": default_3e92e60748100fbde963e9ab0e5dd812,
   "/payload/components/Admin/OAuthLoginButton.tsx#default":
     default_9afe1673d4100f49a7d3f07e2adc119d,
-  "/payload/components/Admin/DashBoardInfo.tsx#default":
-    default_7ab2bfa31b44be3cb41ddc3a1f1a767b,
+  "/payload/components/Admin/DashBoardInfo.tsx#default": default_7ab2bfa31b44be3cb41ddc3a1f1a767b
 };

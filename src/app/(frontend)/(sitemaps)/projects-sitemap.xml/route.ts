@@ -20,13 +20,13 @@ const getPagesSitemap = unstable_cache(
       pagination: false,
       where: {
         _status: {
-          equals: "published",
-        },
+          equals: "published"
+        }
       },
       select: {
         slug: true,
-        updatedAt: true,
-      },
+        updatedAt: true
+      }
     });
 
     const dateFallback = new Date().toISOString();
@@ -34,8 +34,8 @@ const getPagesSitemap = unstable_cache(
     const defaultSitemap = [
       {
         loc: `${SITE_URL}/projects`,
-        lastmod: dateFallback,
-      },
+        lastmod: dateFallback
+      }
     ];
 
     const sitemap = results.docs
@@ -44,7 +44,7 @@ const getPagesSitemap = unstable_cache(
           .map((page) => {
             return {
               loc: `${SITE_URL}/projects/${page?.slug}`,
-              lastmod: page.updatedAt || dateFallback,
+              lastmod: page.updatedAt || dateFallback
             };
           })
       : [];
@@ -53,8 +53,8 @@ const getPagesSitemap = unstable_cache(
   },
   ["projects-sitemap"],
   {
-    tags: ["projects-sitemap"],
-  },
+    tags: ["projects-sitemap"]
+  }
 );
 
 export async function GET() {

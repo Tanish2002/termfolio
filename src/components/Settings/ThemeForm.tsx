@@ -32,7 +32,7 @@ export default function ThemeForm() {
           background: "bg-tokyo-night-light-background",
           text: "text-tokyo-night-light-foreground",
           focussedClassName: "border-tokyo-night-dark-red",
-          unFocussedClassName: "border-tokyo-night-light-selection",
+          unFocussedClassName: "border-tokyo-night-light-selection"
         };
       case "dark":
         return {
@@ -40,7 +40,7 @@ export default function ThemeForm() {
           background: "bg-tokyo-night-dark-background",
           text: "text-tokyo-night-dark-foreground",
           focussedClassName: "border-tokyo-night-dark-red",
-          unFocussedClassName: "border-tokyo-night-light-selection",
+          unFocussedClassName: "border-tokyo-night-light-selection"
         };
       case "system":
         return {
@@ -54,13 +54,11 @@ export default function ThemeForm() {
               ? "text-tokyo-night-dark-foreground"
               : "text-tokyo-night-light-foreground",
           focussedClassName:
-            systemTheme === "dark"
-              ? "border-tokyo-night-dark-red"
-              : "border-tokyo-night-light-red",
+            systemTheme === "dark" ? "border-tokyo-night-dark-red" : "border-tokyo-night-light-red",
           unFocussedClassName:
             systemTheme === "dark"
               ? "border-tokyo-night-dark-selection"
-              : "border-tokyo-night-light-selection",
+              : "border-tokyo-night-light-selection"
         };
     }
   }, [previewTheme, systemTheme]);
@@ -138,23 +136,13 @@ export default function ThemeForm() {
             internalPaddingClass="0"
             colors={{
               focussedClassName: currentPreview["focussedClassName"],
-              unFocussedClassName: currentPreview["unFocussedClassName"],
+              unFocussedClassName: currentPreview["unFocussedClassName"]
             }}
           >
-            <div
-              className={cn(
-                currentPreview.background,
-                currentPreview.text,
-                "p-4",
-              )}
-            >
-              <h3 className="mb-2 text-lg font-bold underline">
-                {currentPreview.title}
-              </h3>
+            <div className={cn(currentPreview.background, currentPreview.text, "p-4")}>
+              <h3 className="mb-2 text-lg font-bold underline">{currentPreview.title}</h3>
               <ThemeColorPreview
-                actualTheme={
-                  previewTheme === "system" ? systemTheme : previewTheme
-                }
+                actualTheme={previewTheme === "system" ? systemTheme : previewTheme}
               />
             </div>
           </BorderBox>

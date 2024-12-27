@@ -18,7 +18,7 @@ const ScrollProvider: React.FC = () => {
         const scrollAmount = scrollableDiv.current.clientHeight * 0.1;
         scrollableDiv.current.scrollBy({
           top: e.key === "PageUp" ? -scrollAmount : scrollAmount,
-          behavior: "smooth",
+          behavior: "smooth"
         });
       }
     };

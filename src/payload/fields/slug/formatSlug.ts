@@ -22,9 +22,7 @@ export const formatSlugHook =
         }
       } else if (Array.isArray(fallback)) {
         const fallbackValues = fallback
-          .map((key) =>
-            typeof data?.[key] === "string" ? formatSlug(data[key]) : "",
-          )
+          .map((key) => (typeof data?.[key] === "string" ? formatSlug(data[key]) : ""))
           .filter(Boolean);
 
         if (fallbackValues.length > 0) {

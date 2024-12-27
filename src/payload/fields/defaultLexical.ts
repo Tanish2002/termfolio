@@ -11,7 +11,7 @@ import {
   UnderlineFeature,
   UnorderedListFeature,
   defaultEditorFeatures,
-  lexicalEditor,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import { Config } from "payload";
 
@@ -45,30 +45,30 @@ export const defaultLexical: Config["editor"] = lexicalEditor({
               name: "url",
               type: "text",
               admin: {
-                condition: ({ linkType }) => linkType !== "internal",
+                condition: ({ linkType }) => linkType !== "internal"
               },
               label: ({ t }) => t("fields:enterURL"),
-              required: true,
-            },
+              required: true
+            }
           ];
-        },
+        }
       }),
       ColorTextFeature({
         enabledColors: [
           {
             label: "Orange",
-            className: "text-tokyo-night-orange",
+            className: "text-tokyo-night-orange"
           },
           {
             label: "Cyan",
-            className: "text-tokyo-night-cyan",
+            className: "text-tokyo-night-cyan"
           },
           {
             label: "Magenta",
-            className: "text-tokyo-night-magenta",
-          },
-        ],
-      }),
+            className: "text-tokyo-night-magenta"
+          }
+        ]
+      })
     ];
-  },
+  }
 });

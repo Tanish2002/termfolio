@@ -15,7 +15,7 @@ interface StaticHandlerArgs {
 export const getStaticHandler = ({
   collection,
   folderSrc,
-  getStorageClient,
+  getStorageClient
 }: StaticHandlerArgs): StaticHandler => {
   return async (req, { params: { filename } }) => {
     try {
@@ -25,27 +25,24 @@ export const getStaticHandler = ({
       const isVideo = videoExtensions.includes(extension);
 
       const resource = await getStorageClient().api.resource(publicId, {
-        resource_type: isVideo ? "video" : "image",
+        resource_type: isVideo ? "video" : "image"
       });
 
       const response = await fetch(resource.secure_url);
 
       if (!response.ok) {
-        req.payload.logger.error(
-          `Failed to fetch Cloudinary resource for ${filename}`,
-        );
+        req.payload.logger.error(`Failed to fetch Cloudinary resource for ${filename}`);
         return new Response("Not Found", { status: 404 });
       }
 
       const headers = new Headers({
         "Content-Length": response.headers.get("content-length") || "0",
-        "Content-Type":
-          response.headers.get("content-type") || "application/octet-stream",
+        "Content-Type": response.headers.get("content-type") || "application/octet-stream"
       });
 
       return new Response(response.body, {
         headers,
-        status: 200,
+        status: 200
       });
     } catch (err) {
       req.payload.logger.error(err);

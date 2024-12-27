@@ -7,7 +7,7 @@ import {
   getSelectedNode,
   setFloatingElemPositionForLinkEditor,
   useEditorConfigContext,
-  useLexicalDrawer,
+  useLexicalDrawer
 } from "@payloadcms/richtext-lexical/client";
 import {
   $getSelection,
@@ -18,44 +18,32 @@ import {
   ElementNode,
   KEY_ESCAPE_COMMAND,
   LexicalNode,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from "@payloadcms/richtext-lexical/lexical";
 import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
-import {
-  $findMatchingParent,
-  mergeRegister,
-} from "@payloadcms/richtext-lexical/lexical/utils";
-import {
-  CloseMenuIcon,
-  EditIcon,
-  formatDrawerSlug,
-  useEditDepth,
-} from "@payloadcms/ui";
+import { $findMatchingParent, mergeRegister } from "@payloadcms/richtext-lexical/lexical/utils";
+import { CloseMenuIcon, EditIcon, formatDrawerSlug, useEditDepth } from "@payloadcms/ui";
 import type { Data, FormState } from "payload";
 
 import { $isAutoColorTextNode } from "@/payload/features/colorText/nodes/AutoColorTextNode";
 import {
   $createColorTextNode,
   $isColorTextNode,
-  TOGGLE_COLOR_COMMAND,
+  TOGGLE_COLOR_COMMAND
 } from "@/payload/features/colorText/nodes/ColorTextNode";
 import { ColorTextFields } from "@/payload/features/colorText/nodes/types";
 
 import type { ColorTextPayload } from "../types";
 import { TOGGLE_COLOR_WITH_MODAL_COMMAND } from "./commands";
 
-export function ColorEditor({
-  anchorElem,
-}: {
-  anchorElem: HTMLElement;
-}): React.ReactNode {
+export function ColorEditor({ anchorElem }: { anchorElem: HTMLElement }): React.ReactNode {
   const [editor] = useLexicalComposerContext();
   const editorRef = useRef<HTMLDivElement | null>(null);
   const [textColor, setTextColor] = useState<null | string>(null);
 
   const {
     fieldProps: { schemaPath },
-    uuid,
+    uuid
   } = useEditorConfigContext();
 
   const [stateData, setStateData] = useState<
@@ -70,7 +58,7 @@ export function ColorEditor({
 
   const drawerSlug = formatDrawerSlug({
     slug: `lexical-rich-text-colorText-` + uuid,
-    depth: editDepth,
+    depth: editDepth
   });
 
   const { toggleDrawer } = useLexicalDrawer(drawerSlug);
@@ -99,13 +87,8 @@ export function ColorEditor({
     // Handle the data displayed in the floating textColor editor & drawer when you click on a textColor node
 
     const focusNode = getSelectedNode(selection);
-    selectedNodeDomRect = editor
-      .getElementByKey(focusNode.getKey())
-      ?.getBoundingClientRect();
-    const focusColorTextParent = $findMatchingParent(
-      focusNode,
-      $isColorTextNode,
-    );
+    selectedNodeDomRect = editor.getElementByKey(focusNode.getKey())?.getBoundingClientRect();
+    const focusColorTextParent = $findMatchingParent(focusNode, $isColorTextNode);
 
     // Prevent colorText modal from showing if selection spans further than the colorText: https://github.com/facebook/lexical/issues/4064
     const badNode = selection
@@ -128,7 +111,7 @@ export function ColorEditor({
     const data: { text: string } & ColorTextFields = {
       ...focusColorTextParent.getFields(),
       id: focusColorTextParent.getID(),
-      text: focusColorTextParent.getTextContent(),
+      text: focusColorTextParent.getTextContent()
     };
 
     setTextColor(focusColorTextParent.getFields()?.textColor ?? null);
@@ -160,23 +143,14 @@ export function ColorEditor({
       if (!selectedNodeDomRect) {
         // Get the DOM rect of the selected node using the native selection. This sometimes produces the wrong
         // result, which is why we use lexical's selection preferably.
-        selectedNodeDomRect = nativeSelection
-          .getRangeAt(0)
-          .getBoundingClientRect();
+        selectedNodeDomRect = nativeSelection.getRangeAt(0).getBoundingClientRect();
       }
 
       if (selectedNodeDomRect != null) {
         selectedNodeDomRect.y += 40;
-        setFloatingElemPositionForLinkEditor(
-          selectedNodeDomRect,
-          editorElem,
-          anchorElem,
-        );
+        setFloatingElemPositionForLinkEditor(selectedNodeDomRect, editorElem, anchorElem);
       }
-    } else if (
-      activeElement == null ||
-      activeElement.className !== "link-input"
-    ) {
+    } else if (activeElement == null || activeElement.className !== "link-input") {
       if (rootElement !== null) {
         setFloatingElemPositionForLinkEditor(null, editorElem, anchorElem);
       }
@@ -199,8 +173,8 @@ export function ColorEditor({
 
           return true;
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     );
   }, [editor, $updateTextColorEditor, toggleDrawer, drawerSlug]);
 
@@ -242,7 +216,7 @@ export function ColorEditor({
           void $updateTextColorEditor();
           return true;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_ESCAPE_COMMAND,
@@ -254,8 +228,8 @@ export function ColorEditor({
           }
           return false;
         },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        COMMAND_PRIORITY_HIGH
+      )
     );
   }, [editor, $updateTextColorEditor, isTextColor, setNotColorText]);
 
@@ -321,7 +295,7 @@ export function ColorEditor({
           } & ColorTextFields;
 
           const bareColorTextFields: ColorTextFields = {
-            textColor: newColorTextPayload.textColor,
+            textColor: newColorTextPayload.textColor
           };
 
           editor.update(() => {
@@ -337,7 +311,7 @@ export function ColorEditor({
 
             if (colorTextParent) {
               const colorTextNode = $createColorTextNode({
-                fields: bareColorTextFields,
+                fields: bareColorTextFields
               });
               colorTextParent.replace(colorTextNode, true);
             }
@@ -346,7 +320,7 @@ export function ColorEditor({
             editor.dispatchCommand(TOGGLE_COLOR_COMMAND, {
               fields: bareColorTextFields,
               selectedNodes,
-              text: newColorTextPayload.text,
+              text: newColorTextPayload.text
             });
           });
         }}

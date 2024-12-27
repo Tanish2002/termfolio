@@ -4,7 +4,7 @@ const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: "/blog",
   projects: "/projects",
   experiences: "/experience",
-  techstacks: "/",
+  techstacks: "/"
 };
 
 type Props = {
@@ -18,7 +18,7 @@ export const generatePreviewPath = ({ collection, slug }: Props) => {
   const params = {
     slug,
     collection,
-    path,
+    path
   };
 
   const encodedParams = new URLSearchParams();

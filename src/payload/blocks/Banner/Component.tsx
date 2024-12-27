@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-  FaCheckCircle,
-  FaExclamationTriangle,
-  FaInfoCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
 
 import type { BannerBlock as BannerBlockProps } from "@/payload-types";
 import RichText from "@/payload/components/RichText";
@@ -20,9 +15,7 @@ export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
     info: <FaInfoCircle className="mr-3 text-lg text-tokyo-night-blue" />,
     error: <FaTimesCircle className="mr-3 text-lg text-tokyo-night-red" />,
     success: <FaCheckCircle className="mr-3 text-lg text-tokyo-night-green" />,
-    warning: (
-      <FaExclamationTriangle className="mr-3 text-lg text-tokyo-night-yellow" />
-    ),
+    warning: <FaExclamationTriangle className="mr-3 text-lg text-tokyo-night-yellow" />
   };
 
   return (
@@ -31,10 +24,8 @@ export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
         className={cn("flex items-center rounded border px-6 py-3", {
           "border-tokyo-night-blue bg-tokyo-night-blue/30": style === "info",
           "border-tokyo-night-red bg-tokyo-night-red/30": style === "error",
-          "border-tokyo-night-green bg-tokyo-night-green/30":
-            style === "success",
-          "border-tokyo-night-yellow bg-tokyo-night-yellow/30":
-            style === "warning",
+          "border-tokyo-night-green bg-tokyo-night-green/30": style === "success",
+          "border-tokyo-night-yellow bg-tokyo-night-yellow/30": style === "warning"
         })}
       >
         <div className="flex w-full items-center">
@@ -44,7 +35,7 @@ export const BannerBlock: React.FC<Props> = ({ className, content, style }) => {
               "text-tokyo-night-blue": style === "info",
               "text-tokyo-night-red": style === "error",
               "text-tokyo-night-green": style === "success",
-              "text-tokyo-night-yellow": style === "warning",
+              "text-tokyo-night-yellow": style === "warning"
             })}
             data={content}
             enableGutter={false}

@@ -9,9 +9,7 @@ export const useMobileNavbarOpen = () => {
   const context = useContext(MobileNavbarOpenContext);
   if (context === null) {
     return null; // don't return error since desktop components might not be wrapped in this mobile context
-    throw new Error(
-      "useMobileNavbarOpen must be used within a MobileNavbarOpenContext",
-    );
+    throw new Error("useMobileNavbarOpen must be used within a MobileNavbarOpenContext");
   }
   return context;
 };

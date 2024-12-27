@@ -3,7 +3,7 @@ import type {
   Adapter,
   PluginOptions as CloudStoragePluginOptions,
   CollectionOptions,
-  GeneratedAdapter,
+  GeneratedAdapter
 } from "@payloadcms/plugin-cloud-storage/types";
 import type { ConfigOptions } from "cloudinary";
 import { v2 as cloudinary } from "cloudinary";
@@ -28,7 +28,7 @@ export const videoExtensions = [
   "webm",
   "mpg",
   "mpe",
-  "mpeg",
+  "mpeg"
 ];
 
 export type CloudinaryStorageOptions = {
@@ -55,9 +55,7 @@ export type CloudinaryStorageOptions = {
   folder?: string;
 };
 
-type CloudinaryStoragePlugin = (
-  storageCloudinaryArgs: CloudinaryStorageOptions,
-) => Plugin;
+type CloudinaryStoragePlugin = (storageCloudinaryArgs: CloudinaryStorageOptions) => Plugin;
 
 export const cloudinaryStorage: CloudinaryStoragePlugin =
   (cloudinaryStorageOptions: CloudinaryStorageOptions) =>
@@ -69,17 +67,18 @@ export const cloudinaryStorage: CloudinaryStoragePlugin =
     const adapter = cloudinaryStorageInternal(cloudinaryStorageOptions);
 
     // Add adapter to each collection option object
-    const collectionsWithAdapter: CloudStoragePluginOptions["collections"] =
-      Object.entries(cloudinaryStorageOptions.collections).reduce(
-        (acc, [slug, collOptions]) => ({
-          ...acc,
-          [slug]: {
-            ...(collOptions === true ? {} : collOptions),
-            adapter,
-          },
-        }),
-        {} as Record<string, CollectionOptions>,
-      );
+    const collectionsWithAdapter: CloudStoragePluginOptions["collections"] = Object.entries(
+      cloudinaryStorageOptions.collections
+    ).reduce(
+      (acc, [slug, collOptions]) => ({
+        ...acc,
+        [slug]: {
+          ...(collOptions === true ? {} : collOptions),
+          adapter
+        }
+      }),
+      {} as Record<string, CollectionOptions>
+    );
 
     // Set disableLocalStorage: true for collections specified in the plugin options
     const config = {
@@ -93,25 +92,22 @@ export const cloudinaryStorage: CloudinaryStoragePlugin =
           ...collection,
           upload: {
             ...(typeof collection.upload === "object" ? collection.upload : {}),
-            disableLocalStorage: true,
-          },
+            disableLocalStorage: true
+          }
         };
-      }),
+      })
     };
 
     return cloudStoragePlugin({
-      collections: collectionsWithAdapter,
+      collections: collectionsWithAdapter
     })(config);
   };
 
-function cloudinaryStorageInternal({
-  config = {},
-  folder,
-}: CloudinaryStorageOptions): Adapter {
+function cloudinaryStorageInternal({ config = {}, folder }: CloudinaryStorageOptions): Adapter {
   return ({ collection, prefix }): GeneratedAdapter => {
     if (!cloudinary) {
       throw new Error(
-        "The package cloudinary is not installed, but is required for the plugin-cloud-storage Cloudinary adapter. Please install it.",
+        "The package cloudinary is not installed, but is required for the plugin-cloud-storage Cloudinary adapter. Please install it."
       );
     }
 
@@ -136,13 +132,13 @@ function cloudinaryStorageInternal({
         collection,
         folderSrc,
         getStorageClient,
-        prefix,
+        prefix
       }),
       staticHandler: getStaticHandler({
         collection,
         folderSrc,
-        getStorageClient,
-      }),
+        getStorageClient
+      })
     };
   };
 }

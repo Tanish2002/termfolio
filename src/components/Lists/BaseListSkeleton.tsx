@@ -9,14 +9,9 @@ interface BaseListSkeletonProps {
   boxText: string;
 }
 
-export const BaseListSkeleton: React.FC<BaseListSkeletonProps> = ({
-  count = 10,
-  boxText,
-}) => {
+export const BaseListSkeleton: React.FC<BaseListSkeletonProps> = ({ count = 10, boxText }) => {
   return (
-    <BorderBox
-      texts={[{ textYPosition: "top", textXPosition: "left", text: boxText }]}
-    >
+    <BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: boxText }]}>
       <ul className="w-full space-y-2">
         {Array.from({ length: count }).map((_, index) => (
           <li

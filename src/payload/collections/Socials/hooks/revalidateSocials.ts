@@ -1,15 +1,12 @@
 import { revalidateTag } from "next/cache";
 
-import type {
-  CollectionAfterChangeHook,
-  CollectionAfterDeleteHook,
-} from "payload";
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
 
 import type { Techstack } from "@/payload-types";
 
 export const revalidateSocials: CollectionAfterChangeHook<Techstack> = ({
   doc,
-  req: { payload, context },
+  req: { payload, context }
 }) => {
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating socials list`);
@@ -20,7 +17,7 @@ export const revalidateSocials: CollectionAfterChangeHook<Techstack> = ({
 
 export const revalidateDelete: CollectionAfterDeleteHook<Techstack> = ({
   doc,
-  req: { context },
+  req: { context }
 }) => {
   if (!context.disableRevalidate) {
     revalidateTag("socials-list");

@@ -9,10 +9,7 @@ import { COMMAND_PRIORITY_LOW } from "lexical";
 
 import { ClientProps } from "../..";
 import { AutoColorTextNode } from "../../../nodes/AutoColorTextNode";
-import {
-  $toggleLink,
-  TOGGLE_COLOR_COMMAND,
-} from "../../../nodes/ColorTextNode";
+import { $toggleLink, TOGGLE_COLOR_COMMAND } from "../../../nodes/ColorTextNode";
 import { ColorTextPayload } from "../floatingColorEditor/types";
 
 export const ColorTextPlugin: PluginComponent<ClientProps> = () => {
@@ -20,9 +17,7 @@ export const ColorTextPlugin: PluginComponent<ClientProps> = () => {
 
   useEffect(() => {
     if (!editor.hasNodes([AutoColorTextNode])) {
-      throw new Error(
-        "ColorTextPlugin: ColorTextNode not registered on editor",
-      );
+      throw new Error("ColorTextPlugin: ColorTextNode not registered on editor");
     }
     return mergeRegister(
       editor.registerCommand(
@@ -31,8 +26,8 @@ export const ColorTextPlugin: PluginComponent<ClientProps> = () => {
           $toggleLink(payload);
           return true;
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     );
   }, [editor]);
 

@@ -11,15 +11,15 @@ const tokyoNightThemePlugin = plugin(
       ":root": Object.fromEntries(
         Object.entries(tokyoNightLightColors).map(([key, value]) => [
           `--color-tokyo-night-${key}`,
-          value,
-        ]),
+          value
+        ])
       ),
       ".dark": Object.fromEntries(
         Object.entries(tokyoNightColors).map(([key, value]) => [
           `--color-tokyo-night-${key}`,
-          value,
-        ]),
-      ),
+          value
+        ])
+      )
     }; // Ensure correct typing
 
     // Add the CSS variables to the base styles
@@ -63,11 +63,11 @@ const tokyoNightThemePlugin = plugin(
             selection:
               "color-mix(in srgb, var(--color-tokyo-night-selection) calc(<alpha-value> * 100%), transparent)",
             comment:
-              "color-mix(in srgb, var(--color-tokyo-night-comment) calc(<alpha-value> * 100%), transparent)",
-          },
-        },
-      },
-    },
-  },
+              "color-mix(in srgb, var(--color-tokyo-night-comment) calc(<alpha-value> * 100%), transparent)"
+          }
+        }
+      }
+    }
+  }
 );
 export default tokyoNightThemePlugin;

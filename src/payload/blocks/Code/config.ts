@@ -12,7 +12,7 @@ const SUPPORTED_LANGUAGES = [
   "go",
   "rust",
   "cpp",
-  "csharp",
+  "csharp"
 ];
 export const Code: Block = {
   slug: "code",
@@ -25,9 +25,9 @@ export const Code: Block = {
       options: [
         ...SUPPORTED_LANGUAGES.map((lang) => ({
           label: lang,
-          value: lang,
-        })),
-      ],
+          value: lang
+        }))
+      ]
     },
     {
       name: "codeContent",
@@ -37,9 +37,9 @@ export const Code: Block = {
       admin: {
         language: "javascript", // Default language for the editor
         components: {
-          Field: "/payload/fields/code/index.tsx#default",
-        },
-      },
-    },
-  ],
+          Field: "/payload/fields/code/index.tsx#default"
+        }
+      }
+    }
+  ]
 };

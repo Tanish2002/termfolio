@@ -11,7 +11,7 @@ function monthRange(startDate: string, endDate: string) {
     "Sept",
     "Oct",
     "Nov",
-    "Dec",
+    "Dec"
   ];
 
   const start = new Date(startDate);

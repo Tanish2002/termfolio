@@ -8,7 +8,7 @@ export function getCurrentFont(): FontSettings {
 
   // Default is scientifica
   return {
-    font: fontCookie === "mono" ? "mono" : "scientifica",
+    font: fontCookie === "mono" ? "mono" : "scientifica"
   };
 }
 

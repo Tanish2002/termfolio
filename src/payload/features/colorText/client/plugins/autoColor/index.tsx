@@ -7,7 +7,7 @@ import type {
   ElementNode,
   LexicalEditor,
   LexicalNode,
-  TextNode,
+  TextNode
 } from "@payloadcms/richtext-lexical/lexical";
 import {
   $createTextNode,
@@ -17,7 +17,7 @@ import {
   $isNodeSelection,
   $isRangeSelection,
   $isTextNode,
-  TextNode as TextNodeValue,
+  TextNode as TextNodeValue
 } from "@payloadcms/richtext-lexical/lexical";
 import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@payloadcms/richtext-lexical/lexical/utils";
@@ -26,12 +26,9 @@ import { ClientProps } from "../..";
 import {
   $createAutoColorTextNode,
   $isAutoColorTextNode,
-  AutoColorTextNode,
+  AutoColorTextNode
 } from "../../../nodes/AutoColorTextNode";
-import {
-  $createColorTextNode,
-  $isColorTextNode,
-} from "../../../nodes/ColorTextNode";
+import { $createColorTextNode, $isColorTextNode } from "../../../nodes/ColorTextNode";
 import { ColorTextFields } from "../../../nodes/types";
 
 interface ColorTextMatcherResult {
@@ -64,15 +61,12 @@ function createColorMatcher(): ColorTextMatcher {
       index: match.index,
       length: match[0].length,
       text: match[2], // The inner text
-      color: match[1], // The color class or className
+      color: match[1] // The color class or className
     };
   };
 }
 
-function findFirstMatch(
-  text: string,
-  matchers: ColorTextMatcher[],
-): ColorTextMatcherResult | null {
+function findFirstMatch(text: string, matchers: ColorTextMatcher[]): ColorTextMatcherResult | null {
   for (let i = 0; i < matchers.length; i++) {
     const match = matchers[i](text);
 
@@ -121,8 +115,7 @@ function isPreviousNodeValid(node: LexicalNode): boolean {
   return (
     previousNode === null ||
     $isLineBreakNode(previousNode) ||
-    ($isTextNode(previousNode) &&
-      endsWithSeparator(previousNode.getTextContent()))
+    ($isTextNode(previousNode) && endsWithSeparator(previousNode.getTextContent()))
   );
 }
 
@@ -142,32 +135,28 @@ function isContentAroundIsValid(
   matchStart: number,
   matchEnd: number,
   text: string,
-  nodes: TextNode[],
+  nodes: TextNode[]
 ): boolean {
   const contentBeforeIsValid =
-    matchStart > 0
-      ? isSeparator(text[matchStart - 1])
-      : isPreviousNodeValid(nodes[0]);
+    matchStart > 0 ? isSeparator(text[matchStart - 1]) : isPreviousNodeValid(nodes[0]);
   if (!contentBeforeIsValid) {
     return false;
   }
 
   const contentAfterIsValid =
-    matchEnd < text.length
-      ? isSeparator(text[matchEnd])
-      : isNextNodeValid(nodes[nodes.length - 1]);
+    matchEnd < text.length ? isSeparator(text[matchEnd]) : isNextNodeValid(nodes[nodes.length - 1]);
   return contentAfterIsValid;
 }
 
 function extractMatchingNodes(
   nodes: TextNode[],
   startIndex: number,
-  endIndex: number,
+  endIndex: number
 ): [
   matchingOffset: number,
   unmodifiedBeforeNodes: TextNode[],
   matchingNodes: TextNode[],
-  unmodifiedAfterNodes: TextNode[],
+  unmodifiedAfterNodes: TextNode[]
 ] {
   const unmodifiedBeforeNodes: TextNode[] = [];
   const matchingNodes: TextNode[] = [];
@@ -195,23 +184,18 @@ function extractMatchingNodes(
     currentOffset += currentNodeLength;
     currentNodes.shift();
   }
-  return [
-    matchingOffset,
-    unmodifiedBeforeNodes,
-    matchingNodes,
-    unmodifiedAfterNodes,
-  ];
+  return [matchingOffset, unmodifiedBeforeNodes, matchingNodes, unmodifiedAfterNodes];
 }
 
 function $createAutoLinkNode_(
   nodes: TextNode[],
   startIndex: number,
   endIndex: number,
-  match: ColorTextMatcherResult,
+  match: ColorTextMatcherResult
 ): TextNode | undefined {
   const fields = {
     textColor: match.color,
-    ...match.fields,
+    ...match.fields
   } as ColorTextFields;
 
   const linkNode = $createColorTextNode({ fields });
@@ -221,10 +205,7 @@ function $createAutoLinkNode_(
     if (startIndex === 0) {
       [linkTextNode, remainingTextNode] = remainingTextNode.splitText(endIndex);
     } else {
-      [, linkTextNode, remainingTextNode] = remainingTextNode.splitText(
-        startIndex,
-        endIndex,
-      );
+      [, linkTextNode, remainingTextNode] = remainingTextNode.splitText(startIndex, endIndex);
     }
     const textNode = $createTextNode(match.text);
     textNode.setFormat(linkTextNode.getFormat());
@@ -254,9 +235,7 @@ function $createAutoLinkNode_(
         if (currentNodeEnd <= endIndex) {
           linkNodes.push(currentNode);
         } else {
-          const [linkTextNode, endNode] = currentNode.splitText(
-            endIndex - currentNodeStart,
-          );
+          const [linkTextNode, endNode] = currentNode.splitText(endIndex - currentNodeStart);
           linkNodes.push(linkTextNode);
           remainingTextNode = endNode;
         }
@@ -264,9 +243,7 @@ function $createAutoLinkNode_(
       offset += currentNodeLength;
     }
     const selection = $getSelection();
-    const selectedTextNode = selection
-      ? selection.getNodes().find($isTextNode)
-      : undefined;
+    const selectedTextNode = selection ? selection.getNodes().find($isTextNode) : undefined;
     const textNode = $createTextNode(firstLinkTextNode.getTextContent());
     textNode.setFormat(firstLinkTextNode.getFormat());
     textNode.setDetail(firstLinkTextNode.getDetail());
@@ -290,12 +267,10 @@ function $createAutoLinkNode_(
 function $handleLinkCreation(
   nodes: TextNode[],
   matchers: ColorTextMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   let currentNodes = [...nodes];
-  const initialText = currentNodes
-    .map((node) => node.getTextContent())
-    .join("");
+  const initialText = currentNodes.map((node) => node.getTextContent()).join("");
   let text = initialText;
 
   let match;
@@ -309,16 +284,15 @@ function $handleLinkCreation(
       invalidMatchEnd + matchStart,
       invalidMatchEnd + matchEnd,
       initialText,
-      currentNodes,
+      currentNodes
     );
 
     if (isValid) {
-      const [matchingOffset, , matchingNodes, unmodifiedAfterNodes] =
-        extractMatchingNodes(
-          currentNodes,
-          invalidMatchEnd + matchStart,
-          invalidMatchEnd + matchEnd,
-        );
+      const [matchingOffset, , matchingNodes, unmodifiedAfterNodes] = extractMatchingNodes(
+        currentNodes,
+        invalidMatchEnd + matchStart,
+        invalidMatchEnd + matchEnd
+      );
 
       const actualMatchStart = invalidMatchEnd + matchStart - matchingOffset;
       const actualMatchEnd = invalidMatchEnd + matchEnd - matchingOffset;
@@ -326,7 +300,7 @@ function $handleLinkCreation(
         matchingNodes,
         actualMatchStart,
         actualMatchEnd,
-        match,
+        match
       );
       currentNodes = remainingTextNode
         ? [remainingTextNode, ...unmodifiedAfterNodes]
@@ -344,7 +318,7 @@ function $handleLinkCreation(
 function handleColorTextEdit(
   linkNode: AutoColorTextNode,
   matchers: ColorTextMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   // Check children are simple text
   const children = linkNode.getChildren();
@@ -388,7 +362,7 @@ function handleColorTextEdit(
 function handleBadNeighbors(
   textNode: TextNode,
   matchers: ColorTextMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   const previousSibling = textNode.getPreviousSibling();
   const nextSibling = textNode.getNextSibling();
@@ -425,11 +399,7 @@ function getTextNodesToMatch(textNode: TextNode): TextNode[] {
   // check if next siblings are simple text nodes till a node contains a space separator
   const textNodesToMatch = [textNode];
   let nextSibling = textNode.getNextSibling();
-  while (
-    nextSibling !== null &&
-    $isTextNode(nextSibling) &&
-    nextSibling.isSimpleText()
-  ) {
+  while (nextSibling !== null && $isTextNode(nextSibling) && nextSibling.isSimpleText()) {
     textNodesToMatch.push(nextSibling);
     if (/\s/.test(nextSibling.getTextContent())) {
       break;
@@ -442,19 +412,14 @@ function getTextNodesToMatch(textNode: TextNode): TextNode[] {
 function useAutoLink(
   editor: LexicalEditor,
   matchers: ColorTextMatcher[],
-  onChange?: ChangeHandler,
+  onChange?: ChangeHandler
 ): void {
   useEffect(() => {
     if (!editor.hasNodes([AutoColorTextNode])) {
-      throw new Error(
-        "LexicalAutoLinkPlugin: AutoLinkNode not registered on editor",
-      );
+      throw new Error("LexicalAutoLinkPlugin: AutoLinkNode not registered on editor");
     }
 
-    const onChangeWrapped = (
-      url: null | string,
-      prevUrl: null | string,
-    ): void => {
+    const onChangeWrapped = (url: null | string, prevUrl: null | string): void => {
       if (onChange != null) {
         onChange(url, prevUrl);
       }
@@ -469,8 +434,7 @@ function useAutoLink(
         } else if (!$isColorTextNode(parent)) {
           if (
             textNode.isSimpleText() &&
-            (startsWithSeparator(textNode.getTextContent()) ||
-              !$isAutoColorTextNode(previous))
+            (startsWithSeparator(textNode.getTextContent()) || !$isAutoColorTextNode(previous))
           ) {
             const textNodesToMatch = getTextNodesToMatch(textNode);
             $handleLinkCreation(textNodesToMatch, matchers, onChangeWrapped);
@@ -478,13 +442,12 @@ function useAutoLink(
 
           handleBadNeighbors(textNode, matchers, onChangeWrapped);
         }
-      }),
+      })
     );
   }, [editor, matchers, onChange]);
 }
 
-const COLOR_SPAN_REGEX =
-  /<span\s+(?:class|className)="([^"]+)">([^<]+)<\/span>/g;
+const COLOR_SPAN_REGEX = /<span\s+(?:class|className)="([^"]+)">([^<]+)<\/span>/g;
 const MATCHERS = [createColorMatcher()];
 
 export const AutoColorTextPlugin: PluginComponent<ClientProps> = () => {

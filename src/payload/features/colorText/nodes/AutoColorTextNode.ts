@@ -3,7 +3,7 @@ import {
   $isElementNode,
   ElementNode,
   LexicalNode,
-  RangeSelection,
+  RangeSelection
 } from "@payloadcms/richtext-lexical/lexical";
 
 import { ColorTextNode } from "./ColorTextNode";
@@ -14,7 +14,7 @@ export class AutoColorTextNode extends ColorTextNode {
     return new AutoColorTextNode({
       id: "",
       fields: node.__fields,
-      key: node.__key,
+      key: node.__key
     });
   }
 
@@ -46,18 +46,12 @@ export class AutoColorTextNode extends ColorTextNode {
       fields: serialized.fields,
       format: serialized.format,
       indent: serialized.indent,
-      version: 2,
+      version: 2
     };
   }
 
-  insertNewAfter(
-    selection: RangeSelection,
-    restoreSelection = true,
-  ): ElementNode | null {
-    const element = this.getParentOrThrow().insertNewAfter(
-      selection,
-      restoreSelection,
-    );
+  insertNewAfter(selection: RangeSelection, restoreSelection = true): ElementNode | null {
+    const element = this.getParentOrThrow().insertNewAfter(selection, restoreSelection);
     if ($isElementNode(element)) {
       const linkNode = $createAutoColorTextNode({ fields: this.__fields });
       element.append(linkNode);
@@ -68,14 +62,14 @@ export class AutoColorTextNode extends ColorTextNode {
 }
 
 export function $createAutoColorTextNode({
-  fields,
+  fields
 }: {
   fields: ColorTextFields;
 }): AutoColorTextNode {
   return $applyNodeReplacement(new AutoColorTextNode({ id: "", fields }));
 }
 export function $isAutoColorTextNode(
-  node: LexicalNode | null | undefined,
+  node: LexicalNode | null | undefined
 ): node is AutoColorTextNode {
   return node instanceof AutoColorTextNode;
 }

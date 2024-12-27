@@ -5,16 +5,16 @@ export const Tags: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name"],
-    group: "Misc",
+    group: "Misc"
   },
   access: {
-    read: () => true,
+    read: () => true
   },
   fields: [
     {
       name: "name",
       type: "text",
-      localized: true,
-    },
-  ],
+      localized: true
+    }
+  ]
 };

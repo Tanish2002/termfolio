@@ -2,7 +2,7 @@ import {
   MetaDescriptionField,
   MetaTitleField,
   OverviewField,
-  PreviewField,
+  PreviewField
 } from "@payloadcms/plugin-seo/fields";
 import {
   BlocksFeature,
@@ -10,7 +10,7 @@ import {
   HeadingFeature,
   HorizontalRuleFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 
@@ -31,7 +31,7 @@ export const Projects: CollectionConfig<"projects"> = {
     create: isAdmin,
     delete: isAdmin,
     read: authenticatedOrPublished,
-    update: isAdmin,
+    update: isAdmin
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -42,7 +42,7 @@ export const Projects: CollectionConfig<"projects"> = {
     slug: true,
     tags: true,
     githubLink: true,
-    projectLink: true,
+    projectLink: true
   },
   admin: {
     defaultColumns: ["title", "slug", "updatedAt"],
@@ -50,27 +50,27 @@ export const Projects: CollectionConfig<"projects"> = {
       url: ({ data }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === "string" ? data.slug : "",
-          collection: "projects",
+          collection: "projects"
         });
 
         return `${getServerSideURL()}${path}`;
-      },
+      }
     },
     preview: (data) => {
       const path = generatePreviewPath({
         slug: typeof data?.slug === "string" ? data.slug : "",
-        collection: "projects",
+        collection: "projects"
       });
 
       return `${getServerSideURL()}${path}`;
     },
-    useAsTitle: "title",
+    useAsTitle: "title"
   },
   fields: [
     {
       name: "title",
       type: "text",
-      required: true,
+      required: true
     },
     {
       name: "projectBanner",
@@ -79,8 +79,8 @@ export const Projects: CollectionConfig<"projects"> = {
       relationTo: "media",
       displayPreview: true,
       filterOptions: {
-        mimeType: { contains: "image" },
-      },
+        mimeType: { contains: "image" }
+      }
     },
     {
       type: "tabs",
@@ -95,20 +95,20 @@ export const Projects: CollectionConfig<"projects"> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({
-                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"]
                     }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
+                    HorizontalRuleFeature()
                   ];
-                },
+                }
               }),
               label: false,
-              required: true,
-            },
+              required: true
+            }
           ],
-          label: "Content",
+          label: "Content"
         },
         {
           label: "Meta",
@@ -118,36 +118,34 @@ export const Projects: CollectionConfig<"projects"> = {
               type: "text",
               label: "Project Live Link",
               admin: {
-                position: "sidebar",
+                position: "sidebar"
               },
               validate: (value: string | null) =>
-                !value ||
-                /^(https?:\/\/)?([^\s$.?#].[^\s]*)$/i.test(value) ||
-                "Invalid URL",
+                !value || /^(https?:\/\/)?([^\s$.?#].[^\s]*)$/i.test(value) || "Invalid URL"
             },
             {
               name: "githubLink",
               type: "text",
               admin: {
-                position: "sidebar",
+                position: "sidebar"
               },
               validate: (value: string | null) =>
                 !value ||
                 /^https?:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?$/.test(
-                  value,
+                  value
                 ) ||
-                "Invalid GitHub URL",
+                "Invalid GitHub URL"
             },
             {
               name: "tags",
               type: "relationship",
               admin: {
-                position: "sidebar",
+                position: "sidebar"
               },
               hasMany: true,
-              relationTo: "tags",
-            },
-          ],
+              relationTo: "tags"
+            }
+          ]
         },
         {
           name: "meta",
@@ -155,10 +153,10 @@ export const Projects: CollectionConfig<"projects"> = {
           fields: [
             OverviewField({
               titlePath: "meta.title",
-              descriptionPath: "meta.description",
+              descriptionPath: "meta.description"
             }),
             MetaTitleField({
-              hasGenerateFn: true,
+              hasGenerateFn: true
             }),
             MetaDescriptionField({}),
             PreviewField({
@@ -167,11 +165,11 @@ export const Projects: CollectionConfig<"projects"> = {
 
               // field paths to match the target field for data
               titlePath: "meta.title",
-              descriptionPath: "meta.description",
-            }),
-          ],
-        },
-      ],
+              descriptionPath: "meta.description"
+            })
+          ]
+        }
+      ]
     },
     {
       name: "projectType",
@@ -199,25 +197,25 @@ export const Projects: CollectionConfig<"projects"> = {
         { label: "Development Tool", value: "development tool" },
         { label: "Open Source Library", value: "open-source library" },
         { label: "IoT Application", value: "iot application" },
-        { label: "Research Prototype", value: "research prototype" },
+        { label: "Research Prototype", value: "research prototype" }
       ],
       admin: {
-        position: "sidebar",
+        position: "sidebar"
       },
-      required: true,
+      required: true
     },
-    ...slugField(),
+    ...slugField()
   ],
   hooks: {
     afterChange: [revalidateProject],
-    afterDelete: [revalidateDelete],
+    afterDelete: [revalidateDelete]
   },
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
+        interval: 100 // We set this interval for optimal live preview
+      }
     },
-    maxPerDoc: 10,
-  },
+    maxPerDoc: 10
+  }
 };

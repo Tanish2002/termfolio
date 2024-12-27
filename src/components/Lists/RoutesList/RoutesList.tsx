@@ -8,11 +8,11 @@ const items: BaseListItem[] = [
   {
     leftContent: "Experience",
     rightContent: "/experience",
-    href: "/experience",
+    href: "/experience"
   },
   { leftContent: "Projects", rightContent: "/projects", href: "/projects" },
   { leftContent: "Blog", rightContent: "/blog", href: "/blog" },
-  { leftContent: "Settings", rightContent: "/settings", href: "/settings" },
+  { leftContent: "Settings", rightContent: "/settings", href: "/settings" }
 ];
 
 const RoutesList: React.FC<{ divIndex: number }> = async ({ divIndex }) => {

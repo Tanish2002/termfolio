@@ -9,7 +9,7 @@ const tokyoNightColors = {
   cyan: "#7dcfff",
   comment: "#565f89",
   darkBlue: "#3d59a1",
-  darkPurple: "#1e2239",
+  darkPurple: "#1e2239"
 };
 
 const truncateText = (text: string, maxLength = 50) =>
@@ -28,9 +28,7 @@ export async function GET(req: Request) {
   async function loadGoogleFont(font: string, text: string | number | boolean) {
     const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
     const css = await (await fetch(url)).text();
-    const resource = css.match(
-      /src: url\((.+)\) format\('(opentype|truetype)'\)/,
-    );
+    const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/);
 
     if (resource) {
       const response = await fetch(resource[1]);
@@ -52,7 +50,7 @@ export async function GET(req: Request) {
           backgroundColor: tokyoNightColors.background,
           padding: "60px",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <div
@@ -60,7 +58,7 @@ export async function GET(req: Request) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            maxWidth: "60%",
+            maxWidth: "60%"
           }}
         >
           {type && (
@@ -73,7 +71,7 @@ export async function GET(req: Request) {
                 fontSize: "20px",
                 marginBottom: "20px",
                 textTransform: "capitalize",
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               {type}
@@ -86,7 +84,7 @@ export async function GET(req: Request) {
               color: tokyoNightColors.foreground,
               margin: "0 0 20px 0",
               lineHeight: 1.2,
-              fontWeight: 600,
+              fontWeight: 600
             }}
           >
             {truncateText(title || "", 60)}
@@ -98,7 +96,7 @@ export async function GET(req: Request) {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "10px",
-                marginTop: "20px",
+                marginTop: "20px"
               }}
             >
               {tags.split(",").map((tag, index) => (
@@ -110,7 +108,7 @@ export async function GET(req: Request) {
                     padding: "6px 12px",
                     borderRadius: "15px",
                     fontSize: "18px",
-                    whiteSpace: "nowrap",
+                    whiteSpace: "nowrap"
                   }}
                 >
                   {tag}
@@ -124,11 +122,11 @@ export async function GET(req: Request) {
               style={{
                 marginTop: "20px",
                 fontSize: "20px",
-                color: tokyoNightColors.comment,
+                color: tokyoNightColors.comment
               }}
             >
               {formatDistance(new Date(createdAt), new Date(), {
-                addSuffix: true,
+                addSuffix: true
               })}
             </div>
           )}
@@ -142,7 +140,7 @@ export async function GET(req: Request) {
               height: "100%",
               borderRadius: "20px",
               overflow: "hidden",
-              boxShadow: `0 10px 30px ${tokyoNightColors.darkPurple}`,
+              boxShadow: `0 10px 30px ${tokyoNightColors.darkPurple}`
             }}
           >
             <img
@@ -151,7 +149,7 @@ export async function GET(req: Request) {
               style={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
+                objectFit: "cover"
               }}
             />
           </div>
@@ -165,15 +163,15 @@ export async function GET(req: Request) {
         {
           name: "Inter",
           data: await loadGoogleFont("Inter", title || "bakaotaku.dev"),
-          style: "normal",
-        },
-      ],
-    },
+          style: "normal"
+        }
+      ]
+    }
   );
 }
 
 export const config = {
   api: {
-    responseType: "buffer",
-  },
+    responseType: "buffer"
+  }
 };

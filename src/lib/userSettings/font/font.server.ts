@@ -12,7 +12,7 @@ export async function getCurrentFont(): Promise<FontSettings> {
 
   // Default is scientifica
   return {
-    font: fontCookie === "mono" ? "mono" : "scientifica",
+    font: fontCookie === "mono" ? "mono" : "scientifica"
   };
 }
 

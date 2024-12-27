@@ -14,20 +14,16 @@ export function getCurrentTheme(): ThemeSettings {
   const resolvedThemeCookie = getCookie("user-resolved-theme");
 
   const validTheme =
-    themeCookie === "light" ||
-    themeCookie === "dark" ||
-    themeCookie === "system"
+    themeCookie === "light" || themeCookie === "dark" || themeCookie === "system"
       ? themeCookie
       : null;
 
   const validResolvedTheme =
-    resolvedThemeCookie === "light" || resolvedThemeCookie === "dark"
-      ? resolvedThemeCookie
-      : null;
+    resolvedThemeCookie === "light" || resolvedThemeCookie === "dark" ? resolvedThemeCookie : null;
 
   return {
     theme: validTheme || "system", // default to system
-    resolvedTheme: validResolvedTheme || "dark", // default to dark
+    resolvedTheme: validResolvedTheme || "dark" // default to dark
   };
 }
 
@@ -39,7 +35,7 @@ export function updateUserTheme(settings: ThemeSettings) {
 // take a theme and a jotai setter function to update cookies and apply theme
 export const setTheme = (
   newTheme: ThemeType,
-  setThemeState: SetAtom<[SetStateAction<ThemeType>], void>,
+  setThemeState: SetAtom<[SetStateAction<ThemeType>], void>
 ) => {
   const resolvedTheme = resolveTheme(newTheme);
 
@@ -69,15 +65,11 @@ export const applyTheme = (resolvedTheme: ResolvedThemeType) => {
 };
 
 // Resolve theme based on user preference and system setting
-export const resolveTheme = (
-  themePreference: ThemeType | null,
-): ResolvedThemeType => {
+export const resolveTheme = (themePreference: ThemeType | null): ResolvedThemeType => {
   if (themePreference === "system") {
     // Check media query if available
     if (typeof window !== "undefined") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
     return "dark"; // Default to dark if no media query
   }

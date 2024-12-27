@@ -1,13 +1,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import kirby from "@/assets/kirby.webp";
 import mario from "@/assets/mario.webp";
@@ -19,7 +13,7 @@ import sonic from "@/assets/sonic.webp";
 const WalkingGif: React.FC = () => {
   const gifs: StaticImageData[] = useMemo(
     () => [mario, kirby, sonic, parrot, seagull, pikachu],
-    [],
+    []
   );
   const [currentGif, setCurrentGif] = useState<StaticImageData>(gifs[0]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,7 +48,7 @@ const WalkingGif: React.FC = () => {
 
       animationRef.current = requestAnimationFrame(animate);
     },
-    [containerWidth, imageWidth, getRandomGif],
+    [containerWidth, imageWidth, getRandomGif]
   );
 
   useEffect(() => {

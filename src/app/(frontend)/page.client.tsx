@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 async function getFortune(): Promise<string> {
   try {
     const response = await fetch("https://aphorismcookie.herokuapp.com", {
-      cache: "no-store",
+      cache: "no-store"
     });
-    const data: { data: { message: string }; meta: { status: number } } =
-      await response.json();
+    const data: { data: { message: string }; meta: { status: number } } = await response.json();
     return data.data.message;
   } catch (error) {
     console.error("Error fetching fortune:", error);

@@ -11,16 +11,16 @@ const getPagesSitemap = async () => {
   const defaultSitemap = [
     {
       loc: `${SITE_URL}/`,
-      lastmod: dateFallback,
+      lastmod: dateFallback
     },
     {
       loc: `${SITE_URL}/settings/font`,
-      lastmod: dateFallback,
+      lastmod: dateFallback
     },
     {
       loc: `${SITE_URL}/settings/theme`,
-      lastmod: dateFallback,
-    },
+      lastmod: dateFallback
+    }
   ];
 
   return [...defaultSitemap];

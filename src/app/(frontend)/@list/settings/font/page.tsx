@@ -13,13 +13,13 @@ export default React.memo(async function Settings() {
     {
       leftContent: "Font",
       rightContent: font,
-      href: "/settings/font",
+      href: "/settings/font"
     },
     {
       leftContent: "Theme",
       rightContent: theme ?? "system",
-      href: "/settings/theme",
-    },
+      href: "/settings/theme"
+    }
   ];
   return <BaseList divIndex={2} items={items} boxText="settings" />;
 });
