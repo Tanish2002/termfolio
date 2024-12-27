@@ -5,60 +5,60 @@ import { getServerSideSitemap } from "next-sitemap";
 import { getPayload } from "payload";
 
 const getPagesSitemap = unstable_cache(
-	async () => {
-		const payload = await getPayload({ config });
-		const SITE_URL =
-			process.env.NEXT_PUBLIC_SERVER_URL ||
-			process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-			"https://bakaotaku.dev";
+  async () => {
+    const payload = await getPayload({ config });
+    const SITE_URL =
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+      process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+      "https://bakaotaku.dev";
 
-		const results = await payload.find({
-			collection: "experiences",
-			overrideAccess: false,
-			draft: false,
-			depth: 0,
-			pagination: false,
-			where: {
-				_status: {
-					equals: "published"
-				}
-			},
-			select: {
-				slug: true,
-				updatedAt: true
-			}
-		});
+    const results = await payload.find({
+      collection: "experiences",
+      overrideAccess: false,
+      draft: false,
+      depth: 0,
+      pagination: false,
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+      select: {
+        slug: true,
+        updatedAt: true,
+      },
+    });
 
-		const dateFallback = new Date().toISOString();
+    const dateFallback = new Date().toISOString();
 
-		const defaultSitemap = [
-			{
-				loc: `${SITE_URL}/experience`,
-				lastmod: dateFallback
-			}
-		];
+    const defaultSitemap = [
+      {
+        loc: `${SITE_URL}/experience`,
+        lastmod: dateFallback,
+      },
+    ];
 
-		const sitemap = results.docs
-			? results.docs
-					.filter((page) => Boolean(page?.slug))
-					.map((page) => {
-						return {
-							loc: `${SITE_URL}/experience/${page?.slug}`,
-							lastmod: page.updatedAt || dateFallback
-						};
-					})
-			: [];
+    const sitemap = results.docs
+      ? results.docs
+          .filter((page) => Boolean(page?.slug))
+          .map((page) => {
+            return {
+              loc: `${SITE_URL}/experience/${page?.slug}`,
+              lastmod: page.updatedAt || dateFallback,
+            };
+          })
+      : [];
 
-		return [...defaultSitemap, ...sitemap];
-	},
-	["experience-sitemap"],
-	{
-		tags: ["experience-sitemap"]
-	}
+    return [...defaultSitemap, ...sitemap];
+  },
+  ["experience-sitemap"],
+  {
+    tags: ["experience-sitemap"],
+  },
 );
 
 export async function GET() {
-	const sitemap = await getPagesSitemap();
+  const sitemap = await getPagesSitemap();
 
-	return getServerSideSitemap(sitemap);
+  return getServerSideSitemap(sitemap);
 }

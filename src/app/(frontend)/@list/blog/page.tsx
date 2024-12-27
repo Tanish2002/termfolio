@@ -6,6 +6,6 @@ import { getPublishedPosts } from "@/components/Lists/BlogList/getPostsAction";
 export const dynamic = "force-static";
 
 export default async function Blog() {
-	const initialItems = await getPublishedPosts();
-	return <BlogList initialItems={initialItems} />;
+  const initialItems = await getPublishedPosts();
+  return <BlogList initialItems={initialItems} />;
 }

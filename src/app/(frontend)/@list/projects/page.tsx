@@ -10,40 +10,40 @@ import { BaseList } from "@/components/Lists/BaseList";
 export const dynamic = "force-static";
 
 export default async function Experience() {
-	const items = await queryItems();
-	return <BaseList divIndex={2} items={items} boxText="projects" />;
+  const items = await queryItems();
+  return <BaseList divIndex={2} items={items} boxText="projects" />;
 }
 
 const queryItems = unstable_cache(
-	async () => {
-		const { isEnabled: draft } = await draftMode();
+  async () => {
+    const { isEnabled: draft } = await draftMode();
 
-		const payload = await getPayload({ config: configPromise });
+    const payload = await getPayload({ config: configPromise });
 
-		const result = await payload.find({
-			collection: "projects",
-			draft,
-			overrideAccess: draft,
-			pagination: false,
-			select: {
-				title: true,
-				projectType: true,
-				slug: true
-			},
-			sort: ["-createdAt"],
-			where: {
-				_status: {
-					equals: "published"
-				}
-			}
-		});
-		const transformedItems = result.docs.map((item) => ({
-			leftContent: item.title.trim(),
-			rightContent: item.projectType.trim(),
-			href: "/projects/" + item.slug?.trim()
-		}));
-		return transformedItems;
-	},
-	["project-list"],
-	{ tags: ["project-list"] }
+    const result = await payload.find({
+      collection: "projects",
+      draft,
+      overrideAccess: draft,
+      pagination: false,
+      select: {
+        title: true,
+        projectType: true,
+        slug: true,
+      },
+      sort: ["-createdAt"],
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+    const transformedItems = result.docs.map((item) => ({
+      leftContent: item.title.trim(),
+      rightContent: item.projectType.trim(),
+      href: "/projects/" + item.slug?.trim(),
+    }));
+    return transformedItems;
+  },
+  ["project-list"],
+  { tags: ["project-list"] },
 );

@@ -1,3 +1,3 @@
 export interface FontSettings {
-	font: "scientifica" | "mono";
+  font: "scientifica" | "mono";
 }

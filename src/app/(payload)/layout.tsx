@@ -11,22 +11,26 @@ import type { ServerFunctionClient } from "payload";
 import { importMap } from "./admin/importMap.js";
 
 type Args = {
-	children: React.ReactNode;
+  children: React.ReactNode;
 };
 
 const serverFunction: ServerFunctionClient = async function (args) {
-	"use server";
-	return handleServerFunctions({
-		...args,
-		config,
-		importMap
-	});
+  "use server";
+  return handleServerFunctions({
+    ...args,
+    config,
+    importMap,
+  });
 };
 
 const Layout = ({ children }: Args) => (
-	<RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-		{children}
-	</RootLayout>
+  <RootLayout
+    config={config}
+    importMap={importMap}
+    serverFunction={serverFunction}
+  >
+    {children}
+  </RootLayout>
 );
 
 export default Layout;

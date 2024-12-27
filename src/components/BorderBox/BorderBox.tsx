@@ -5,65 +5,74 @@ import cn from "@/utils/cn";
 import BorderBoxClient from "./BorderBoxClient";
 
 export interface TextProps {
-	textYPosition: "top" | "bottom";
-	textXPosition: "left" | "center" | "right";
-	text: string;
-	className?: string;
+  textYPosition: "top" | "bottom";
+  textXPosition: "left" | "center" | "right";
+  text: string;
+  className?: string;
 }
 
 interface BorderBoxProps {
-	texts?: TextProps[];
-	children: React.ReactNode;
-	internalPaddingClass?: string;
-	colors?: {
-		focussedClassName: string;
-		unFocussedClassName: string;
-	};
+  texts?: TextProps[];
+  children: React.ReactNode;
+  internalPaddingClass?: string;
+  colors?: {
+    focussedClassName: string;
+    unFocussedClassName: string;
+  };
 }
 
 const BorderBox: React.FC<BorderBoxProps> = ({
-	texts = null,
-	children,
-	colors,
-	internalPaddingClass = "p-2"
+  texts = null,
+  children,
+  colors,
+  internalPaddingClass = "p-2",
 }) => {
-	const getYPositionClass = (textYPosition: TextProps["textYPosition"]): string => {
-		return textYPosition === "bottom" ? "-bottom-3" : "-top-3";
-	};
+  const getYPositionClass = (
+    textYPosition: TextProps["textYPosition"],
+  ): string => {
+    return textYPosition === "bottom" ? "-bottom-3" : "-top-3";
+  };
 
-	const getXPositionClass = (textXPosition: TextProps["textXPosition"]): string => {
-		switch (textXPosition) {
-			case "left":
-				return "left-2 transform translate-x-2";
-			case "right":
-				return "right-0 transform translate-x-0";
-			case "center":
-			default:
-				return "left-1/2 transform -translate-x-1/2";
-		}
-	};
+  const getXPositionClass = (
+    textXPosition: TextProps["textXPosition"],
+  ): string => {
+    switch (textXPosition) {
+      case "left":
+        return "left-2 transform translate-x-2";
+      case "right":
+        return "right-0 transform translate-x-0";
+      case "center":
+      default:
+        return "left-1/2 transform -translate-x-1/2";
+    }
+  };
 
-	return (
-		<BorderBoxClient colors={colors} internalPaddingClass={internalPaddingClass}>
-			{texts &&
-				texts.map(({ textYPosition, textXPosition, text, className }, index) => (
-					<span
-						key={index}
-						className={cn(
-							"absolute bg-tokyo-night-background px-2 text-tokyo-night-red",
-							getYPositionClass(textYPosition),
-							getXPositionClass(textXPosition),
-							className
-						)}
-					>
-						{text}
-					</span>
-				))}
-			<div className="relative h-full overflow-y-auto">
-				<div className="flex min-h-full flex-col text-lg">{children}</div>
-			</div>
-		</BorderBoxClient>
-	);
+  return (
+    <BorderBoxClient
+      colors={colors}
+      internalPaddingClass={internalPaddingClass}
+    >
+      {texts &&
+        texts.map(
+          ({ textYPosition, textXPosition, text, className }, index) => (
+            <span
+              key={index}
+              className={cn(
+                "absolute bg-tokyo-night-background px-2 text-tokyo-night-red",
+                getYPositionClass(textYPosition),
+                getXPositionClass(textXPosition),
+                className,
+              )}
+            >
+              {text}
+            </span>
+          ),
+        )}
+      <div className="relative h-full overflow-y-auto">
+        <div className="flex min-h-full flex-col text-lg">{children}</div>
+      </div>
+    </BorderBoxClient>
+  );
 };
 
 export default React.memo(BorderBox);

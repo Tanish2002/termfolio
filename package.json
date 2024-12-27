@@ -1,103 +1,109 @@
 {
-	"name": "termfolio",
-	"version": "1.0.0",
-	"type": "module",
-	"scripts": {
-		"build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-		"postbuild": "next-sitemap --config next-sitemap.config.cjs",
-		"dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
-		"dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && bun run build && bun run start",
-		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-		"generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-		"ii": "cross-env NODE_OPTIONS=--no-deprecation bun --ignore-workspace install",
-		"lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
-		"lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
-		"format": "prettier --write .",
-		"format:check": "prettier ./src --check",
-		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-		"reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm bun.lockb && bun --ignore-workspace install",
-		"start": "cross-env NODE_OPTIONS=--no-deprecation next start"
-	},
-	"eslintConfig": {
-		"extends": [
-			"prettier",
-			"next/core-web-vitals"
-		]
-	},
-	"prettier": {
-		"plugins": [
-			"@trivago/prettier-plugin-sort-imports",
-			"prettier-plugin-tailwindcss"
-		],
-		"bracketSpacing": true,
-		"semi": true,
-		"singleQuote": false,
-		"jsxSingleQuote": false,
-		"useTabs": true,
-		"tabWidth": 2,
-		"trailingComma": "none",
-		"printWidth": 100,
-		"importOrder": [
-			"^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
-			"<THIRD_PARTY_MODULES>",
-			"^@/(.*)$",
-			"^[./]"
-		],
-		"importOrderSeparation": true,
-		"importOrderSortSpecifiers": true
-	},
-	"dependencies": {
-		"@payloadcms/db-postgres": "latest",
-		"@payloadcms/live-preview-react": "latest",
-		"@payloadcms/next": "latest",
-		"@payloadcms/payload-cloud": "latest",
-		"@payloadcms/plugin-cloud-storage": "^v3.5.0",
-		"@payloadcms/plugin-seo": "latest",
-		"@payloadcms/richtext-lexical": "latest",
-		"@payloadcms/ui": "latest",
-		"cloudinary": "^2.5.1",
-		"clsx": "^2.1.1",
-		"cookies-next": "^5.0.2",
-		"cross-env": "^7.0.3",
-		"date-fns": "^4.1.0",
-		"graphql": "^16.8.2",
-		"hast-util-to-jsx-runtime": "^2.3.2",
-		"jotai": "^2.10.3",
-		"jsonwebtoken": "9.0.2",
-		"next": "^15.0.4",
-		"next-sitemap": "^4.2.3",
-		"payload": "latest",
-		"payload-oauth2": "^1.0.6",
-		"react": "19.0.0",
-		"react-dom": "19.0.0",
-		"react-icons": "^5.4.0",
-		"sharp": "0.32.6",
-		"sonner": "^1.7.1",
-		"tailwind-merge": "^2.3.0",
-		"underscore": "^1.13.7"
-	},
-	"devDependencies": {
-		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
-		"@next/eslint-plugin-next": "^15.0.4",
-		"@payloadcms/eslint-config": "^1.1.1",
-		"@shikijs/transformers": "^1.24.2",
-		"@tailwindcss/typography": "^0.5.13",
-		"@types/jsonwebtoken": "^9.0.6",
-		"@types/react": "19.0.1",
-		"@types/react-dom": "19.0.1",
-		"autoprefixer": "^10.4.19",
-		"copyfiles": "^2.4.1",
-		"eslint": "^8",
-		"eslint-config-next": "^15.0.4",
-		"eslint-config-prettier": "^9.1.0",
-		"postcss": "^8.4.38",
-		"prettier": "^3.0.3",
-		"prettier-plugin-tailwindcss": "^0.6.8",
-		"shiki": "^1.24.2",
-		"tailwindcss": "^3.4.3",
-		"typescript": "5.7.2"
-	},
-	"engines": {
-		"node": "^18.20.2 || >=20.9.0"
-	}
+  "name": "termfolio",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
+    "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && bun run build && bun run start",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "ii": "cross-env NODE_OPTIONS=--no-deprecation bun --ignore-workspace install",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier ./src --check",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm bun.lockb && bun --ignore-workspace install",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+  },
+  "eslintConfig": {
+    "extends": [
+      "prettier",
+      "next/core-web-vitals"
+    ],
+    "root": true,
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    }
+  },
+  "prettier": {
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-tailwindcss"
+    ],
+    "bracketSpacing": true,
+    "semi": true,
+    "singleQuote": false,
+    "jsxSingleQuote": false,
+    "useTabs": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "printWidth": 100,
+    "importOrder": [
+      "^(react/(.*)$)|^(react$)|^(next/(.*)$)|^(next$)",
+      "<THIRD_PARTY_MODULES>",
+      "^@/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "latest",
+    "@payloadcms/live-preview-react": "latest",
+    "@payloadcms/next": "latest",
+    "@payloadcms/payload-cloud": "latest",
+    "@payloadcms/plugin-cloud-storage": "^v3.5.0",
+    "@payloadcms/plugin-seo": "latest",
+    "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/ui": "latest",
+    "cloudinary": "^2.5.1",
+    "clsx": "^2.1.1",
+    "cookies-next": "^5.0.2",
+    "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
+    "graphql": "^16.8.2",
+    "hast-util-to-jsx-runtime": "^2.3.2",
+    "jotai": "^2.10.3",
+    "jsonwebtoken": "9.0.2",
+    "next": "^15.0.4",
+    "next-sitemap": "^4.2.3",
+    "payload": "latest",
+    "payload-oauth2": "^1.0.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-icons": "^5.4.0",
+    "sharp": "0.32.6",
+    "sonner": "^1.7.1",
+    "tailwind-merge": "^2.3.0",
+    "underscore": "^1.13.7"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@next/eslint-plugin-next": "^15.0.4",
+    "@payloadcms/eslint-config": "^1.1.1",
+    "@shikijs/transformers": "^1.24.2",
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1",
+    "autoprefixer": "^10.4.19",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "^15.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "shiki": "^1.24.2",
+    "tailwindcss": "^3.4.3",
+    "typescript": "5.7.2"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
 }

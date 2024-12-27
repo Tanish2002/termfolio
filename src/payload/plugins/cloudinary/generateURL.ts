@@ -5,20 +5,23 @@ import path from "path";
 import { videoExtensions } from "./index";
 
 interface GenerateUrlArgs {
-	folderSrc: string;
-	getStorageClient: () => typeof cloudinary;
+  folderSrc: string;
+  getStorageClient: () => typeof cloudinary;
 }
 
-export const getGenerateUrl = ({ folderSrc, getStorageClient }: GenerateUrlArgs): GenerateURL => {
-	return async ({ filename, prefix = "" }) => {
-		const publicId = path.posix.join(folderSrc, prefix, filename);
-		const extension = filename.toLowerCase().split(".").pop() as string;
-		const isVideo = videoExtensions.includes(extension);
+export const getGenerateUrl = ({
+  folderSrc,
+  getStorageClient,
+}: GenerateUrlArgs): GenerateURL => {
+  return async ({ filename, prefix = "" }) => {
+    const publicId = path.posix.join(folderSrc, prefix, filename);
+    const extension = filename.toLowerCase().split(".").pop() as string;
+    const isVideo = videoExtensions.includes(extension);
 
-		const resource = await getStorageClient().api.resource(publicId, {
-			resource_type: isVideo ? "video" : "image"
-		});
+    const resource = await getStorageClient().api.resource(publicId, {
+      resource_type: isVideo ? "video" : "image",
+    });
 
-		return resource.secure_url;
-	};
+    return resource.secure_url;
+  };
 };

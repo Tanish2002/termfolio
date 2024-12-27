@@ -11,20 +11,20 @@ import ScrollProvider from "@/providers/ScrollProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [initialTheme, setInitialTheme] = useState<ThemeSettings | null>(null);
+  const [initialTheme, setInitialTheme] = useState<ThemeSettings | null>(null);
 
-	useEffect(() => {
-		const currTheme = getCurrentTheme();
-		setInitialTheme(currTheme);
-	}, []);
+  useEffect(() => {
+    const currTheme = getCurrentTheme();
+    setInitialTheme(currTheme);
+  }, []);
 
-	return (
-		<Provider>
-			<NavigationProvider />
-			<ScrollProvider />
-			<ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
-		</Provider>
-	);
+  return (
+    <Provider>
+      <NavigationProvider />
+      <ScrollProvider />
+      <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
+    </Provider>
+  );
 };
 
 export default Providers;

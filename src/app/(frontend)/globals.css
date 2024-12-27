@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 html {
-	opacity: 0;
+  opacity: 0;
 }
 
 html[data-theme="dark"],
 html[data-theme="light"] {
-	opacity: initial;
+  opacity: initial;
 }
 
 /* lexical editor doesn't handle nested lists properly so gotta use this: https://payloadcms.com/docs/rich-text/converters */
 @layer payload-default {
-	.nestedListItem,
-	.list-check {
-		list-style-type: none;
-	}
+  .nestedListItem,
+  .list-check {
+    list-style-type: none;
+  }
 
-	ul li.LexicalEditorTheme__listItem {
-		list-style-type: disc;
-	}
+  ul li.LexicalEditorTheme__listItem {
+    list-style-type: disc;
+  }
 
-	ol li.LexicalEditorTheme__listItem {
-		list-style-type: decimal;
-	}
+  ol li.LexicalEditorTheme__listItem {
+    list-style-type: decimal;
+  }
 }
 
 /* html.dark .shiki, */

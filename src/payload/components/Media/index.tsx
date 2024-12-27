@@ -5,20 +5,21 @@ import { VideoMedia } from "./VideoMedia";
 import type { Props } from "./types";
 
 export const Media: React.FC<Props> = (props) => {
-	const { className, htmlElement = "div", resource } = props;
+  const { className, htmlElement = "div", resource } = props;
 
-	const isVideo = typeof resource === "object" && resource?.mimeType?.includes("video");
-	const Tag = (htmlElement as any) || Fragment;
+  const isVideo =
+    typeof resource === "object" && resource?.mimeType?.includes("video");
+  const Tag = (htmlElement as any) || Fragment;
 
-	return (
-		<Tag
-			{...(htmlElement !== null
-				? {
-						className
-					}
-				: {})}
-		>
-			{isVideo ? <VideoMedia {...props} /> : <ImageMedia {...props} />}
-		</Tag>
-	);
+  return (
+    <Tag
+      {...(htmlElement !== null
+        ? {
+            className,
+          }
+        : {})}
+    >
+      {isVideo ? <VideoMedia {...props} /> : <ImageMedia {...props} />}
+    </Tag>
+  );
 };
