@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   const title = searchParams.get("title");
   const tags = searchParams.get("tags");
   const image = searchParams.get("image");
-  const createdAt = searchParams.get("createdAt");
+  const publishedAt = searchParams.get("publishedAt");
 
   async function loadGoogleFont(font: string, text: string | number | boolean) {
     const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
@@ -117,7 +117,7 @@ export async function GET(req: Request) {
             </div>
           )}
 
-          {createdAt && (
+          {publishedAt && (
             <div
               style={{
                 marginTop: "20px",
@@ -125,7 +125,7 @@ export async function GET(req: Request) {
                 color: tokyoNightColors.comment
               }}
             >
-              {formatDistance(new Date(createdAt), new Date(), {
+              {formatDistance(new Date(publishedAt), new Date(), {
                 addSuffix: true
               })}
             </div>

@@ -22,7 +22,7 @@ export function generateOgImageUrl(
     case "posts": {
       const postDoc: Partial<Post> = item;
       handleTags(postDoc.tags, params);
-      params.set("createdAt", postDoc.createdAt || "");
+      params.set("publishedAt", postDoc.publishedAt || "");
       break;
     }
     case "projects": {

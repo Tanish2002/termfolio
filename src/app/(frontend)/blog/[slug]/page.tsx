@@ -52,8 +52,8 @@ export default async function BlogPost({ params }: Args) {
           {/* Metadata Details - Stacked on Small Screens */}
           <div className="flex flex-col items-start gap-2 text-tokyo-night-comment sm:flex-row sm:items-center sm:gap-4">
             {/* Date */}
-            <time className="text-xs text-tokyo-night-red sm:text-sm" dateTime={post.createdAt}>
-              {formatDate(post.createdAt)}
+            <time className="text-xs text-tokyo-night-red sm:text-sm" dateTime={post.publishedAt!}>
+              {formatDate(post.publishedAt!)}
             </time>
           </div>
         </div>

@@ -1,8 +1,6 @@
+import { parseISO, format } from 'date-fns';
+
 export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
+  const parsedDate = parseISO(dateString);
+  return format(parsedDate, 'MMMM d, yyyy');
 }
