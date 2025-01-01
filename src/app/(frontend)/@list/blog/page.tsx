@@ -5,7 +5,11 @@ import { getArchivedPosts, getPublishedPosts } from "@/components/Lists/BlogList
 
 export const dynamic = "force-dynamic"; // keep this dynamic
 
-export default async function Blog({ searchParams }: { searchParams: Promise<{ status: "published" | "archived" }> }) {
+export default async function Blog({
+  searchParams
+}: {
+  searchParams: Promise<{ status: "published" | "archived" }>;
+}) {
   const status = (await searchParams).status;
   const initialItems = status === "archived" ? await getArchivedPosts() : await getPublishedPosts();
   return <BlogList initialItems={initialItems} />;

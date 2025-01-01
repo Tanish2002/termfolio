@@ -75,7 +75,7 @@ export const plugins: Plugin[] = [
     }
   }),
   seoPlugin({
-    collections: [Posts.slug, Experiences.slug, Projects.slug],
+    collections: ["posts", "experiences", "projects"],
     generateTitle,
     generateURL
   }),
