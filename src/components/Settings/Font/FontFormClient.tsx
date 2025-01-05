@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
 import { updateUserFont } from "@/lib/userSettings/client";
@@ -26,7 +26,21 @@ export default function FontFormClient({
     updateUserFont({ font });
 
     // Show a custom toast notification
-    toast.success("Font settings saved successfully!");
+    toast.custom((t: any) => (
+      <div
+        className={`${t.visible ? 'animate-enter' : 'animate-leave'
+          } bg-tokyo-night-background border border-tokyo-night-blue p-4 rounded shadow-lg`}
+      >
+        <div className="flex items-center space-x-4">
+          <div className="flex-1">
+            <h3 className="text-tokyo-night-cyan font-medium">Settings Saved!</h3>
+            <p className="mt-1 text-sm text-tokyo-night-foreground">
+              Your font has been updated
+            </p>
+          </div>
+        </div>
+      </div>
+    ));
   };
 
   return (

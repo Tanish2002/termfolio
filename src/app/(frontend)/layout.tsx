@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import React from "react";
 
-import { Toaster } from "sonner";
-
 import About from "@/components/About";
 import BorderBox from "@/components/BorderBox/BorderBox";
 import RoutesList from "@/components/Lists/RoutesList/RoutesList";
@@ -20,6 +18,8 @@ import { getServerSideURL } from "@/utils/getURL";
 import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
 
 import "./globals.css";
+import CustomToaster from "@/components/Toaster";
+import { FirstVisitToast } from "@/components/FirstTimeVisitToast";
 
 export function generateMetadata(): Metadata {
   const title = "Termfolio | bakaotaku.dev";
@@ -60,18 +60,10 @@ export default async function RootLayout({
         )}
       >
         {/* import here so font is used */}
-        <Toaster
-          toastOptions={{
-            classNames: {
-              success: "bg-tokyo-night-green",
-              info: "bg-tokyo-night-blue",
-              error: "bg-tokyo-night-red",
-              warning: "bg-tokyo-night-yellow"
-            }
-          }}
-        />
+        <CustomToaster />
         <Providers>
           <LivePreviewListener />
+          <FirstVisitToast />
           <div
             className={cn(
               "grid h-full w-screen flex-grow-[99] grid-rows-7 gap-4 overflow-hidden p-5",

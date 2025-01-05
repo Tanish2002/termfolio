@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 import { FaDesktop, FaMoon, FaSun } from "react-icons/fa6";
-import { toast } from "sonner";
+import { toast } from 'react-hot-toast';
 
 import { setTheme } from "@/lib/userSettings/client";
 import { ThemeType, systemThemeAtom, themeAtom } from "@/store/themeAtoms";
@@ -68,8 +68,21 @@ export default function ThemeForm() {
       onSubmit={(e) => {
         e.preventDefault();
         setTheme(previewTheme, setUserTheme);
-
-        toast.success("Theme settings saved successfully!");
+        toast.custom((t: any) => (
+          <div
+            className={`${t.visible ? 'animate-enter' : 'animate-leave'
+              } bg-tokyo-night-background border border-tokyo-night-blue p-4 rounded shadow-lg`}
+          >
+            <div className="flex items-center space-x-4">
+              <div className="flex-1">
+                <h3 className="text-tokyo-night-cyan font-medium">Settings Saved!</h3>
+                <p className="mt-1 text-sm text-tokyo-night-foreground">
+                  Your theme has been updated
+                </p>
+              </div>
+            </div>
+          </div>
+        ));
       }}
       className="space-y-6"
     >
