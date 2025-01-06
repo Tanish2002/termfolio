@@ -27,7 +27,8 @@ export default buildConfig({
     },
     components: {
       afterLogin: ["/payload/components/Admin/OAuthLoginButton.tsx#default"],
-      beforeLogin: ["/payload/components/Admin/DashBoardInfo.tsx#default"]
+      beforeLogin: ["/payload/components/Admin/DashBoardInfo.tsx#default"],
+      beforeDashboard: ['/payload/components/Admin/Revalidate.tsx#default'],
     },
     livePreview: {
       breakpoints: [
