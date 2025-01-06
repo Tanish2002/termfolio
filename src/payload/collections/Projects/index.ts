@@ -131,7 +131,7 @@ export const Projects: CollectionConfig<"projects"> = {
               },
               validate: (value: string | null) =>
                 !value ||
-                /^https?:\/\/(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?$/.test(
+                /^https?:\/\/(www\.)?github\.com\/((orgs\/[A-Za-z0-9_.-]+\/repositories)|([A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)?))$/.test(
                   value
                 ) ||
                 "Invalid GitHub URL"
