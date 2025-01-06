@@ -1,5 +1,5 @@
 {
-  "id": "05753fab-9d67-4e4a-b6ee-f387fd861c1e",
+  "id": "b56500ae-9857-46ca-ab68-0e1bbca43313",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -857,8 +857,12 @@
           "name": "posts_rels_parent_fk",
           "tableFrom": "posts_rels",
           "tableTo": "posts",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -866,8 +870,12 @@
           "name": "posts_rels_tags_fk",
           "tableFrom": "posts_rels",
           "tableTo": "tags",
-          "columnsFrom": ["tags_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tags_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -875,8 +883,12 @@
           "name": "posts_rels_users_fk",
           "tableFrom": "posts_rels",
           "tableTo": "users",
-          "columnsFrom": ["users_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1148,8 +1160,12 @@
           "name": "_posts_v_parent_id_posts_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "posts",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1283,8 +1299,12 @@
           "name": "_posts_v_rels_parent_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "_posts_v",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1292,8 +1312,12 @@
           "name": "_posts_v_rels_tags_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "tags",
-          "columnsFrom": ["tags_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tags_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1301,8 +1325,12 @@
           "name": "_posts_v_rels_users_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "users",
-          "columnsFrom": ["users_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1730,8 +1758,12 @@
           "name": "_experiences_v_parent_id_experiences_id_fk",
           "tableFrom": "_experiences_v",
           "tableTo": "experiences",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1919,8 +1951,12 @@
           "name": "projects_project_banner_id_media_id_fk",
           "tableFrom": "projects",
           "tableTo": "media",
-          "columnsFrom": ["project_banner_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "project_banner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2033,8 +2069,12 @@
           "name": "projects_rels_parent_fk",
           "tableFrom": "projects_rels",
           "tableTo": "projects",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2042,8 +2082,12 @@
           "name": "projects_rels_tags_fk",
           "tableFrom": "projects_rels",
           "tableTo": "tags",
-          "columnsFrom": ["tags_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tags_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2336,8 +2380,12 @@
           "name": "_projects_v_parent_id_projects_id_fk",
           "tableFrom": "_projects_v",
           "tableTo": "projects",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2345,8 +2393,12 @@
           "name": "_projects_v_version_project_banner_id_media_id_fk",
           "tableFrom": "_projects_v",
           "tableTo": "media",
-          "columnsFrom": ["version_project_banner_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "version_project_banner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2459,8 +2511,12 @@
           "name": "_projects_v_rels_parent_fk",
           "tableFrom": "_projects_v_rels",
           "tableTo": "_projects_v",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2468,8 +2524,12 @@
           "name": "_projects_v_rels_tags_fk",
           "tableFrom": "_projects_v_rels",
           "tableTo": "tags",
-          "columnsFrom": ["tags_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tags_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2735,8 +2795,12 @@
           "name": "users_roles_parent_fk",
           "tableFrom": "users_roles",
           "tableTo": "users",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3209,8 +3273,12 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3218,8 +3286,12 @@
           "name": "payload_locked_documents_rels_media_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "media",
-          "columnsFrom": ["media_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "media_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3227,8 +3299,12 @@
           "name": "payload_locked_documents_rels_tags_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "tags",
-          "columnsFrom": ["tags_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tags_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3236,8 +3312,12 @@
           "name": "payload_locked_documents_rels_posts_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "posts",
-          "columnsFrom": ["posts_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "posts_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3245,8 +3325,12 @@
           "name": "payload_locked_documents_rels_experiences_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "experiences",
-          "columnsFrom": ["experiences_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "experiences_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3254,8 +3338,12 @@
           "name": "payload_locked_documents_rels_projects_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "projects",
-          "columnsFrom": ["projects_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "projects_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3263,8 +3351,12 @@
           "name": "payload_locked_documents_rels_techstacks_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "techstacks",
-          "columnsFrom": ["techstacks_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "techstacks_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3272,8 +3364,12 @@
           "name": "payload_locked_documents_rels_socials_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "socials",
-          "columnsFrom": ["socials_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "socials_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3281,8 +3377,12 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
-          "columnsFrom": ["users_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3486,8 +3586,12 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3495,8 +3599,12 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
-          "columnsFrom": ["users_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "users_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3588,22 +3696,34 @@
     "public.enum_posts_status": {
       "name": "enum_posts_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum__posts_v_version_status": {
       "name": "enum__posts_v_version_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum_experiences_status": {
       "name": "enum_experiences_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum__experiences_v_version_status": {
       "name": "enum__experiences_v_version_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum_projects_project_type": {
       "name": "enum_projects_project_type",
@@ -3629,6 +3749,7 @@
         "automation tool",
         "development tool",
         "open-source library",
+        "open-source contribution",
         "iot application",
         "research prototype"
       ]
@@ -3636,7 +3757,10 @@
     "public.enum_projects_status": {
       "name": "enum_projects_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum__projects_v_version_project_type": {
       "name": "enum__projects_v_version_project_type",
@@ -3662,6 +3786,7 @@
         "automation tool",
         "development tool",
         "open-source library",
+        "open-source contribution",
         "iot application",
         "research prototype"
       ]
@@ -3669,7 +3794,10 @@
     "public.enum__projects_v_version_status": {
       "name": "enum__projects_v_version_status",
       "schema": "public",
-      "values": ["draft", "published"]
+      "values": [
+        "draft",
+        "published"
+      ]
     },
     "public.enum_techstacks_logo_family": {
       "name": "enum_techstacks_logo_family",
@@ -3740,7 +3868,10 @@
     "public.enum_users_roles": {
       "name": "enum_users_roles",
       "schema": "public",
-      "values": ["admin", "viewer"]
+      "values": [
+        "admin",
+        "viewer"
+      ]
     }
   },
   "schemas": {},

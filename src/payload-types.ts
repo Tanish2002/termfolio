@@ -313,6 +313,7 @@ export interface Project {
     | 'automation tool'
     | 'development tool'
     | 'open-source library'
+    | 'open-source contribution'
     | 'iot application'
     | 'research prototype';
   slug?: string | null;

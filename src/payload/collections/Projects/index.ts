@@ -196,6 +196,7 @@ export const Projects: CollectionConfig<"projects"> = {
         { label: "Automation Tool", value: "automation tool" },
         { label: "Development Tool", value: "development tool" },
         { label: "Open Source Library", value: "open-source library" },
+        { label: "Open Source Contribution", value: "open-source contribution" },
         { label: "IoT Application", value: "iot application" },
         { label: "Research Prototype", value: "research prototype" }
       ],

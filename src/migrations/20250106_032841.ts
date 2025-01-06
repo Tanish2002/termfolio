@@ -1,4 +1,4 @@
-import { MigrateDownArgs, MigrateUpArgs, sql } from "@payloadcms/db-postgres";
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -6,9 +6,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_experiences_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__experiences_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum_projects_project_type" AS ENUM('web development', 'mobile development', 'desktop application', 'native mobile app', 'hybrid mobile app', 'cross platform app', 'enterprise software', 'backend service', 'api service', 'microservice', 'cloud infrastructure', 'data pipeline', 'machine learning', 'ai application', 'data visualization', 'cli tool', 'browser extension', 'automation tool', 'development tool', 'open-source library', 'iot application', 'research prototype');
+  CREATE TYPE "public"."enum_projects_project_type" AS ENUM('web development', 'mobile development', 'desktop application', 'native mobile app', 'hybrid mobile app', 'cross platform app', 'enterprise software', 'backend service', 'api service', 'microservice', 'cloud infrastructure', 'data pipeline', 'machine learning', 'ai application', 'data visualization', 'cli tool', 'browser extension', 'automation tool', 'development tool', 'open-source library', 'open-source contribution', 'iot application', 'research prototype');
   CREATE TYPE "public"."enum_projects_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__projects_v_version_project_type" AS ENUM('web development', 'mobile development', 'desktop application', 'native mobile app', 'hybrid mobile app', 'cross platform app', 'enterprise software', 'backend service', 'api service', 'microservice', 'cloud infrastructure', 'data pipeline', 'machine learning', 'ai application', 'data visualization', 'cli tool', 'browser extension', 'automation tool', 'development tool', 'open-source library', 'iot application', 'research prototype');
+  CREATE TYPE "public"."enum__projects_v_version_project_type" AS ENUM('web development', 'mobile development', 'desktop application', 'native mobile app', 'hybrid mobile app', 'cross platform app', 'enterprise software', 'backend service', 'api service', 'microservice', 'cloud infrastructure', 'data pipeline', 'machine learning', 'ai application', 'data visualization', 'cli tool', 'browser extension', 'automation tool', 'development tool', 'open-source library', 'open-source contribution', 'iot application', 'research prototype');
   CREATE TYPE "public"."enum__projects_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_techstacks_logo_family" AS ENUM('ci', 'fa6', 'io', 'io5', 'md', 'ti', 'go', 'fi', 'gi', 'wi', 'di', 'ai', 'bs', 'ri', 'pi', 'fc', 'gr', 'hi', 'hi2', 'si', 'sl', 'im', 'bi', 'cg', 'vsc', 'tb', 'tfi');
   CREATE TYPE "public"."enum_socials_logo_family" AS ENUM('ci', 'fa6', 'io', 'io5', 'md', 'ti', 'go', 'fi', 'gi', 'wi', 'di', 'ai', 'bs', 'ri', 'pi', 'fc', 'gr', 'hi', 'hi2', 'si', 'sl', 'im', 'bi', 'cg', 'vsc', 'tb', 'tfi');
@@ -578,7 +578,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
   CREATE INDEX IF NOT EXISTS "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`);
+  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -614,5 +614,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__projects_v_version_status";
   DROP TYPE "public"."enum_techstacks_logo_family";
   DROP TYPE "public"."enum_socials_logo_family";
-  DROP TYPE "public"."enum_users_roles";`);
+  DROP TYPE "public"."enum_users_roles";`)
 }
