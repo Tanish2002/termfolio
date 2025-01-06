@@ -37,11 +37,29 @@ const queryItems = unstable_cache(
         }
       }
     });
+
+    const customOrder: { [key: string]: number } = {
+      "web development": 0,
+      "mobile development": 1,
+      "anything else": 2 // Grouping all other types under 'anything else'
+    };
+
+    // First, transform the items
     const transformedItems = result.docs.map((item) => ({
       leftContent: item.title.trim(),
       rightContent: item.projectType.trim(),
-      href: "/projects/" + item.slug?.trim()
+      href: "/projects/" + item.slug?.trim(),
+      projectType: item.projectType.trim(),
     }));
+
+    transformedItems.sort((a, b) => {
+      const aOrder = customOrder[a.projectType] !== undefined ? customOrder[a.projectType] : customOrder["anything else"];
+      const bOrder = customOrder[b.projectType] !== undefined ? customOrder[b.projectType] : customOrder["anything else"];
+
+      if (aOrder !== bOrder) return aOrder - bOrder; // If project type is different, order by customOrder
+      return a.leftContent.localeCompare(b.leftContent); // Alphabetically sort within the same project type
+    });
+
     return transformedItems;
   },
   ["project-list"],
