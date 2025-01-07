@@ -38,6 +38,6 @@ export function FirstVisitToast() {
         </div>
       ));
     }
-  }, []);
+  }, [router]);
   return null;
 }

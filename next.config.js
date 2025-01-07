@@ -1,10 +1,15 @@
 import { withPayload } from "@payloadcms/next/withPayload";
+import bundleAnalyzer from '@next/bundle-analyzer'
 
 import redirects from "./redirects.js";
 
 const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  //
   : undefined || process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,7 +26,13 @@ const nextConfig = {
     ]
   },
   reactStrictMode: true,
+  experimental: {
+    // ppr: 'incremental',
+    optimizePackageImports: [
+      'react-icons/*'
+    ],
+  },
   redirects
 };
 
-export default withPayload(nextConfig);
+export default withBundleAnalyzer(withPayload(nextConfig));

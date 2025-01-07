@@ -45,7 +45,7 @@ export function BaseListItemClient<T extends BaseListItem>({
     : false;
 
   const content = (
-    <li
+    <div
       className={cn(
         "flex w-full items-center justify-between p-0.5 transition-colors",
         isFocused
@@ -69,7 +69,7 @@ export function BaseListItemClient<T extends BaseListItem>({
           {item.rightContent}
         </div>
       )}
-    </li>
+    </div>
   );
 
   if (item.href) {

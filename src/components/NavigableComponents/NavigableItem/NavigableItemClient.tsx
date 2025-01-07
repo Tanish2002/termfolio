@@ -28,7 +28,7 @@ const NavigableItemClient: React.FC<{
     )
   );
 
-  const itemRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     registerItem((prev) => {
@@ -86,9 +86,9 @@ const NavigableItemClient: React.FC<{
   }, [setFocusedItems, setFocusedDiv, itemRef, divIndex, itemIndex]);
 
   return (
-    <div ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>
+    <li ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>
       {href ? <Link href={href}>{children}</Link> : children}
-    </div>
+    </li>
   );
 };
 

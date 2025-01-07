@@ -24,7 +24,6 @@ export async function GET(req: Request) {
   const tags = searchParams.get("tags");
   const image = searchParams.get("image");
   const publishedAt = searchParams.get("publishedAt");
-
   async function loadGoogleFont(font: string, text: string | number | boolean) {
     const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
     const css = await (await fetch(url)).text();
@@ -143,6 +142,7 @@ export async function GET(req: Request) {
               boxShadow: `0 10px 30px ${tokyoNightColors.darkPurple}`
             }}
           >
+            {/* eslint-disable @next/next/no-img-element */}
             <img
               src={image}
               alt="Project Banner"
