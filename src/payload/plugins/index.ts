@@ -46,7 +46,10 @@ export const plugins: Plugin[] = [
     enabled: true,
     strategyName: "github",
     useEmailAsIdentity: true,
-    serverURL: process.env.NEXT_PUBLIC_URL || "http://localhost:3000",
+    serverURL:
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+      process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+      "https://termfolio.bakaotaku.dev",
     clientId: process.env.GITHUB_CLIENT_ID!,
     clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     authCollection: "users",
