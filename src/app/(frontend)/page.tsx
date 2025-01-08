@@ -9,23 +9,9 @@ import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
 
 import FortuneCookie from "./page.client";
 
-async function getFortune(): Promise<string> {
-  try {
-    const response = await fetch("https://aphorismcookie.herokuapp.com", {
-      cache: "no-store"
-    });
-    const data: { data: { message: string }; meta: { status: number } } = await response.json();
-    return data.data.message;
-  } catch (error) {
-    console.error("Error fetching fortune:", error);
-    return "No fortune available at the moment!";
-  }
-}
-
 export const dynamic = "force-static";
 
 export default React.memo(async function About() {
-  const fortune = await getFortune();
   return (
     <>
       <WalkingGif />

@@ -11,6 +11,10 @@ html[data-theme="light"] {
   opacity: initial;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 /* lexical editor doesn't handle nested lists properly so gotta use this: https://payloadcms.com/docs/rich-text/converters */
 @layer payload-default {
   .nestedListItem,
