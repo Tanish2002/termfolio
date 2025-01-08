@@ -22,7 +22,9 @@ const WalkingGif: React.FC = () => {
   const [imageWidth, setImageWidth] = useState<number>(0);
 
   const getSmartRandomGifIndex = useCallback(() => {
-    const availableIndices = gifs.map((_, index) => index).filter(index => index !== currentGifIndex);
+    const availableIndices = gifs
+      .map((_, index) => index)
+      .filter((index) => index !== currentGifIndex);
 
     // Randomly select from the available indices
     return availableIndices[Math.floor(Math.random() * availableIndices.length)];
@@ -37,9 +39,7 @@ const WalkingGif: React.FC = () => {
       const progress = (timestamp % ((totalDistance / speed) * 1000)) / 1000;
       const position = progress * speed - imageWidth + 10;
 
-      const currentImage = document.querySelector<HTMLDivElement>(
-        `.gif-${currentGifIndex}`
-      );
+      const currentImage = document.querySelector<HTMLDivElement>(`.gif-${currentGifIndex}`);
 
       if (currentImage) {
         currentImage.style.transform = `translateX(${position}px)`;
@@ -88,7 +88,7 @@ const WalkingGif: React.FC = () => {
           className={`absolute top-0 gif-${index}`}
           style={{
             display: index === currentGifIndex ? "block" : "none",
-            transition: "opacity 0.3s",
+            transition: "opacity 0.3s"
           }}
         >
           <Image

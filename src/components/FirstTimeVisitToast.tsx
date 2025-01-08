@@ -1,8 +1,11 @@
-'use client'
-import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { isFirstVisit, markAsVisited } from '@/utils/firstVisit';
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+import { toast } from "react-hot-toast";
+
+import { isFirstVisit, markAsVisited } from "@/utils/firstVisit";
 
 export function FirstVisitToast() {
   const router = useRouter();
@@ -12,12 +15,13 @@ export function FirstVisitToast() {
       markAsVisited();
       toast.custom((t: any) => (
         <div
-          className={`${t.visible ? 'animate-enter' : 'animate-leave'
-            } bg-tokyo-night-background border border-tokyo-night-blue p-4 rounded shadow-lg`}
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
         >
           <div className="flex items-center space-x-4">
             <div className="flex-1">
-              <h3 className="text-tokyo-night-cyan font-medium">Welcome!</h3>
+              <h3 className="font-medium text-tokyo-night-cyan">Welcome!</h3>
               <p className="mt-1 text-sm text-tokyo-night-foreground">
                 Using default font and theme.
               </p>
@@ -28,9 +32,9 @@ export function FirstVisitToast() {
             <button
               onClick={() => {
                 toast.dismiss(t.id);
-                router.push('/settings');
+                router.push("/settings");
               }}
-              className="px-3 py-2 bg-tokyo-night-cyan text-tokyo-night-background rounded hover:opacity-90 transition-opacity text-sm"
+              className="rounded bg-tokyo-night-cyan px-3 py-2 text-sm text-tokyo-night-background transition-opacity hover:opacity-90"
             >
               Settings
             </button>

@@ -3,10 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { getArchivedPosts, getPublishedPosts } from "./getPostsAction";
 import BorderBox from "@/components/BorderBox/BorderBox";
+
 import { BaseListItemClient } from "../BaseListItemClient";
 import { BaseListItem } from "../types";
+import { getArchivedPosts, getPublishedPosts } from "./getPostsAction";
 
 export function BlogList({ initialItems }) {
   const searchParams = useSearchParams();
@@ -31,7 +32,15 @@ export function BlogList({ initialItems }) {
   //   />
   // );
   return (
-    <BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: status === "archived" ? "blog - [archived]" : "blog" }]}>
+    <BorderBox
+      texts={[
+        {
+          textYPosition: "top",
+          textXPosition: "left",
+          text: status === "archived" ? "blog - [archived]" : "blog"
+        }
+      ]}
+    >
       <ul className="w-full space-y-2">
         {items.map((item: BaseListItem, itemIndex: number) => (
           <BaseListItemClient

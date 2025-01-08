@@ -4,12 +4,14 @@ import React from "react";
 
 import About from "@/components/About";
 import BorderBox from "@/components/BorderBox/BorderBox";
+import { FirstVisitToast } from "@/components/FirstTimeVisitToast";
 import RoutesList from "@/components/Lists/RoutesList/RoutesList";
 import SocialList from "@/components/Lists/SocialList/SocialList";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
+import CustomToaster from "@/components/Toaster";
 import { mono, scientifica } from "@/constants";
 import { getCurrentFont } from "@/lib/userSettings/server";
 import Providers from "@/providers/providers";
@@ -18,8 +20,6 @@ import { getServerSideURL } from "@/utils/getURL";
 import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
 
 import "./globals.css";
-import CustomToaster from "@/components/Toaster";
-import { FirstVisitToast } from "@/components/FirstTimeVisitToast";
 
 export function generateMetadata(): Metadata {
   const title = "Termfolio | bakaotaku.dev";

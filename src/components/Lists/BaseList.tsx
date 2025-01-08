@@ -5,7 +5,11 @@ import DynamicIcon from "../DynamicIcon";
 import { BaseListItemClient } from "./BaseListItemClient";
 import { BaseListItem, BaseListProps } from "./types";
 
-export async function BaseList<T extends BaseListItem>({ divIndex, items, boxText }: BaseListProps<T>) {
+export async function BaseList<T extends BaseListItem>({
+  divIndex,
+  items,
+  boxText
+}: BaseListProps<T>) {
   return (
     <BorderBox texts={[{ textYPosition: "top", textXPosition: "left", text: boxText }]}>
       <ul className="w-full space-y-2">
@@ -17,8 +21,8 @@ export async function BaseList<T extends BaseListItem>({ divIndex, items, boxTex
               ...item,
               rightContent:
                 typeof item.rightContent !== "string" &&
-                  item.rightContent !== null &&
-                  "iconName" in item.rightContent ? (
+                item.rightContent !== null &&
+                "iconName" in item.rightContent ? (
                   <DynamicIcon
                     className="text-inherit"
                     icon={item.rightContent?.iconName.trim()}

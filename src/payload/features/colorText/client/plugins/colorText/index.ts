@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-import { mergeRegister } from "@payloadcms/richtext-lexical/lexical/utils";
-import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
 import { PluginComponent } from "@payloadcms/richtext-lexical";
 import { COMMAND_PRIORITY_LOW } from "@payloadcms/richtext-lexical/lexical";
+import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
+import { mergeRegister } from "@payloadcms/richtext-lexical/lexical/utils";
 
 import { ClientProps } from "../..";
 import { AutoColorTextNode } from "../../../nodes/AutoColorTextNode";
