@@ -46,8 +46,8 @@ const ScrollableDivClient: React.FC<ScrollableDivProps> = ({ children, className
   const handleClick = useCallback(() => {
     setFocusedDiv(index);
     setFocusedItems((prev) => new Map(prev).set(index, prev.get(index) || 0)); // Restore or set initial item index to 0
-    containerRef.current?.focus();
-  }, [setFocusedDiv, setFocusedItems, containerRef, index]);
+    // containerRef.current?.focus();
+  }, [setFocusedDiv, setFocusedItems, /* containerRef, */ index]);
 
   useEffect(() => {
     const updateScrollableDiv = () => {

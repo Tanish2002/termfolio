@@ -82,8 +82,8 @@ const NavigableItemClient: React.FC<{
   const handleClick = useCallback(() => {
     setFocusedDiv(divIndex);
     setFocusedItems((prev) => new Map(prev).set(divIndex, itemIndex));
-    itemRef.current?.focus();
-  }, [setFocusedItems, setFocusedDiv, itemRef, divIndex, itemIndex]);
+    // itemRef.current?.focus();
+  }, [setFocusedItems, setFocusedDiv, /* itemRef, */ divIndex, itemIndex]);
 
   return (
     <li ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>

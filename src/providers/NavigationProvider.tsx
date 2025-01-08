@@ -57,10 +57,10 @@ const NavigationProvider: React.FC = () => {
                     ? Math.max(0, currentItem - 1)
                     : Math.min(maxItem, currentItem + 1);
 
-                  const itemRef = divItems.get(newItem);
-                  if (itemRef?.current) {
-                    itemRef.current.focus();
-                  }
+                  // const itemRef = divItems.get(newItem);
+                  // if (itemRef?.current) {
+                  //   itemRef.current.focus();
+                  // }
 
                   return new Map(prev).set(prevFocusedDiv, newItem);
                 });
@@ -83,19 +83,19 @@ const NavigationProvider: React.FC = () => {
           }
 
           if (newFocusedDiv !== prevFocusedDiv) {
-            const divRef = registeredDivs.get(newFocusedDiv);
-            if (divRef?.current) {
-              divRef.current.focus();
-            }
+            // const divRef = registeredDivs.get(newFocusedDiv);
+            // if (divRef?.current) {
+            //   divRef.current.focus();
+            // }
 
             setFocusedItems((prev) => {
               const newItemIndex = prev.get(newFocusedDiv) || 0;
               const divItems = registeredItems.get(newFocusedDiv);
               const itemRef = divItems?.get(newItemIndex);
 
-              if (itemRef?.current) {
-                itemRef.current.focus();
-              }
+              // if (itemRef?.current) {
+              //   itemRef.current.focus();
+              // }
 
               return new Map(prev).set(newFocusedDiv, newItemIndex);
             });

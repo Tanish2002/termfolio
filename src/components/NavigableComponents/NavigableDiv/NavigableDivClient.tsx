@@ -39,8 +39,8 @@ const NavigableDivClient: React.FC<{
   const handleClick = useCallback(() => {
     setFocusedDiv(index);
     setFocusedItems((prev) => new Map(prev).set(index, prev.get(index) || 0)); // Restore or set initial item index to 0
-    divRef.current?.focus();
-  }, [setFocusedDiv, setFocusedItems, divRef, index]);
+    // divRef.current?.focus();
+  }, [setFocusedDiv, setFocusedItems, /* divRef, */ index]);
 
   return (
     <NavigableFocusContext.Provider value={isFocused}>
