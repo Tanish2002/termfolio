@@ -1,36 +1,28 @@
+// components/Lists/BlogList.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-
+import { useMemo } from "react";
 import BorderBox from "@/components/BorderBox/BorderBox";
-
 import { BaseListItemClient } from "../BaseListItemClient";
 import { BaseListItem } from "../types";
-import { getArchivedPosts, getPublishedPosts } from "./getPostsAction";
+import React from "react";
 
-export function BlogList({ initialItems }) {
+interface BlogListProps {
+  publishedPosts: BaseListItem[];
+  archivedPosts: BaseListItem[];
+}
+
+function BlogList({ publishedPosts, archivedPosts }: BlogListProps) {
   const searchParams = useSearchParams();
-  const [items, setItems] = useState(initialItems);
-  const status = (
-    ["published", "archived"].includes(searchParams.get("status") || "")
-      ? searchParams.get("status")!
-      : "published"
-  ) as "published" | "archived";
 
-  useEffect(() => {
-    if (status === "archived") getArchivedPosts().then(setItems);
-    if (status === "published") getPublishedPosts().then(setItems);
-  }, [status]);
+  const status = useMemo(() => {
+    const paramStatus = searchParams.get("status");
+    return paramStatus === 'archived' ? 'archived' as const : 'published' as const;
+  }, [searchParams]);
 
-  // can't use baselist since it imports DynamicIcon and that gets bunded to client bundle due to 'use client' used in this component
-  // return (
-  //   <BaseList
-  //     divIndex={2}
-  //     items={items}
-  //     boxText={status === "archived" ? "blog - [archived]" : "blog"}
-  //   />
-  // );
+  const items = status === 'archived' ? archivedPosts : publishedPosts;
+
   return (
     <BorderBox
       texts={[
@@ -57,3 +49,14 @@ export function BlogList({ initialItems }) {
     </BorderBox>
   );
 }
+
+export default React.memo(BlogList);
+
+// can't use baselist since it imports DynamicIcon and that gets bunded to client bundle due to 'use client' used in this component
+// return (
+//   <BaseList
+//     divIndex={2}
+//     items={items}
+//     boxText={status === "archived" ? "blog - [archived]" : "blog"}
+//   />
+// );
