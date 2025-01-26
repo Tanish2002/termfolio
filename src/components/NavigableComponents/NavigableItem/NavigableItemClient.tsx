@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import { activeDivAtom, activeItemsAtom, registeredItemsAtom } from "@/store/navigation/atom";
 import { createItemFocusSelector } from "@/store/navigation/selectors";

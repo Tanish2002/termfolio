@@ -4,11 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useAtomValue, useSetAtom } from "jotai";
 
-import {
-  activeDivAtom,
-  registeredDivsAtom,
-  scrollableStateAtom
-} from "@/store/navigation/atom";
+import { activeDivAtom, registeredDivsAtom, scrollableStateAtom } from "@/store/navigation/atom";
 import { createDivFocusSelector } from "@/store/navigation/selectors";
 import { findScrollableElement } from "@/utils/scrollUtils";
 
@@ -30,8 +26,6 @@ const NavigableDivClient: React.FC<NavigableDivProps> = ({
   isScrollable = false
 }) => {
   const divRef = useRef<HTMLDivElement | null>(null);
-  // const [navState, dispatch] = useAtom(navigationStateAtom);
-  // const isFocused = navState.activeDiv === index;
   const activeDivDispatcher = useSetAtom(activeDivAtom);
   const registeredDivsDispatcher = useSetAtom(registeredDivsAtom);
   const scrollableDivDispatcher = useSetAtom(scrollableStateAtom);
@@ -89,7 +83,7 @@ const NavigableDivClient: React.FC<NavigableDivProps> = ({
         ref={divRef}
         role={isScrollable ? "region" : "navigation"}
         aria-label={label || `${isScrollable ? "Scrollable" : "Navigation"} section ${index}`}
-        aria-selected={isFocused}
+        aria-selected={isScrollable ? undefined : isFocused}
         className={className}
         onClick={handleClick}
         onTouchStart={handleClick}
@@ -99,7 +93,7 @@ const NavigableDivClient: React.FC<NavigableDivProps> = ({
         }}
       >
         <div
-          role="list"
+          role={isScrollable ? "main" : "list"}
           aria-label={`${isScrollable ? "Scrollable content" : "Navigation items"} for ${label || `section ${index}`}`}
           className="h-full w-full"
         >

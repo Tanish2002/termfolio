@@ -1,4 +1,3 @@
-// components/Lists/BlogList.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -9,10 +8,6 @@ import BorderBox from "@/components/BorderBox/BorderBox";
 
 import { BaseListItemClient } from "../BaseListItemClient";
 import { BaseListItem } from "../types";
-
-// components/Lists/BlogList.tsx
-
-// components/Lists/BlogList.tsx
 
 interface BlogListProps {
   publishedPosts: BaseListItem[];
