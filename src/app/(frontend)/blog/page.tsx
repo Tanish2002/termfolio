@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { getServerSideURL } from "@/utils/getURL";
 import { mergeSocialMetadata } from "@/utils/mergeOpenGraph";
 
@@ -32,7 +30,7 @@ export async function generateMetadata({
 
 export default function Blog() {
   return (
-    <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+    <div className="prose-xl my-auto space-y-4">
       <BlogHeader />
 
       <p>

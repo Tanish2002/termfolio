@@ -25,7 +25,7 @@ export default async function BlogPost({ params }: Args) {
   if (!post) return notFound();
 
   return (
-    <article className="md:prose-md prose mx-auto w-full max-w-4xl px-4 py-8 lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert prose-headings:text-tokyo-night-orange sm:px-6 lg:px-8">
+    <article className="md:prose-md prose mx-auto w-full max-w-4xl px-4 py-8 lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert sm:px-6 lg:px-8">
       {/* Blog Post Header */}
       <header className="mb-8 space-y-4">
         {/* Title with responsive text sizing */}
@@ -61,7 +61,7 @@ export default async function BlogPost({ params }: Args) {
 
       {/* Blog Content with Enhanced Readability */}
       <RichText
-        className="prose-h2:border-b"
+        className="prose-h2:border-b prose-h2:border-tokyo-night-foreground"
         data={post.content}
         enableProse
         enableGutter={false}

@@ -1,5 +1,6 @@
 import { Victor_Mono } from "next/font/google";
 import localFont from "next/font/local";
+
 import { CollectionSlug } from "payload";
 
 export const scientifica = localFont({

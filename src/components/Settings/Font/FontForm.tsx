@@ -10,15 +10,7 @@ export default async function FontForm({ initialFont }: { initialFont: FontOptio
     <FontFormClient
       initialFont={initialFont}
       previewMdxComponent={
-        <div
-          className={cn(
-            "prose-p:my-0",
-            "prose-ul:list-disc prose-ul:space-y-2 prose-ul:pl-6 prose-ul:sm:pl-8",
-            "prose-ol:list-decimal prose-ol:space-y-2 prose-ol:pl-6 prose-ul:sm:pl-8",
-            "prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-tokyo-night-comment",
-            "divide-y divide-tokyo-night-comment"
-          )}
-        >
+        <div className={cn("prose w-full max-w-none", "divide-y divide-tokyo-night-comment")}>
           <div>
             <h1>Heading Level 1</h1>
             <h2>Heading Level 2</h2>
@@ -54,7 +46,7 @@ export default async function FontForm({ initialFont }: { initialFont: FontOptio
           <div>
             <h3>Blockquote</h3>
             <blockquote>
-              <p>&quot;The quick brown fox jumps over the lazy dog.&quot;</p>
+              <p>The quick brown fox jumps over the lazy dog.</p>
             </blockquote>
           </div>
           <div>

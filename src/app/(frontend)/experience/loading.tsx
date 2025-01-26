@@ -1,7 +1,7 @@
 // src/app/(frontend)/experience/loading.tsx
 export default function Loading() {
   return (
-    <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+    <div className="prose-xl my-auto space-y-4">
       <div className="animate-pulse space-y-4">
         <div className="h-6 w-3/4 rounded bg-tokyo-night-foreground/10" />
 

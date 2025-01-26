@@ -3,10 +3,14 @@
 
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import React from "react";
+
 import BorderBox from "@/components/BorderBox/BorderBox";
+
 import { BaseListItemClient } from "../BaseListItemClient";
 import { BaseListItem } from "../types";
-import React from "react";
+
+// components/Lists/BlogList.tsx
 
 interface BlogListProps {
   publishedPosts: BaseListItem[];
@@ -18,10 +22,10 @@ function BlogList({ publishedPosts, archivedPosts }: BlogListProps) {
 
   const status = useMemo(() => {
     const paramStatus = searchParams.get("status");
-    return paramStatus === 'archived' ? 'archived' as const : 'published' as const;
+    return paramStatus === "archived" ? ("archived" as const) : ("published" as const);
   }, [searchParams]);
 
-  const items = status === 'archived' ? archivedPosts : publishedPosts;
+  const items = status === "archived" ? archivedPosts : publishedPosts;
 
   return (
     <BorderBox

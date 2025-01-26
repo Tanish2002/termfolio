@@ -30,7 +30,7 @@ export default async function ProjectPage({ params }: Args) {
   return (
     <article
       className={cn(
-        "md:prose-md prose lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert prose-headings:text-tokyo-night-orange prose-a:no-underline",
+        "md:prose-md prose lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert",
         "mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8"
       )}
     >
@@ -90,7 +90,7 @@ export default async function ProjectPage({ params }: Args) {
 
       {/* Project Content with Enhanced Readability */}
       <RichText
-        className="prose-h2:border-b"
+        className="prose-h2:border-b prose-h2:border-tokyo-night-foreground"
         data={project.content}
         enableProse
         enableGutter={false}

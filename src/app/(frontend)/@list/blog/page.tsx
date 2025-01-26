@@ -1,5 +1,6 @@
 // app/blog/page.tsx
 import React from "react";
+
 import BlogList from "@/components/Lists/BlogList";
 import { getArchivedPosts, getPublishedPosts } from "@/components/Lists/BlogList/getPostsAction";
 
@@ -11,10 +12,5 @@ export default async function Blog() {
     getArchivedPosts()
   ]);
 
-  return (
-    <BlogList
-      publishedPosts={publishedPosts}
-      archivedPosts={archivedPosts}
-    />
-  );
+  return <BlogList publishedPosts={publishedPosts} archivedPosts={archivedPosts} />;
 }

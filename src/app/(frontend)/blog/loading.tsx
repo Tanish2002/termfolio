@@ -1,7 +1,7 @@
 // src/app/(frontend)/blog/loading.tsx
 export default function Loading() {
   return (
-    <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+    <div className="prose-xl my-auto space-y-4">
       {/* Archive Toggle Button */}
       <div className="flex items-center justify-end">
         <div className="ml-auto mr-2 h-10 w-32 animate-pulse rounded-md bg-tokyo-night-cyan/10" />

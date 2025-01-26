@@ -11,8 +11,8 @@ import {
   HorizontalRuleFeature,
   IndentFeature,
   InlineToolbarFeature,
-  lexicalEditor,
-  LinkFeature
+  LinkFeature,
+  lexicalEditor
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 

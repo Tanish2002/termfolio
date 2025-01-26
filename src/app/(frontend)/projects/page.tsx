@@ -23,7 +23,7 @@ export function generateMetadata(): Metadata {
 
 export default async function Projects() {
   return (
-    <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+    <div className="prose-xl my-auto space-y-4">
       <p>
         Welcome to my projects showcase! Here, you&apos;ll find a collection of my technical
         adventures and creative solutions that I&apos;ve built over the years. 🛠️

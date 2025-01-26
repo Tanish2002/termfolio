@@ -1,6 +1,5 @@
 import { collectionPrefixMap } from "@/constants";
 
-
 type Props = {
   collection: keyof typeof collectionPrefixMap;
   slug: string;

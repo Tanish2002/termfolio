@@ -15,7 +15,7 @@ export default React.memo(async function About() {
   return (
     <>
       <WalkingGif />
-      <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+      <div className="prose-xl my-auto space-y-4">
         <p>
           Hey there! I&apos;m <span className="text-tokyo-night-cyan">Tanish</span> Khare 👋
         </p>

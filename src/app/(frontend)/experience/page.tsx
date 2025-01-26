@@ -23,7 +23,7 @@ export function generateMetadata(): Metadata {
 
 export default async function Experience() {
   return (
-    <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+    <div className="prose-xl my-auto space-y-4">
       <p>
         Welcome to my experience page! Here, you can dive into my professional journey and see the
         awesome places I&apos;ve worked and the skills I&apos;ve honed along. 🚀

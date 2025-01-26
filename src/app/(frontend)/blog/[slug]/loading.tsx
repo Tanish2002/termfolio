@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Loading() {
   return (
-    <article className="md:prose-md prose mx-auto w-full max-w-4xl px-4 py-8 lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert prose-headings:text-tokyo-night-orange sm:px-6 lg:px-8">
+    <article className="md:prose-md prose mx-auto w-full max-w-4xl px-4 py-8 lg:prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert sm:px-6 lg:px-8">
       {/* Header Loading Skeleton */}
       <header className="mb-8 space-y-4">
         {/* Title Loading */}

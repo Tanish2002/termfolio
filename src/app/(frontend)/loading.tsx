@@ -7,7 +7,7 @@ export default function Loading() {
         <div className="absolute top-0 h-32 w-32 animate-pulse rounded bg-tokyo-night-foreground/10" />
       </div>
 
-      <div className="prose-xl my-auto space-y-4 prose-p:my-0">
+      <div className="prose-xl my-auto space-y-4">
         <div className="animate-pulse space-y-4">
           {/* Introduction */}
           <div className="h-6 w-2/3 rounded bg-tokyo-night-foreground/10" />
