@@ -1,14 +1,12 @@
-import Link from "next/link";
-
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
-  SerializedListItemNode,
-  SerializedListNode
+  SerializedLinkNode,
 } from "@payloadcms/richtext-lexical";
-import { SerializedEditorState, SerializedLexicalNode } from "@payloadcms/richtext-lexical/lexical";
+import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import {
   JSXConvertersFunction,
+  LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
   convertLexicalNodesToJSX
 } from "@payloadcms/richtext-lexical/react";
@@ -21,27 +19,25 @@ import { BannerBlock } from "@/payload/blocks/Banner/Component";
 import CodeBlock, { CodeBlockProps } from "@/payload/blocks/Code/Component";
 import { MediaBlock } from "@/payload/blocks/MediaBlock/Component";
 import cn from "@/utils/cn";
+import { collectionPrefixMap } from "@/constants";
 
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<MediaBlockProps | BannerBlockProps | CodeBlockProps>;
 
+const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
+  const { value, relationTo } = linkNode.fields.doc!
+  if (typeof value !== 'object') {
+    throw new Error('Expected value to be an object')
+  }
+  const slug = value.slug
+  const collectionName = collectionPrefixMap[relationTo] || "/blog"
+  return `${collectionName}/${slug}`
+}
+
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
-  link: ({ node }) => {
-    const children = convertLexicalNodesToJSX({
-      converters: defaultConverters,
-      parent: node,
-      nodes: node.children
-    });
-    if (node.fields.linkType === "internal") {
-      const slug = (node.fields.doc?.value as any).slug;
-      const collectionName = node.fields.doc?.relationTo;
-
-      return <Link href={`/${collectionName}/${slug}`}>{children}</Link>;
-    }
-    return <Link href={node.fields.url}>{children}</Link>;
-  },
+  ...LinkJSXConverter({ internalDocToHref }),
   colorText: ({ node }) => {
     const children = convertLexicalNodesToJSX({
       converters: defaultConverters,
@@ -91,51 +87,4 @@ export default function RichText(props: Props) {
       {...rest}
     />
   );
-}
-
-/**
- * Normalize children of a list to use HTML stacking without needing any CSS quirks.
- *
- * Note: changes a single level, call again for sublists while rendering.
- *
- * @param children children of a list
- * @returns
- */
-function fixListItemNesting(children: SerializedLexicalNode[]) {
-  const res: SerializedLexicalNode[] = [];
-
-  for (const node of children) {
-    //validate
-    if (node.type !== "listitem") {
-      //unexpected item found
-      res.push(node);
-      continue;
-    }
-
-    //check li > ol, li > ul
-    const listItemNode = node as SerializedListItemNode;
-    const children = listItemNode.children;
-
-    if (children.length === 1 && children[0].type === "list" && res.length > 0) {
-      const prev = res.pop() as SerializedListNode;
-
-      // @ts-ignore
-      if (prev.type !== "listitem") {
-        res.push(prev);
-        res.push(node);
-        continue;
-      }
-
-      res.push({
-        ...prev,
-
-        children: [...prev.children, children[0]]
-      } as SerializedListNode);
-
-      continue;
-    }
-
-    res.push(node);
-  }
-  return res;
 }

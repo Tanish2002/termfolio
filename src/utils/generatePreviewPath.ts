@@ -1,11 +1,5 @@
-import { CollectionSlug } from "payload";
+import { collectionPrefixMap } from "@/constants";
 
-const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
-  posts: "/blog",
-  projects: "/projects",
-  experiences: "/experience",
-  techstacks: "/"
-};
 
 type Props = {
   collection: keyof typeof collectionPrefixMap;

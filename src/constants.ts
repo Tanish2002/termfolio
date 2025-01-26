@@ -1,5 +1,6 @@
 import { Victor_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import { CollectionSlug } from "payload";
 
 export const scientifica = localFont({
   src: [
@@ -37,3 +38,10 @@ export const mono = Victor_Mono({
   weight: ["300", "400", "500", "600", "700"],
   adjustFontFallback: true
 });
+
+export const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
+  posts: "/blog",
+  projects: "/projects",
+  experiences: "/experience",
+  techstacks: "/"
+} as const;
