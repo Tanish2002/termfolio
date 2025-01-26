@@ -10,7 +10,6 @@ import SocialList from "@/components/Lists/SocialList/SocialList";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
-import ScrollableDiv from "@/components/NavigableComponents/ScrollableDiv/ScrollableDiv";
 import CustomToaster from "@/components/Toaster";
 import { mono, scientifica } from "@/constants";
 import { getCurrentFont } from "@/lib/userSettings/server";
@@ -74,6 +73,7 @@ export default async function RootLayout({
           >
             <NavigableDiv
               index={0}
+              label="About Section"
               className={cn(
                 "col-start-1 row-span-1 row-start-1 hidden md:flex", //common
                 "lg:col-span-1", //lg
@@ -94,6 +94,7 @@ export default async function RootLayout({
             </NavigableDiv>
             <NavigableDiv
               index={1}
+              label="Routes List"
               className={cn(
                 "col-start-1 row-span-2 hidden md:flex", //common
                 "lg:col-span-1", //lg
@@ -104,6 +105,7 @@ export default async function RootLayout({
             </NavigableDiv>
             <NavigableDiv
               index={2}
+              label="Dynamic List based upon route"
               className={cn(
                 "col-start-1 row-span-2 hidden md:flex", //common
                 "lg:col-span-1", //lg
@@ -115,6 +117,7 @@ export default async function RootLayout({
             </NavigableDiv>
             <NavigableDiv
               index={3}
+              label="Socials List"
               className={cn(
                 "col-start-1 row-span-2 hidden md:flex", //common
                 "lg:col-span-1", //lg
@@ -130,7 +133,7 @@ export default async function RootLayout({
                 "md:col-span-4" //md
               )}
             >
-              <ScrollableDiv index={4} className="h-full">
+              <NavigableDiv label="Main Content" index={4} className="h-full" isScrollable={true}>
                 <BorderBox
                   texts={[
                     {
@@ -142,7 +145,7 @@ export default async function RootLayout({
                 >
                   {children}
                 </BorderBox>
-              </ScrollableDiv>
+              </NavigableDiv>
             </div>
           </div>
 

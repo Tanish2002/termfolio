@@ -3,49 +3,108 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useAtomValue, useSetAtom } from "jotai";
-import { selectAtom } from "jotai/utils";
 
-import { focusedDivAtom, focusedItemsAtom, registeredDivsAtom } from "@/store/focusAtoms";
+import {
+  activeDivAtom,
+  registeredDivsAtom,
+  scrollableStateAtom
+} from "@/store/navigation/atom";
+import { createDivFocusSelector } from "@/store/navigation/selectors";
+import { findScrollableElement } from "@/utils/scrollUtils";
 
 import { NavigableFocusContext } from "../NavigableFocusContext";
 
-const NavigableDivClient: React.FC<{
+interface NavigableDivProps {
   index: number;
   children: React.ReactNode;
   className: string;
-}> = ({ index, children, className }) => {
-  const setFocusedDiv = useSetAtom(focusedDivAtom);
-  const setFocusedItems = useSetAtom(focusedItemsAtom);
-  const registerDiv = useSetAtom(registeredDivsAtom);
+  label?: string;
+  isScrollable?: boolean;
+}
 
-  const isFocused = useAtomValue(
-    useMemo(() => selectAtom(focusedDivAtom, (focused) => focused === index), [index])
-  );
-
+const NavigableDivClient: React.FC<NavigableDivProps> = ({
+  index,
+  children,
+  className,
+  label,
+  isScrollable = false
+}) => {
   const divRef = useRef<HTMLDivElement | null>(null);
+  // const [navState, dispatch] = useAtom(navigationStateAtom);
+  // const isFocused = navState.activeDiv === index;
+  const activeDivDispatcher = useSetAtom(activeDivAtom);
+  const registeredDivsDispatcher = useSetAtom(registeredDivsAtom);
+  const scrollableDivDispatcher = useSetAtom(scrollableStateAtom);
+  const isFocused = useAtomValue(useMemo(() => createDivFocusSelector(index), [index]));
 
   useEffect(() => {
-    registerDiv((prev) => new Map(prev).set(index, divRef));
+    registeredDivsDispatcher({
+      type: "REGISTER_DIV",
+      payload: { index, ref: divRef }
+    });
 
     return () => {
-      registerDiv((prev) => {
-        const updatedDivs = new Map(prev);
-        updatedDivs.delete(index);
-        return updatedDivs;
+      registeredDivsDispatcher({ type: "UNREGISTER_DIV", payload: index });
+    };
+  }, [index, registeredDivsDispatcher]);
+
+  useEffect(() => {
+    if (!isScrollable) return;
+
+    const updateScrollableDiv = () => {
+      if (divRef.current) {
+        const scrollableElement = findScrollableElement(divRef.current);
+        scrollableDivDispatcher({
+          type: "SET_SCROLLABLE_DIV",
+          payload: {
+            index,
+            element: scrollableElement || undefined
+          }
+        });
+      }
+    };
+
+    updateScrollableDiv();
+    const resizeObserver = new ResizeObserver(updateScrollableDiv);
+    if (divRef.current) {
+      resizeObserver.observe(divRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+      scrollableDivDispatcher({
+        type: "SET_SCROLLABLE_DIV",
+        payload: { index, element: undefined }
       });
     };
-  }, [index, registerDiv]);
+  }, [scrollableDivDispatcher, index, isScrollable]);
 
   const handleClick = useCallback(() => {
-    setFocusedDiv(index);
-    setFocusedItems((prev) => new Map(prev).set(index, prev.get(index) || 0)); // Restore or set initial item index to 0
-    // divRef.current?.focus();
-  }, [setFocusedDiv, setFocusedItems, /* divRef, */ index]);
+    activeDivDispatcher({ type: "CHANGE_DIV", payload: index });
+  }, [activeDivDispatcher, index]);
 
   return (
     <NavigableFocusContext.Provider value={isFocused}>
-      <div ref={divRef} onClick={handleClick} onTouchStart={handleClick} className={className}>
-        {children}
+      <div
+        ref={divRef}
+        role={isScrollable ? "region" : "navigation"}
+        aria-label={label || `${isScrollable ? "Scrollable" : "Navigation"} section ${index}`}
+        aria-selected={isFocused}
+        className={className}
+        onClick={handleClick}
+        onTouchStart={handleClick}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleClick();
+        }}
+      >
+        <div
+          role="list"
+          aria-label={`${isScrollable ? "Scrollable content" : "Navigation items"} for ${label || `section ${index}`}`}
+          className="h-full w-full"
+        >
+          {children}
+        </div>
       </div>
     </NavigableFocusContext.Provider>
   );

@@ -16,14 +16,14 @@ const MobileNavbar: React.FC<{ list: React.ReactNode }> = async ({ list }) => {
             "grid h-svh grid-cols-1 grid-rows-6 gap-4 overflow-y-scroll bg-tokyo-night-background p-5 text-tokyo-night-foreground"
           )}
         >
-          <NavigableDiv index={10} className="row-span-2">
+          <NavigableDiv index={10} className="row-span-2" label="Routes List">
             <RoutesList divIndex={1} />
           </NavigableDiv>
-          <NavigableDiv index={11} className="row-span-2">
+          <NavigableDiv index={11} className="row-span-2" label="Dynamic List based upon route">
             {/* Render a parallel route based on the current pathName */}
             {list}
           </NavigableDiv>
-          <NavigableDiv index={12} className="row-span-2">
+          <NavigableDiv index={12} className="row-span-2" label="Socials List">
             <SocialList divIndex={3} />
           </NavigableDiv>
         </div>

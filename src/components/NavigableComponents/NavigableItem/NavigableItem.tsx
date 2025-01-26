@@ -7,8 +7,9 @@ const NavigableItem: React.FC<{
   itemIndex: number;
   href?: string;
   children: React.ReactNode;
-}> = ({ divIndex, itemIndex, href, children }) => (
-  <NavigableItemClient divIndex={divIndex} itemIndex={itemIndex} href={href}>
+  label?: string;
+}> = ({ divIndex, itemIndex, href, children, label }) => (
+  <NavigableItemClient divIndex={divIndex} label={label} itemIndex={itemIndex} href={href}>
     {children}
   </NavigableItemClient>
 );

@@ -1,6 +1,4 @@
-// src/store/themeAtoms.ts
 import { atom } from "jotai";
-import { atomWithDefault } from "jotai/utils";
 
 export type ThemeType = "light" | "dark" | "system";
 export type ResolvedThemeType = "light" | "dark";

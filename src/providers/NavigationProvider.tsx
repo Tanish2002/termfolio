@@ -1,116 +1,114 @@
 "use client";
 
-import { useEffect } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { debounce } from "underscore";
+import { useAtom, useAtomValue } from "jotai";
 
 import useIsMobile from "@/hooks/useIsMobile";
 import {
-  focusedDivAtom,
-  focusedItemsAtom,
+  activeDivAtom,
+  activeItemsAtom,
   registeredDivsAtom,
-  registeredItemsAtom
-} from "@/store/focusAtoms";
+  registeredItemsAtom,
+  scrollableStateAtom
+} from "@/store/navigation/atom";
 import { findScrollableElement } from "@/utils/scrollUtils";
+import { throttle } from "@/utils/throttle";
 
 const NavigationProvider: React.FC = () => {
-  const setFocusedDiv = useSetAtom(focusedDivAtom);
-  const setFocusedItems = useSetAtom(focusedItemsAtom);
+  const [activeDiv, activeDivDispatcher] = useAtom(activeDivAtom);
+  const [activeItem, activeItemDispatcher] = useAtom(activeItemsAtom);
   const registeredDivs = useAtomValue(registeredDivsAtom);
   const registeredItems = useAtomValue(registeredItemsAtom);
+  const scrollableState = useAtomValue(scrollableStateAtom);
+  const scrollableDiv = scrollableState.scrollableDiv;
   const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isMobile) return;
-    const handleKeyDown = debounce((e: KeyboardEvent) => {
-      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "h", "j", "k", "l"].includes(e.key)) {
-        e.preventDefault();
 
-        setFocusedDiv((prevFocusedDiv) => {
-          let newFocusedDiv = prevFocusedDiv;
+    const handleKeyDown = throttle((e: KeyboardEvent) => {
+      const key = e.key;
+      const isNavKey = [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+        "h",
+        "j",
+        "k",
+        "l"
+      ].includes(key);
+      const isScrollKey = ["PageUp", "PageDown"].includes(key);
 
-          switch (e.key) {
-            case "ArrowLeft":
-            case "ArrowRight":
-            case "h":
-            case "l": {
-              const sortedKeys = Array.from(registeredDivs.keys()).sort((a, b) => a - b);
-              const currentIndex = sortedKeys.indexOf(prevFocusedDiv);
-              newFocusedDiv = ["ArrowRight", "l"].includes(e.key)
-                ? sortedKeys[(currentIndex + 1) % sortedKeys.length]
-                : sortedKeys[(currentIndex - 1 + sortedKeys.length) % sortedKeys.length]; // ArrowLeft
-              break;
-            }
-            case "ArrowUp":
-            case "ArrowDown":
-            case "k":
-            case "j": {
-              const divItems = registeredItems.get(prevFocusedDiv);
-              if (divItems && divItems.size > 0) {
-                // Handle navigation between items
-                setFocusedItems((prev) => {
-                  const currentItem = prev.get(prevFocusedDiv) || 0;
-                  const maxItem = divItems.size - 1;
-                  const newItem = ["ArrowUp", "k"].includes(e.key)
-                    ? Math.max(0, currentItem - 1)
-                    : Math.min(maxItem, currentItem + 1);
+      if (!isNavKey && !isScrollKey) return;
+      e.preventDefault();
 
-                  // const itemRef = divItems.get(newItem);
-                  // if (itemRef?.current) {
-                  //   itemRef.current.focus();
-                  // }
-
-                  return new Map(prev).set(prevFocusedDiv, newItem);
-                });
-              } else {
-                // Scroll the NavigableDiv if it has no items and scrollableElement found
-                const divRef = registeredDivs.get(prevFocusedDiv);
-                if (divRef?.current) {
-                  const scrollableElement = findScrollableElement(divRef.current);
-                  if (scrollableElement) {
-                    const scrollAmount = scrollableElement.clientHeight * 0.1; // Scroll by 10% of the height
-                    scrollableElement.scrollBy({
-                      top: ["ArrowUp", "k"].includes(e.key) ? -scrollAmount : scrollAmount,
-                      behavior: "smooth"
-                    });
-                  }
-                }
-              }
-              return prevFocusedDiv;
-            }
-          }
-
-          if (newFocusedDiv !== prevFocusedDiv) {
-            // const divRef = registeredDivs.get(newFocusedDiv);
-            // if (divRef?.current) {
-            //   divRef.current.focus();
-            // }
-
-            setFocusedItems((prev) => {
-              const newItemIndex = prev.get(newFocusedDiv) || 0;
-              const divItems = registeredItems.get(newFocusedDiv);
-              const itemRef = divItems?.get(newItemIndex);
-
-              // if (itemRef?.current) {
-              //   itemRef.current.focus();
-              // }
-
-              return new Map(prev).set(newFocusedDiv, newItemIndex);
-            });
-          }
-
-          return newFocusedDiv;
+      if (isScrollKey && scrollableDiv?.current) {
+        const scrollAmount = scrollableDiv.current.clientHeight * 0.1;
+        scrollableDiv.current.scrollBy({
+          top: key === "PageUp" ? -scrollAmount : scrollAmount,
+          behavior: "smooth"
         });
+        return;
+      }
+
+      const isVertical = ["ArrowUp", "ArrowDown", "j", "k"].includes(key);
+      const isUp = ["ArrowUp", "k"].includes(key);
+      const isRight = ["ArrowRight", "l"].includes(key);
+
+      if (isVertical) {
+        const divItems = registeredItems.get(activeDiv);
+        if (!divItems?.size) {
+          const divRef = registeredDivs.get(activeDiv);
+          if (divRef?.current) {
+            const scrollableElement = findScrollableElement(divRef.current);
+            if (scrollableElement) {
+              scrollableElement.scrollBy({
+                top: isUp
+                  ? -scrollableElement.clientHeight * 0.1
+                  : scrollableElement.clientHeight * 0.1,
+                behavior: "smooth"
+              });
+            }
+          }
+          return;
+        }
+
+        const currentItem = activeItem.get(activeDiv) || 0;
+        const newItem = isUp
+          ? Math.max(0, currentItem - 1)
+          : Math.min(divItems.size - 1, currentItem + 1);
+
+        activeItemDispatcher({
+          type: "CHANGE_ITEM",
+          payload: { divIndex: activeDiv, itemIndex: newItem }
+        });
+      } else {
+        const divs = Array.from(registeredDivs.keys()).sort((a, b) => a - b);
+        const currentIndex = divs.indexOf(activeDiv);
+        const newIndex = isRight
+          ? (currentIndex + 1) % divs.length
+          : (currentIndex - 1 + divs.length) % divs.length;
+
+        activeDivDispatcher({ type: "CHANGE_DIV", payload: divs[newIndex] });
       }
     }, 100);
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [setFocusedDiv, setFocusedItems, registeredDivs, registeredItems, isMobile]);
+  }, [
+    activeDiv,
+    activeItem,
+    scrollableDiv,
+    registeredDivs,
+    registeredItems,
+    activeItemDispatcher,
+    activeDivDispatcher,
+    isMobile
+  ]);
 
-  return <></>;
+  return null;
 };
 
 export default React.memo(NavigationProvider);

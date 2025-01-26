@@ -12,6 +12,8 @@ import { BaseListItem } from "../types";
 
 // components/Lists/BlogList.tsx
 
+// components/Lists/BlogList.tsx
+
 interface BlogListProps {
   publishedPosts: BaseListItem[];
   archivedPosts: BaseListItem[];

@@ -3,13 +3,12 @@
 import { usePathname } from "next/navigation";
 import React, { useMemo } from "react";
 
-import { atom, useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { useAtomValue } from "jotai";
 
 import { useMobileNavbarOpen } from "@/components/MobileNavbar/MobileNavbarContext";
 import NavigableItem from "@/components/NavigableComponents/NavigableItem/NavigableItem";
 import useIsMobile from "@/hooks/useIsMobile";
-import { focusedDivAtom, focusedItemsAtom } from "@/store/focusAtoms";
+import { createItemFocusSelector } from "@/store/navigation/selectors";
 import cn from "@/utils/cn";
 
 import { BaseListItem, BaseListItemClientProps } from "./types";
@@ -22,24 +21,12 @@ export function BaseListItemClient<T extends BaseListItem>({
   const setIsOpen = useMobileNavbarOpen();
   const pathName = usePathname();
   const isMobile = useIsMobile();
-
   const isFocused = useAtomValue(
-    useMemo(
-      () =>
-        selectAtom(
-          atom((get) => ({
-            focusedDiv: get(focusedDivAtom),
-            focusedItems: get(focusedItemsAtom)
-          })),
-          ({ focusedDiv, focusedItems }) =>
-            focusedDiv === divIndex && focusedItems.get(divIndex) === itemIndex
-        ),
-      [divIndex, itemIndex]
-    )
+    useMemo(() => createItemFocusSelector(divIndex, itemIndex), [divIndex, itemIndex])
   );
 
   const isSelected = item.href
-    ? item.href === "/" && pathName !== "/" /* check for the / route */
+    ? item.href === "/" && pathName !== "/"
       ? false
       : pathName.includes(item.href)
     : false;
@@ -74,14 +61,19 @@ export function BaseListItemClient<T extends BaseListItem>({
 
   if (item.href) {
     return (
-      <NavigableItem divIndex={divIndex} itemIndex={itemIndex} href={item.href}>
+      <NavigableItem
+        divIndex={divIndex}
+        itemIndex={itemIndex}
+        href={item.href}
+        label={item.leftContent}
+      >
         {content}
       </NavigableItem>
     );
   }
 
   return (
-    <NavigableItem divIndex={divIndex} itemIndex={itemIndex}>
+    <NavigableItem divIndex={divIndex} itemIndex={itemIndex} label={item.leftContent}>
       {content}
     </NavigableItem>
   );

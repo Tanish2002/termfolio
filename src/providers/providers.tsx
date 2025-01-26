@@ -7,7 +7,6 @@ import { Provider } from "jotai";
 import { getCurrentTheme } from "@/lib/userSettings/client";
 import { ThemeSettings } from "@/lib/userSettings/theme/types";
 import NavigationProvider from "@/providers/NavigationProvider";
-import ScrollProvider from "@/providers/ScrollProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -21,7 +20,6 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <Provider>
       <NavigationProvider />
-      <ScrollProvider />
       <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
     </Provider>
   );

@@ -2,72 +2,50 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef } from "react";
 import React from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
-import { focusedDivAtom, focusedItemsAtom, registeredItemsAtom } from "@/store/focusAtoms";
+import { activeDivAtom, activeItemsAtom, registeredItemsAtom } from "@/store/navigation/atom";
+import { createItemFocusSelector } from "@/store/navigation/selectors";
 
 const NavigableItemClient: React.FC<{
   divIndex: number;
   itemIndex: number;
   href?: string;
   children: React.ReactNode;
-}> = ({ divIndex, itemIndex, href, children }) => {
+  label?: string;
+}> = ({ divIndex, itemIndex, href, children, label }) => {
   const router = useRouter();
-  const setFocusedDiv = useSetAtom(focusedDivAtom);
-  const setFocusedItems = useSetAtom(focusedItemsAtom);
-  const registerItem = useSetAtom(registeredItemsAtom);
+  const activeDivDispatcher = useSetAtom(activeDivAtom);
+  const activeItemsDispatcher = useSetAtom(activeItemsAtom);
+  const registeredItemsDispatcher = useSetAtom(registeredItemsAtom);
   const isFocused = useAtomValue(
-    useMemo(
-      () =>
-        selectAtom(focusedItemsAtom, (focusedItems) => focusedItems.get(divIndex) === itemIndex),
-      [divIndex, itemIndex]
-    )
+    useMemo(() => createItemFocusSelector(divIndex, itemIndex), [divIndex, itemIndex])
   );
-
   const itemRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
-    registerItem((prev) => {
-      const updatedDivs = new Map(prev);
-      const itemsInDiv = updatedDivs.get(divIndex) || new Map();
-      itemsInDiv.set(itemIndex, itemRef);
-      updatedDivs.set(divIndex, itemsInDiv);
-      return updatedDivs;
+    registeredItemsDispatcher({
+      type: "REGISTER_ITEM",
+      payload: { divIndex, itemIndex, ref: itemRef }
     });
-
     return () => {
-      registerItem((prev) => {
-        const updatedDivs = new Map(prev);
-        const itemsInDiv = updatedDivs.get(divIndex);
-        if (itemsInDiv) {
-          itemsInDiv.delete(itemIndex);
-          if (itemsInDiv.size > 0) {
-            updatedDivs.set(divIndex, itemsInDiv);
-          } else {
-            updatedDivs.delete(divIndex);
-          }
-        }
-        return updatedDivs;
+      registeredItemsDispatcher({
+        type: "UNREGISTER_ITEM",
+        payload: { divIndex, itemIndex }
       });
     };
-  }, [divIndex, itemIndex, itemRef, registerItem]);
+  }, [divIndex, itemIndex, registeredItemsDispatcher]);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isFocused && href) {
-        router.push(href);
-      }
-    },
-    [href, isFocused, router]
-  );
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isFocused, handleKeyDown]);
+  const handleClick = useCallback(() => {
+    activeDivDispatcher({ type: "CHANGE_DIV", payload: divIndex });
+    activeItemsDispatcher({
+      type: "CHANGE_ITEM",
+      payload: { divIndex, itemIndex }
+    });
+  }, [activeItemsDispatcher, activeDivDispatcher, divIndex, itemIndex]);
 
   useEffect(() => {
     if (isFocused && itemRef.current) {
@@ -79,15 +57,42 @@ const NavigableItemClient: React.FC<{
     }
   }, [isFocused]);
 
-  const handleClick = useCallback(() => {
-    setFocusedDiv(divIndex);
-    setFocusedItems((prev) => new Map(prev).set(divIndex, itemIndex));
-    // itemRef.current?.focus();
-  }, [setFocusedItems, setFocusedDiv, /* itemRef, */ divIndex, itemIndex]);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && isFocused && href) {
+        router.push(href);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFocused, href, router]);
 
   return (
-    <li ref={itemRef} tabIndex={0} onClick={handleClick} onTouchStart={handleClick}>
-      {href ? <Link href={href}>{children}</Link> : children}
+    <li
+      ref={itemRef}
+      role="listitem"
+      aria-label={label || `Navigation item ${itemIndex}`}
+      tabIndex={isFocused ? 0 : -1}
+      onClick={handleClick}
+      onTouchStart={handleClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          if (href) {
+            router.push(href);
+          } else {
+            handleClick();
+          }
+        }
+      }}
+    >
+      {href ? (
+        <Link href={href} aria-current={isFocused ? "page" : undefined} tabIndex={-1}>
+          {children}
+        </Link>
+      ) : (
+        children
+      )}
     </li>
   );
 };
