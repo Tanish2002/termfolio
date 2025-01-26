@@ -11,7 +11,8 @@ import {
   HorizontalRuleFeature,
   IndentFeature,
   InlineToolbarFeature,
-  lexicalEditor
+  lexicalEditor,
+  LinkFeature
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 
@@ -82,10 +83,31 @@ export const Posts: CollectionConfig<"posts"> = {
               name: "content",
               type: "richText",
               editor: lexicalEditor({
-                features: ({ rootFeatures, defaultFeatures }) => {
+                features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    ...defaultFeatures,
+                    LinkFeature({
+                      enabledCollections: ["posts"],
+                      fields: ({ defaultFields }) => {
+                        const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
+                          if ("name" in field && field.name === "url") return false;
+                          return true;
+                        });
+
+                        return [
+                          ...defaultFieldsWithoutUrl,
+                          {
+                            name: "url",
+                            type: "text",
+                            admin: {
+                              condition: ({ linkType }) => linkType !== "internal"
+                            },
+                            label: ({ t }) => t("fields:enterURL"),
+                            required: true
+                          }
+                        ];
+                      }
+                    }),
                     HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
