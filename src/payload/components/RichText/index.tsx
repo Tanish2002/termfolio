@@ -54,6 +54,15 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     code: async ({ node }) => {
       return <CodeBlock {...node.fields} />;
     }
+  },
+  inlineBlocks: {
+    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
+    mediaBlock: async ({ node }) => (
+      <MediaBlock imgClassName="m-0" {...node.fields} disableInnerContainer={true} />
+    ),
+    code: async ({ node }) => {
+      return <CodeBlock {...node.fields} isInline={true} />;
+    }
   }
 });
 

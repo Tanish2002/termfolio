@@ -24,12 +24,7 @@ const CopyToClipboardButton = ({ content }: { content: string }) => {
 
   return (
     <button
-      className={cn(
-        "text-tokyo-night-foreground",
-        // "dark:text-tokyo-night-foreground",
-        "bg-tokyo-night-code-background",
-        "rounded p-2"
-      )}
+      className={cn("text-tokyo-night-foreground", "bg-tokyo-night-code-background", "rounded p-2")}
       aria-label={clicked ? "Copied!" : "Copy to Clipboard"}
       onClick={onClick}
     >

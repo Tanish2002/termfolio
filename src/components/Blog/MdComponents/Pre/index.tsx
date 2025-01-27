@@ -9,41 +9,58 @@ import PreClient from "./Pre.client";
 interface PreProps extends React.HTMLAttributes<HTMLPreElement> {
   language: string;
   code_content: string;
+  isInline?: boolean;
 }
 
-const Pre: React.FC<PreProps> = async (props) => {
-  const lang = props.language;
+const Pre: React.FC<PreProps> = async ({ language, code_content, isInline = false, ...props }) => {
+  const lang = language;
   const currentFont = await getCurrentFont();
+  const isMultiLine = code_content.includes("\n");
+
+  if (isInline && !isMultiLine) {
+    return (
+      <div className="relative my-3">
+        <div
+          className={cn(
+            "relative block overflow-x-auto rounded-md border border-tokyo-night-selection px-4 py-4",
+            "bg-tokyo-night-code-background text-tokyo-night-foreground prose-code:border-none",
+            mono.className
+          )}
+        >
+          {props.children}
+          <span className="absolute right-4 top-1/2 -translate-y-1/2">
+            <PreClient content={code_content} />
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={cn("relative")}>
-      <div
-        className={cn(
-          "absolute left-1/2 top-1 -translate-x-1/2 transform",
-          "rounded-t-md",
-          "px-4 py-1 text-sm",
-          "text-tokyo-night-orange",
-          "bg-tokyo-night-code-background",
-          currentFont.font === "scientifica" ? scientifica.className : mono.className
-        )}
-      >
-        {lang}
-      </div>
+    <div className={cn("relative", "prose-pre:my-1")}>
+      {isMultiLine && (
+        <div
+          className={cn(
+            "absolute left-1/2 top-1 z-50 -translate-x-1/2 transform",
+            "rounded-t-md px-4 py-1 text-sm",
+            "bg-tokyo-night-code-background text-tokyo-night-orange",
+            currentFont.font === "scientifica" ? scientifica.className : mono.className
+          )}
+        >
+          {lang}
+        </div>
+      )}
       <pre
         {...props}
-        className={cn(
-          // "text-[var(--shiki-light)] dark:text-[var(--shiki-dark)]",
-          "bg-tokyo-night-code-background",
-          "my-3 overflow-x-auto px-4 pt-8",
-          mono.className // code content will always be by default mono
-        )}
         style={undefined}
-      />
-      <div className="absolute right-4 top-4">
-        <PreClient content={props.code_content} />
-      </div>
+        className={cn("relative overflow-x-auto px-4", "my-1 py-4", mono.className)}
+      >
+        <div className="absolute right-4 top-4">
+          <PreClient content={code_content} />
+        </div>
+        {props.children}
+      </pre>
     </div>
   );
 };
-
-export default Pre;
+export default React.memo(Pre);

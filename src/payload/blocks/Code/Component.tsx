@@ -8,10 +8,15 @@ import Span from "@/components/Blog/MdComponents/Span";
 
 export type CodeBlockProps = {
   codeContent: string;
-  language?: string;
+  language: string;
+  isInline?: boolean;
 };
 
-export default async function CodeBlock({ codeContent, language = "javascript" }: CodeBlockProps) {
+export default async function CodeBlock({
+  codeContent,
+  language = "javascript",
+  isInline = false
+}: CodeBlockProps) {
   const hast = await codeToHast(codeContent, {
     lang: language,
     themes: {
@@ -26,7 +31,9 @@ export default async function CodeBlock({ codeContent, language = "javascript" }
     jsx,
     jsxs,
     components: {
-      pre: (props) => <Pre {...props} language={language} code_content={codeContent} />,
+      pre: (props) => (
+        <Pre {...props} language={language} code_content={codeContent} isInline={isInline} />
+      ),
       span: (props) => <Span {...props} />
     }
   });

@@ -109,7 +109,10 @@ export const Posts: CollectionConfig<"posts"> = {
                       }
                     }),
                     HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({
+                      blocks: [Banner, Code, MediaBlock],
+                      inlineBlocks: [Banner, Code, MediaBlock]
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature()

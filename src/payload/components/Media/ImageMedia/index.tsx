@@ -66,10 +66,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   const sizes = sizeFromProps || generateSizes((resource as Media).sizes);
 
   return (
-    <picture>
+    <picture className="flex justify-center">
       <NextImage
         alt={alt || ""}
-        className={cn(imgClassName)}
+        className={cn(imgClassName, "rounded-sm border border-tokyo-night-selection")}
         fill={fill}
         height={!fill ? height : undefined}
         placeholder="blur"
