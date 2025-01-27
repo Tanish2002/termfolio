@@ -16,7 +16,11 @@ export const getGenerateUrl = ({ folderSrc, getStorageClient }: GenerateUrlArgs)
     const isVideo = videoExtensions.includes(extension);
 
     const resource = await getStorageClient().api.resource(publicId, {
-      resource_type: isVideo ? "video" : "image"
+      resource_type: isVideo ? "video" : "image",
+      transformation: {
+        quality: "auto",
+        fetch_format: "auto"
+      }
     });
 
     return resource.secure_url;

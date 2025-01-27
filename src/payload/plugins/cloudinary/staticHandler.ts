@@ -25,11 +25,13 @@ export const getStaticHandler = ({
       const isVideo = videoExtensions.includes(extension);
 
       const resource = await getStorageClient().api.resource(publicId, {
-        resource_type: isVideo ? "video" : "image"
-      });
-
+        resource_type: isVideo ? "video" : "image",
+        transformation: {
+          quality: "auto",
+          fetch_format: "auto"
+        }
+      })
       const response = await fetch(resource.secure_url);
-
       if (!response.ok) {
         req.payload.logger.error(`Failed to fetch Cloudinary resource for ${filename}`);
         return new Response("Not Found", { status: 404 });
