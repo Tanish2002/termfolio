@@ -1,20 +1,27 @@
 import React from "react";
 
-import { mono, scientifica } from "@/constants";
-import { getCurrentFont } from "@/lib/userSettings/server";
+import { mono } from "@/constants";
+import { FontOption } from "@/store/fontAtom";
 import cn from "@/utils/cn";
 
+import { LanguageTag } from "./LanguageTag";
 import PreClient from "./Pre.client";
 
 interface PreProps extends React.HTMLAttributes<HTMLPreElement> {
   language: string;
   code_content: string;
   isInline?: boolean;
+  font?: FontOption;
 }
 
-const Pre: React.FC<PreProps> = async ({ language, code_content, isInline = false, ...props }) => {
+const Pre: React.FC<PreProps> = async ({
+  language,
+  code_content,
+  isInline = false,
+  font,
+  ...props
+}) => {
   const lang = language;
-  const currentFont = await getCurrentFont();
   const isMultiLine = code_content.includes("\n");
 
   if (isInline && !isMultiLine) {
@@ -38,18 +45,7 @@ const Pre: React.FC<PreProps> = async ({ language, code_content, isInline = fals
 
   return (
     <div className={cn("relative", "prose-pre:my-1")}>
-      {isMultiLine && (
-        <div
-          className={cn(
-            "absolute left-1/2 top-1 z-50 -translate-x-1/2 transform",
-            "rounded-t-md px-4 py-1 text-sm",
-            "bg-tokyo-night-code-background text-tokyo-night-orange",
-            currentFont.font === "scientifica" ? scientifica.className : mono.className
-          )}
-        >
-          {lang}
-        </div>
-      )}
+      {isMultiLine && <LanguageTag lang={lang} font={font} />}
       <pre
         {...props}
         style={undefined}
@@ -63,4 +59,5 @@ const Pre: React.FC<PreProps> = async ({ language, code_content, isInline = fals
     </div>
   );
 };
+
 export default React.memo(Pre);

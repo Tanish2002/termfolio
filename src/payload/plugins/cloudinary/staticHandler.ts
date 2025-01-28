@@ -30,7 +30,7 @@ export const getStaticHandler = ({
           quality: "auto",
           fetch_format: "auto"
         }
-      })
+      });
       const response = await fetch(resource.secure_url);
       if (!response.ok) {
         req.payload.logger.error(`Failed to fetch Cloudinary resource for ${filename}`);

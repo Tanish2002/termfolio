@@ -11,7 +11,29 @@ export default {
     "./src/**/*.{ts,tsx}"
   ],
   darkMode: ["selector", '[data-theme="dark"]'],
-  plugins: [typography, tokyoNightThemePlugin],
+  plugins: [
+    typography,
+    tokyoNightThemePlugin,
+    // custom plugin to change the scaling of fonts, since scientifica is bit smaller.
+    function({ addBase }) {
+      addBase({
+        ":root": {
+          "--font-scale": "1"
+        },
+        ".font-mono": {
+          "--font-scale": "0.9",
+          "font-family": "var(--font-mono)"
+        },
+        ".font-scientifica": {
+          "--font-scale": "1",
+          "font-family": "var(--font-scientifica)"
+        },
+        html: {
+          "font-size": "calc(100% * var(--font-scale))"
+        }
+      });
+    }
+  ],
   prefix: "",
   theme: {
     extend: {
@@ -154,8 +176,8 @@ export default {
         }
       },
       fontFamily: {
-        mono: ["var(--font-mono)"],
-        scientifica: ["var(--font-scientifica)"]
+        mono: "var(--font-mono)",
+        scientifica: "var(--font-scientifica)"
       }
     }
   }

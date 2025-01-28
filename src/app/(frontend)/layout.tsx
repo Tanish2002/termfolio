@@ -12,7 +12,6 @@ import MobileNavbar from "@/components/MobileNavbar/MobileNavbar";
 import NavigableDiv from "@/components/NavigableComponents/NavigableDiv/NavigableDiv";
 import CustomToaster from "@/components/Toaster";
 import { mono, scientifica } from "@/constants";
-import { getCurrentFont } from "@/lib/userSettings/server";
 import Providers from "@/providers/providers";
 import cn from "@/utils/cn";
 import { getServerSideURL } from "@/utils/getURL";
@@ -43,19 +42,13 @@ export default async function RootLayout({
   children: React.ReactNode;
   list: React.ReactNode;
 }>) {
-  const { font } = await getCurrentFont();
-
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning // disable hydration warning coz we using custom script to update this
-    >
+    <html lang="en">
       <body
+        suppressHydrationWarning={true} // disable hydration warning coz we using custom script to update this
         className={cn(
           "flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
-          font === "mono"
-            ? `font-mono ${mono.variable}`
-            : `font-scientifica ${scientifica.variable}`
+          mono.variable, scientifica.variable
         )}
       >
         {/* import here so font is used */}
@@ -150,30 +143,31 @@ export default async function RootLayout({
           </div>
 
           <MobileNavbar list={list} />
+          <footer className={cn("hidden", "mx-6 md:flex md:flex-grow-[1]")}>
+            <div className="flex divide-x divide-tokyo-night-foreground">
+              <div className="px-2">
+                <span className="text-tokyo-night-red">&lt;pgUp&gt;/&lt;pgDown&gt;:</span>
+                <span className="text-tokyo-night-blue">scroll</span>
+              </div>
+              <div className="px-2">
+                <span className="text-tokyo-night-red">&lt;left&gt;/&lt;right&gt;:</span>
+                <span className="text-tokyo-night-blue">switch section</span>
+              </div>
+              <div className="px-2">
+                <span className="text-tokyo-night-red">&lt;up&gt;/&lt;down&gt;:</span>
+                <span className="text-tokyo-night-blue">switch item/scroll</span>
+              </div>
+              <div className="px-2">
+                <span className="text-tokyo-night-red">&lt;Enter&gt;:</span>
+                <span className="text-tokyo-night-blue">select item</span>
+              </div>
+            </div>
+            <div className="px-2">
+              <span className="text-tokyo-night-magenta">(or just use the mouse 😆)</span>
+            </div>
+          </footer>
+
         </Providers>
-        <footer className={cn("hidden", "mx-6 md:flex md:flex-grow-[1]")}>
-          <div className="flex divide-x divide-tokyo-night-foreground">
-            <div className="px-2">
-              <span className="text-tokyo-night-red">&lt;pgUp&gt;/&lt;pgDown&gt;:</span>
-              <span className="text-tokyo-night-blue">scroll</span>
-            </div>
-            <div className="px-2">
-              <span className="text-tokyo-night-red">&lt;left&gt;/&lt;right&gt;:</span>
-              <span className="text-tokyo-night-blue">switch section</span>
-            </div>
-            <div className="px-2">
-              <span className="text-tokyo-night-red">&lt;up&gt;/&lt;down&gt;:</span>
-              <span className="text-tokyo-night-blue">switch item/scroll</span>
-            </div>
-            <div className="px-2">
-              <span className="text-tokyo-night-red">&lt;Enter&gt;:</span>
-              <span className="text-tokyo-night-blue">select item</span>
-            </div>
-          </div>
-          <div className="px-2">
-            <span className="text-tokyo-night-magenta">(or just use the mouse 😆)</span>
-          </div>
-        </footer>
         <Script id="theme-setter" strategy="beforeInteractive">
           {`
 (() => {
@@ -182,46 +176,54 @@ export default async function RootLayout({
     return match ? match[2] : null;
   };
 
-  const setCookie = (name, value, options = {}) => {
-    let cookieString = name + '=' + value + ';path=' + (options.path || '/') + ';';
-    if (options.maxAge) {
-      cookieString += 'max-age=' + options.maxAge + ';';
-    }
-    document.cookie = cookieString;
-  };
-
   const prefersDarkMQ = "(prefers-color-scheme: dark)";
   const cookieTheme = getCookie("user-theme");
-	const theme = cookieTheme ?? "system";
+  const theme = cookieTheme ?? "system";
 
-  const cookieResolvedTheme = getCookie("user-resolved-theme");
-	const resolvedTheme = theme === "dark" || theme === "light"
-  	? theme
-  	: window.matchMedia(prefersDarkMQ).matches
-  	? "dark"
-  	: "light";
-
-  const cl = document.documentElement.classList;
-  const themeAlreadyApplied = cl.contains("dark");
-
-  if (themeAlreadyApplied) {
-    console.warn(
-      "Hi there, could you let Tanish know you're seeing this message? Thanks!"
-    );
-  } else {
-    if (resolvedTheme === "dark") {
-      cl.add("dark");
-    } else {
-      cl.remove("dark");
+  const resolveTheme = (themePreference) => {
+    if (themePreference === "system") {
+      return window.matchMedia(prefersDarkMQ).matches ? "dark" : "light";
     }
-    setCookie("user-theme", theme, {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365 // 1 year
-    });
-    setCookie("user-resolved-theme", resolvedTheme, {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365 // 1 year
-    });
+    return themePreference ?? "dark"; // default dark mode
+  };
+
+  const applyTheme = (resolvedTheme) => {
+    const htmlElement = document.body;
+
+    if (resolvedTheme === "dark") {
+      htmlElement.classList.add("dark");
+      htmlElement.setAttribute("data-theme", "dark");
+    } else {
+      htmlElement.classList.remove("dark");
+      htmlElement.setAttribute("data-theme", "light");
+    }
+  };
+
+  const resolvedTheme = resolveTheme(theme);
+  applyTheme(resolvedTheme);
+
+  // Store the resolved theme in a global variable for the provider to sync with
+  window.__initialTheme = { theme, resolvedTheme };
+})();
+`}
+        </Script>
+        <Script id="font-setter" strategy="beforeInteractive">
+          {`
+(() => {
+  try {
+    const cookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user-font='))
+      ?.split('=')[1];
+    const fontClass = cookie === 'mono' ? 'font-mono' : 'font-scientifica';
+    const fontClassToRemove = cookie === 'mono' ? 'font-scientifica' : 'font-mono';
+    document.body.classList.remove(fontClassToRemove);
+    document.body.classList.add(fontClass);
+
+    // Store the resolved font in a global variable for the provider to sync with
+    window.__initialFont = cookie  === 'mono' ? 'mono' : 'scientifica';
+  } catch (e) {
+    console.error("Hey this shouldn't happen.. Can you let tanish know about this thanks!");
   }
 })();
 `}

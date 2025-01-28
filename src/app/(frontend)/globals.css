@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+body {
   opacity: 0;
 }
 
-html[data-theme="dark"],
-html[data-theme="light"] {
+body[data-theme="dark"],
+body[data-theme="light"] {
   opacity: initial;
 }
 
@@ -17,6 +17,7 @@ html[data-theme="light"] {
 
 /* lexical editor doesn't handle nested lists properly so gotta use this: https://payloadcms.com/docs/rich-text/converters */
 @layer payload-default {
+
   .nestedListItem,
   .list-check {
     list-style-type: none;

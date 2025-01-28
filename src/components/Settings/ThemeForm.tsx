@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 import { toast } from "react-hot-toast";
@@ -14,14 +14,9 @@ import BorderBox from "../BorderBox/BorderBox";
 import ThemeColorPreview from "./ThemeColorPreview";
 
 export default function ThemeForm() {
-  const [userTheme, setUserTheme] = useAtom(themeAtom);
+  const [userTheme, setUserTheme] = useAtom(themeAtom); // using atom here since I'm sure it gets updated in the UserSettingsProvider
   const systemTheme = useAtomValue(systemThemeAtom);
   const [previewTheme, setPreviewTheme] = useState<ThemeType>(userTheme);
-
-  // initialize the previewTheme with userTheme value so it gets checked automatically on load
-  useEffect(() => {
-    setPreviewTheme(userTheme);
-  }, [userTheme]);
 
   // Dynamically compute the preview based on current theme and actual theme
   const currentPreview = useMemo(() => {
@@ -70,9 +65,8 @@ export default function ThemeForm() {
         setTheme(previewTheme, setUserTheme);
         toast.custom((t: any) => (
           <div
-            className={`${
-              t.visible ? "animate-enter" : "animate-leave"
-            } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
+            className={`${t.visible ? "animate-enter" : "animate-leave"
+              } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
           >
             <div className="flex items-center space-x-4">
               <div className="flex-1">

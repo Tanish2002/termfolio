@@ -2,35 +2,33 @@
 
 import { useState } from "react";
 
+import { useAtom, useSetAtom } from "jotai";
 import { toast } from "react-hot-toast";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { ImTerminal } from "react-icons/im";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
-import { updateUserFont } from "@/lib/userSettings/client";
-
-import { FontOption } from "./FontForm";
-import FontShowcase from "./FontPreview";
+import { mono, scientifica } from "@/constants";
+import { getCurrentFontCookie, setUserFont } from "@/lib/userSettings/client";
+import { FontOption, fontAtom } from "@/store/fontAtom";
 
 export default function FontFormClient({
-  initialFont,
-  previewMdxComponent
+  previews
 }: {
-  initialFont: FontOption;
-  previewMdxComponent: React.ReactNode;
+  previews: Record<FontOption, React.ReactNode>;
 }) {
-  const [font, setFont] = useState<FontOption>(initialFont);
+  const [userFont, setUserFontAtom] = useAtom(fontAtom); // using atom here since I'm sure it gets updated in the UserSettingsProvider
+  const [previewFont, setPreviewFont] = useState<FontOption>(userFont);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateUserFont({ font });
+    setUserFont(previewFont, setUserFontAtom);
 
     // Show a custom toast notification
     toast.custom((t: any) => (
       <div
-        className={`${
-          t.visible ? "animate-enter" : "animate-leave"
-        } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
+        className={`${t.visible ? "animate-enter" : "animate-leave"
+          } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
       >
         <div className="flex items-center space-x-4">
           <div className="flex-1">
@@ -54,8 +52,8 @@ export default function FontFormClient({
               id="font-scientifica"
               name="font"
               value="font-scientifica"
-              checked={font === "scientifica"}
-              onChange={() => setFont("scientifica")}
+              checked={previewFont === "scientifica"}
+              onChange={() => setPreviewFont("scientifica")}
               className="peer hidden"
               required
             />
@@ -76,8 +74,8 @@ export default function FontFormClient({
               id="font-mono"
               name="font"
               value="font-mono"
-              checked={font === "mono"}
-              onChange={() => setFont("mono")}
+              checked={previewFont === "mono"}
+              onChange={() => setPreviewFont("mono")}
               className="peer hidden"
             />
             <label
@@ -108,9 +106,13 @@ export default function FontFormClient({
         {/* Font Preview */}
         <div className="my-4">
           <BorderBox>
-            <div className={"bg-tokyo-night-background p-4 text-tokyo-night-foreground"}>
+            <div className="bg-tokyo-night-background p-4 text-tokyo-night-foreground">
               <h3 className="mb-2 text-lg font-bold underline">Font Preview</h3>
-              <FontShowcase font={font} previewMdxComponent={previewMdxComponent} />
+              <div
+                className={`p-4 ${previewFont === "scientifica" ? scientifica.className : mono.className} prose-lg`}
+              >
+                {previews[previewFont]}
+              </div>
             </div>
           </BorderBox>
         </div>

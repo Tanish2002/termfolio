@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from "cookies-next/client";
-import { SetStateAction } from "jotai";
+import { SetStateAction, useAtomValue } from "jotai";
 
-import { ResolvedThemeType, ThemeType } from "@/store/themeAtoms";
+import { ResolvedThemeType, ThemeType, systemThemeAtom } from "@/store/themeAtoms";
 
 import { ThemeSettings } from "./types";
 
@@ -9,7 +9,7 @@ import { ThemeSettings } from "./types";
 type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 // get current user theme from cookies on client
-export function getCurrentTheme(): ThemeSettings {
+export function getCurrentThemeCookie(): ThemeSettings {
   const themeCookie = getCookie("user-theme");
   const resolvedThemeCookie = getCookie("user-resolved-theme");
 
@@ -52,14 +52,14 @@ export const setTheme = (
 // Apply theme to document body
 export const applyTheme = (resolvedTheme: ResolvedThemeType) => {
   if (typeof document !== "undefined") {
-    const htmlElement = document.documentElement;
+    const bodyElement = document.body;
 
     if (resolvedTheme === "dark") {
-      htmlElement.classList.add("dark");
-      htmlElement.setAttribute("data-theme", "dark");
+      bodyElement.classList.add("dark");
+      bodyElement.setAttribute("data-theme", "dark");
     } else {
-      htmlElement.classList.remove("dark");
-      htmlElement.setAttribute("data-theme", "light");
+      bodyElement.classList.remove("dark");
+      bodyElement.setAttribute("data-theme", "light");
     }
   }
 };
