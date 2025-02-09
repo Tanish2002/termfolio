@@ -14,6 +14,7 @@ import { Tags } from "./payload/collections/Tags";
 import { TechStacks } from "./payload/collections/TechStacks";
 import { Users } from "./payload/collections/Users";
 import { defaultLexical } from "./payload/fields/defaultLexical";
+import { SocialLinks } from "./payload/globals/Socials";
 import { plugins } from "./payload/plugins";
 
 const filename = fileURLToPath(import.meta.url);
@@ -55,6 +56,7 @@ export default buildConfig({
   },
   plugins: [...plugins],
   collections: [Users, Media, Tags, Posts, Experiences, Projects, TechStacks, Socials],
+  globals: [SocialLinks],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

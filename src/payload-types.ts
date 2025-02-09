@@ -40,8 +40,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'social-links': SocialLink;
+  };
+  globalsSelect: {
+    'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -729,6 +733,56 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-links".
+ */
+export interface SocialLink {
+  id: number;
+  socialMedia: {
+    /**
+     * Twitter/X profile URL
+     */
+    twitter: string;
+    /**
+     * LinkedIn profile URL
+     */
+    linkedin: string;
+    /**
+     * GitHub profile URL
+     */
+    github: string;
+  };
+  resume: {
+    /**
+     * Resume URL
+     */
+    url: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-links_select".
+ */
+export interface SocialLinksSelect<T extends boolean = true> {
+  socialMedia?:
+    | T
+    | {
+        twitter?: T;
+        linkedin?: T;
+        github?: T;
+      };
+  resume?:
+    | T
+    | {
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

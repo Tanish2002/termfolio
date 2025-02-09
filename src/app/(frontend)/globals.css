@@ -17,7 +17,6 @@ body[data-theme="light"] {
 
 /* lexical editor doesn't handle nested lists properly so gotta use this: https://payloadcms.com/docs/rich-text/converters */
 @layer payload-default {
-
   .nestedListItem,
   .list-check {
     list-style-type: none;

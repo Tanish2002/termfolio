@@ -65,8 +65,9 @@ export default function ThemeForm() {
         setTheme(previewTheme, setUserTheme);
         toast.custom((t: any) => (
           <div
-            className={`${t.visible ? "animate-enter" : "animate-leave"
-              } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
+            className={`${
+              t.visible ? "animate-enter" : "animate-leave"
+            } rounded border border-tokyo-night-blue bg-tokyo-night-background p-4 shadow-lg`}
           >
             <div className="flex items-center space-x-4">
               <div className="flex-1">

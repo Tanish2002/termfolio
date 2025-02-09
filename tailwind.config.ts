@@ -15,7 +15,7 @@ export default {
     typography,
     tokyoNightThemePlugin,
     // custom plugin to change the scaling of fonts, since scientifica is bit smaller.
-    function({ addBase }) {
+    function ({ addBase }) {
       addBase({
         ":root": {
           "--font-scale": "1"

@@ -48,7 +48,8 @@ export default async function RootLayout({
         suppressHydrationWarning={true} // disable hydration warning coz we using custom script to update this
         className={cn(
           "flex h-svh w-screen flex-col bg-tokyo-night-background text-tokyo-night-foreground antialiased transition-colors",
-          mono.variable, scientifica.variable
+          mono.variable,
+          scientifica.variable
         )}
       >
         {/* import here so font is used */}
@@ -166,7 +167,6 @@ export default async function RootLayout({
               <span className="text-tokyo-night-magenta">(or just use the mouse 😆)</span>
             </div>
           </footer>
-
         </Providers>
         <Script id="theme-setter" strategy="beforeInteractive">
           {`

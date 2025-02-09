@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 
 import PreLoader from "@/components/PreLoader";
 import { applyTheme } from "@/lib/userSettings/client";
-import { fontAtom, FontOption } from "@/store/fontAtom";
+import { FontOption, fontAtom } from "@/store/fontAtom";
 import { ResolvedThemeType, ThemeType, systemThemeAtom, themeAtom } from "@/store/themeAtoms";
 
 declare global {
@@ -33,13 +33,13 @@ export default function UserSettingsProvider({ children }: { children: React.Rea
       const { theme: initialTheme, resolvedTheme } = window.__initialTheme;
       const initialFont = window.__initialFont;
       setTheme(initialTheme);
-      setFont(initialFont)
+      setFont(initialFont);
       applyTheme(resolvedTheme);
       setTimeout(() => {
         setIsLoading(false); // After 1.5 seconds, set loading to false
       }, 1500);
     }
-  }, [setTheme]);
+  }, [setTheme, setFont]);
 
   // Effect to keep track of system theme changes
   useEffect(() => {

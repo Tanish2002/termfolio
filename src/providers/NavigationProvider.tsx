@@ -29,6 +29,12 @@ const NavigationProvider: React.FC = () => {
 
     const handleKeyDown = throttle((e: KeyboardEvent) => {
       const key = e.key;
+
+      // Check for modifier keys (Ctrl, Alt, Meta/Command)
+      if (e.ctrlKey || e.altKey || e.metaKey) {
+        return; // Allow browser shortcuts to work normally
+      }
+
       const isNavKey = [
         "ArrowUp",
         "ArrowDown",

@@ -1,6 +1,10 @@
 import { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import React from "react";
+
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 
 import BorderBox from "@/components/BorderBox/BorderBox";
 import WalkingGif from "@/components/WalkingGif";
@@ -12,6 +16,7 @@ import FortuneCookie from "./page.client";
 export const dynamic = "force-static";
 
 export default React.memo(async function About() {
+  const socials = await getSocialLinks();
   return (
     <>
       <WalkingGif />
@@ -48,7 +53,11 @@ export default React.memo(async function About() {
         <div>
           <p>
             These days, you’ll find me on{" "}
-            <Link href="https://x.com/baka_otaku2002" className="text-tokyo-night-red underline">
+            <Link
+              href={socials.socialMedia.twitter}
+              target="_blank"
+              className="text-tokyo-night-red underline"
+            >
               X (Twitter)
             </Link>{" "}
             🐦.
@@ -56,7 +65,8 @@ export default React.memo(async function About() {
           <p>
             If you want to cringe a little, feel free to connect with me on{" "}
             <Link
-              href="https://www.linkedin.com/in/tanish-khare-144032169/"
+              href={socials.socialMedia.linkedin}
+              target="_blank"
               className="text-tokyo-night-red underline"
             >
               LinkedIn
@@ -65,7 +75,11 @@ export default React.memo(async function About() {
           </p>
           <p>
             Check out my projects and code over on{" "}
-            <Link href="https://github.com/Tanish2002/" className="text-tokyo-night-red underline">
+            <Link
+              href={socials.socialMedia.github}
+              target="_blank"
+              className="text-tokyo-night-red underline"
+            >
               GitHub
             </Link>{" "}
             💻.
@@ -73,7 +87,8 @@ export default React.memo(async function About() {
           <p>
             Oh, and you can find my résumé here 👉{" "}
             <Link
-              href="https://drive.google.com/file/d/1B_H_v4Vl93RSfaaP6o-I9O9kFUQoHu8m/view?usp=sharing"
+              href={socials.resume.url}
+              target="_blank"
               className="text-tokyo-night-red underline"
             >
               resume
@@ -104,6 +119,23 @@ export default React.memo(async function About() {
     </>
   );
 });
+
+const getSocialLinks = unstable_cache(
+  async () => {
+    const payload = await getPayload({ config: configPromise });
+
+    const result = await payload.findGlobal({
+      slug: "social-links",
+      select: {
+        resume: true,
+        socialMedia: true
+      }
+    });
+    return result;
+  },
+  ["social-links"],
+  { tags: ["social-links"] }
+);
 
 export function generateMetadata(): Metadata {
   const title = "Termfolio | bakaotaku.dev";
