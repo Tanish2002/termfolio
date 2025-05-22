@@ -27,7 +27,6 @@ const nextConfig = {
   },
   reactStrictMode: true,
   experimental: {
-    // ppr: 'incremental',
     optimizePackageImports: ["react-icons/*"]
   },
   redirects

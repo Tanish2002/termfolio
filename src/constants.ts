@@ -6,17 +6,17 @@ import { CollectionSlug } from "payload";
 export const scientifica = localFont({
   src: [
     {
-      path: "./assets/fonts/scientifica.ttf",
+      path: "../public/fonts/scientifica.ttf",
       weight: "400",
       style: "normal"
     },
     {
-      path: "./assets/fonts/scientificaItalic.ttf",
+      path: "../public/fonts/scientificaItalic.ttf",
       weight: "400",
       style: "italic"
     },
     {
-      path: "./assets/fonts/scientificaBold.ttf",
+      path: "../public/fonts/scientificaBold.ttf",
       weight: "700",
       style: "normal"
     }
